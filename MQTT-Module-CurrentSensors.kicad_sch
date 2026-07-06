@@ -1,0 +1,642 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "fcdc4d99-6273-4901-9910-bd8fd00b962f")
+	(paper "A4")
+	(title_block
+		(title "MQTT - Current Sensor - Module")
+		(date "2026-07-07")
+		(rev "1.0")
+	)
+	(lib_symbols)
+	(bus_alias "I2C0"
+		(members "SDA0" "SCL0")
+	)
+	(bus_alias "SPI"
+		(members "MOSI" "SCK" "MISO")
+	)
+	(rectangle
+		(start 127 22.86)
+		(end 274.32 134.62)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type none)
+		)
+		(uuid c1673e42-c7d4-4b52-ac2d-c95749efdad2)
+	)
+	(text "MQTT - Current Sensor - Module"
+		(exclude_from_sim no)
+		(at 62.23 25.4 0)
+		(effects
+			(font
+				(size 3.2 3.2)
+				(thickness 0.254)
+				(bold yes)
+			)
+		)
+		(uuid "98aa30d6-7c57-46a8-8408-a4d741493127")
+	)
+	(text_box "Additional BOM Items"
+		(exclude_from_sim no)
+		(at 20.32 125.73 0)
+		(size 43.18 5.08)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width -0.0001)
+			(type solid)
+		)
+		(fill
+			(type none)
+		)
+		(effects
+			(font
+				(size 2 2)
+				(thickness 0.254)
+				(bold yes)
+			)
+			(justify left top)
+		)
+		(uuid "1d41d7ae-5705-49b3-abcb-ac916823bd58")
+	)
+	(text_box "-"
+		(exclude_from_sim no)
+		(at 20.32 130.81 0)
+		(size 85.09 19.05)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width -0.0001)
+			(type solid)
+		)
+		(fill
+			(type none)
+		)
+		(effects
+			(font
+				(size 2 2)
+			)
+			(justify left top)
+		)
+		(uuid "2b5fa35c-344a-4282-b6a2-7cb1fa8ed256")
+	)
+	(text_box "Summary:"
+		(exclude_from_sim no)
+		(at 20.32 35.56 0)
+		(size 20.32 3.81)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width -0.0001)
+			(type solid)
+		)
+		(fill
+			(type none)
+		)
+		(effects
+			(font
+				(size 2 2)
+				(thickness 0.254)
+				(bold yes)
+			)
+			(justify left top)
+		)
+		(uuid "2e918530-a0be-4f7b-84d9-f853aa5273ba")
+	)
+	(text_box "Non BOM Items"
+		(exclude_from_sim no)
+		(at 20.32 93.98 0)
+		(size 33.02 3.81)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width -0.0001)
+			(type solid)
+		)
+		(fill
+			(type none)
+		)
+		(effects
+			(font
+				(size 2 2)
+				(thickness 0.254)
+				(bold yes)
+			)
+			(justify left top)
+		)
+		(uuid "44c57b02-95c9-405d-94f2-fd948a8ea3ef")
+	)
+	(text_box "Page 2: Controller\nPage 3: Headers\nPage 4: SensorRecievers\nPage 5: AnalogDigitalConverter\nPage 6: SensorPowerConversion"
+		(exclude_from_sim no)
+		(at 20.32 68.58 0)
+		(size 85.09 19.05)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width -0.0001)
+			(type solid)
+		)
+		(fill
+			(type none)
+		)
+		(effects
+			(font
+				(size 2 2)
+			)
+			(justify left top)
+		)
+		(uuid "455d3d8b-e066-41af-a238-b2c79c695375")
+	)
+	(text_box "Table of Contents"
+		(exclude_from_sim no)
+		(at 20.32 63.5 0)
+		(size 33.02 3.81)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width -0.0001)
+			(type solid)
+		)
+		(fill
+			(type none)
+		)
+		(effects
+			(font
+				(size 2 2)
+				(thickness 0.254)
+				(bold yes)
+			)
+			(justify left top)
+		)
+		(uuid "52de908f-e9e3-4648-af82-d766fe0c628b")
+	)
+	(text_box "-"
+		(exclude_from_sim no)
+		(at 20.32 99.06 0)
+		(size 85.09 19.05)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width -0.0001)
+			(type solid)
+		)
+		(fill
+			(type none)
+		)
+		(effects
+			(font
+				(size 2 2)
+			)
+			(justify left top)
+		)
+		(uuid "e87eea99-7fb3-4a5c-aa02-2a145a16e6d0")
+	)
+	(text_box "Module for the ESP32 S3 based modular controller board.\nModule is designed to run 3 x 4-20mA Sensors, and read them at a resolution of 15 bit."
+		(exclude_from_sim no)
+		(at 20.32 40.64 0)
+		(size 104.14 15.24)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width -0.0001)
+			(type solid)
+		)
+		(fill
+			(type none)
+		)
+		(effects
+			(font
+				(size 2 2)
+			)
+			(justify left top)
+		)
+		(uuid "f3215bd1-dbc3-4d1b-8765-2c82910837b4")
+	)
+	(bus
+		(pts
+			(xy 175.26 60.96) (xy 175.26 76.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5025aed9-e440-4e33-8a5b-187217c45068")
+	)
+	(bus
+		(pts
+			(xy 175.26 104.14) (xy 175.26 80.01)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "54b2483b-e229-4477-9c5d-36199e78d272")
+	)
+	(bus
+		(pts
+			(xy 229.87 76.2) (xy 229.87 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "73d6bc05-1183-4ef3-912b-db19a569ff03")
+	)
+	(bus
+		(pts
+			(xy 220.98 80.01) (xy 224.79 80.01)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "82587d94-6cae-4487-bcac-7e2adea7c0e2")
+	)
+	(bus
+		(pts
+			(xy 175.26 76.2) (xy 182.88 76.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "85251a38-f8a7-4c5c-9b52-b65b94906abc")
+	)
+	(bus
+		(pts
+			(xy 175.26 60.96) (xy 187.96 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9c0a189e-9279-446e-a10d-56eabbf04b7b")
+	)
+	(bus
+		(pts
+			(xy 220.98 76.2) (xy 229.87 76.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a55b2551-2f60-4147-9094-e02aa5c786ee")
+	)
+	(bus
+		(pts
+			(xy 187.96 60.96) (xy 187.96 52.07)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a7d20649-0a3c-4e93-b991-07edc516171e")
+	)
+	(bus
+		(pts
+			(xy 175.26 80.01) (xy 182.88 80.01)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "aff4dd38-5674-4fc2-a4ed-0320671e89a0")
+	)
+	(bus
+		(pts
+			(xy 220.98 43.18) (xy 226.06 43.18)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ca872376-d2d2-442e-b98c-0fd830ebddd4")
+	)
+	(bus
+		(pts
+			(xy 224.79 80.01) (xy 224.79 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f24348b7-bbf0-4183-83f9-853bd6c95724")
+	)
+	(sheet
+		(at 226.06 34.29)
+		(size 38.1 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "04cb4c22-9f48-453c-9321-ed5f92a048ae")
+		(property "Sheetname" "SensorRecievers"
+			(at 233.68 33.02 0)
+			(effects
+				(font
+					(size 1.9 1.9)
+					(thickness 0.38)
+					(bold yes)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "sensorrecievers.kicad_sch"
+			(at 230.378 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "Sens[1..3]" output
+			(at 226.06 43.18 180)
+			(uuid "23b4e126-5b06-48c2-9ac0-f7310cc2a4b6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "MQTT-Module-CurrentSensors"
+				(path "/fcdc4d99-6273-4901-9910-bd8fd00b962f"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 140.97 34.29)
+		(size 36.83 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "2008a321-bc7f-4ad7-b1cf-7c70f09fefdd")
+		(property "Sheetname" "SensorPowerConversion"
+			(at 142.24 33.02 0)
+			(effects
+				(font
+					(size 1.9 1.9)
+					(thickness 0.38)
+					(bold yes)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "sensorpowerconversion.kicad_sch"
+			(at 140.97 52.6546 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "MQTT-Module-CurrentSensors"
+				(path "/fcdc4d99-6273-4901-9910-bd8fd00b962f"
+					(page "6")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 170.18 104.14)
+		(size 63.5 20.32)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "5bb4b2fb-c117-403c-b2ae-c89cbb06dbb3")
+		(property "Sheetname" "Headers"
+			(at 195.58 102.87 0)
+			(effects
+				(font
+					(size 1.9 1.9)
+					(thickness 0.38)
+					(bold yes)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "headers.kicad_sch"
+			(at 190.246 126.492 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "{ISP}" input
+			(at 224.79 104.14 90)
+			(uuid "390fa131-9630-4d12-a414-5653ac7cc182")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "{I2C0}" bidirectional
+			(at 175.26 104.14 90)
+			(uuid "fb558953-e930-4e50-b419-1726dad9b10f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "{GEN}" bidirectional
+			(at 229.87 104.14 90)
+			(uuid "794aede1-18c4-4cc9-8b51-90418d910a52")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "MQTT-Module-CurrentSensors"
+				(path "/fcdc4d99-6273-4901-9910-bd8fd00b962f"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 182.88 34.29)
+		(size 38.1 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "803358d2-0805-45e5-8364-1b8856ff9a5d")
+		(property "Sheetname" "AnalogDigitalConverter"
+			(at 185.42 33.02 0)
+			(effects
+				(font
+					(size 1.9 1.9)
+					(thickness 0.38)
+					(bold yes)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "adc.kicad_sch"
+			(at 193.294 53.594 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "Sens[1..3]" input
+			(at 220.98 43.18 0)
+			(uuid "2c867ea8-ab5f-4334-92fb-08464fe0f0ec")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "{I2C1}" bidirectional
+			(at 187.96 52.07 270)
+			(uuid "20b69bf9-adaa-4c55-ac13-d07036030c9c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "MQTT-Module-CurrentSensors"
+				(path "/fcdc4d99-6273-4901-9910-bd8fd00b962f"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 182.88 68.58)
+		(size 38.1 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "aa87b2dd-90b3-41b3-8e99-8dcc5f11db59")
+		(property "Sheetname" "Controller"
+			(at 194.564 67.564 0)
+			(effects
+				(font
+					(size 1.9 1.9)
+					(thickness 0.38)
+					(bold yes)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "controller.kicad_sch"
+			(at 190.5 88.138 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "{ISP}" output
+			(at 220.98 80.01 0)
+			(uuid "ca3f5f16-90e8-419e-979c-82905299706c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "{I2C0}" bidirectional
+			(at 182.88 80.01 180)
+			(uuid "d1af3543-1fed-4a51-a067-3181e529cc26")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "{I2C1}" bidirectional
+			(at 182.88 76.2 180)
+			(uuid "de9f0827-b42e-481f-a1b0-265082458c30")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "{GEN}" bidirectional
+			(at 220.98 76.2 0)
+			(uuid "adc7c284-97e7-46bd-8d42-545573c1da95")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "MQTT-Module-CurrentSensors"
+				(path "/fcdc4d99-6273-4901-9910-bd8fd00b962f"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)
