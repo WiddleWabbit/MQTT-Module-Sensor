@@ -22445,7 +22445,7 @@
 	(footprint "LOGO"
 		(layer "B.Cu")
 		(uuid "96873d9c-9640-4444-97ea-36ed65575cfb")
-		(at 140.1 111.8 180)
+		(at 140.5 108.7 180)
 		(property "Reference" "G***"
 			(at 0 0 0)
 			(layer "B.SilkS")
@@ -23470,6 +23470,19 @@
 			(justify mirror)
 		)
 	)
+	(gr_text "Licensed under CERN-OHL-P v2"
+		(at 140.4 122.1 0)
+		(layer "B.SilkS")
+		(uuid "53a38aa3-0939-4126-b102-75f884de344b")
+		(effects
+			(font
+				(size 1.2 1.2)
+				(thickness 0.3)
+				(bold yes)
+			)
+			(justify bottom mirror)
+		)
+	)
 	(gr_text "SNS"
 		(at 155.928572 92.3 -0)
 		(layer "B.SilkS")
@@ -23627,12 +23640,12 @@
 		)
 	)
 	(gr_text "github.com/WiddleWabbit/\nMQTT-Module-Sensor"
-		(at 140 121.1 0)
+		(at 140.5 118.2 0)
 		(layer "B.SilkS")
 		(uuid "dd806317-c038-40b8-9ea5-542b48c18060")
 		(effects
 			(font
-				(size 1.3 1.3)
+				(size 1.5 1.5)
 				(thickness 0.325)
 				(bold yes)
 			)
