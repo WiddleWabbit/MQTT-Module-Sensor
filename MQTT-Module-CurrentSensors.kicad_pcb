@@ -13930,7 +13930,7 @@
 		(descr "0603")
 		(tags "Capacitor")
 		(property "Reference" "C202"
-			(at 0.0625 2.9 0)
+			(at 2.2625 1.1 0)
 			(layer "F.SilkS")
 			(uuid "263d80f1-dda3-4cfe-b809-390745a027dc")
 			(effects
@@ -19040,7 +19040,7 @@
 		(descr "SOD-323F http://www.nxp.com/documents/outline_drawing/SOD323F.pdf")
 		(tags "SOD-323F")
 		(property "Reference" "D301"
-			(at 0 2.2 90)
+			(at -2.8 1.1 180)
 			(layer "F.SilkS")
 			(uuid "94574253-d09b-4b6c-950e-e4fd09c53a83")
 			(effects
