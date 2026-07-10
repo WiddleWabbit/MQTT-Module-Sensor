@@ -92,28 +92,28 @@
           "Unavoidable due to pad spacing"
         ],
         [
-          "clearance|145537500|88037500|1ab4757e-0863-4fc6-9bf4-598e1d812ee8|fd729e03-b379-464c-8a5f-12c39a6a1a49",
+          "clearance|146137500|87237500|6039d261-97e5-43c8-a78b-03f220a894bc|8487e685-b80b-4bfc-b7ac-0c6bd4415b9d",
           "Unavoidable due to pad spacing"
+        ],
+        [
+          "clearance|146137500|87900000|8487e685-b80b-4bfc-b7ac-0c6bd4415b9d|f82fc830-23a0-4664-98d3-2093c436d5e2",
+          ""
         ],
         [
           "clearance|146137500|88037500|1ab4757e-0863-4fc6-9bf4-598e1d812ee8|6039d261-97e5-43c8-a78b-03f220a894bc",
-          "Unavoidable due to pad spacing"
-        ],
-        [
-          "clearance|146137500|88037500|1ab4757e-0863-4fc6-9bf4-598e1d812ee8|f82fc830-23a0-4664-98d3-2093c436d5e2",
-          "Unavoidable due to pad spacing"
+          ""
         ],
         [
           "clearance|147500000|84800000|9c8f6ce3-f74e-4492-a38b-aafab1d6cc5c|d2bcc4d6-8288-41ab-9c9e-645e88c583af",
           "Unavoidable due to pad spacing"
         ],
         [
-          "clearance|147500000|85875000|80bd62c0-500c-4a2a-a774-6803c1751e62|84acb09f-fab6-4cd6-8d9d-18023ae4f3ae",
-          "Unavoidable due to pad spacing"
+          "clearance|147500000|85275000|80bd62c0-500c-4a2a-a774-6803c1751e62|d2bcc4d6-8288-41ab-9c9e-645e88c583af",
+          ""
         ],
         [
-          "clearance|147637500|86475000|601705ba-3d67-4fb7-bb1c-aa229a3a0458|84acb09f-fab6-4cd6-8d9d-18023ae4f3ae",
-          "Unavoidable due to pad spacing"
+          "clearance|147500000|85875000|80bd62c0-500c-4a2a-a774-6803c1751e62|84acb09f-fab6-4cd6-8d9d-18023ae4f3ae",
+          ""
         ],
         [
           "clearance|148162500|85275000|d2bcc4d6-8288-41ab-9c9e-645e88c583af|601705ba-3d67-4fb7-bb1c-aa229a3a0458",
@@ -121,119 +121,135 @@
         ],
         [
           "clearance|148300000|86500000|516dbeba-a96a-4cd7-a5f3-f5850925abf4|601705ba-3d67-4fb7-bb1c-aa229a3a0458",
-          "Unavoidable due to pad spacing"
+          ""
         ],
         [
           "clearance|148437500|93600000|45691293-2bb4-4b8f-934b-44406955b310|39f6e5bc-29c1-4c03-b3a1-b3860f05cba5",
           "Unavoidable due to pad spacing"
         ],
         [
-          "clearance|148437500|94800000|45691293-2bb4-4b8f-934b-44406955b310|c0912378-9cfd-4ec8-896d-b75b440f50aa",
-          "Unavoidable due to pad spacing"
-        ],
-        [
-          "clearance|148818750|95181250|26d90a44-dc44-4f36-bc93-0f6d7d7ef51c|45691293-2bb4-4b8f-934b-44406955b310",
-          "Unavoidable due to pad spacing"
+          "clearance|148900000|95100000|39c0a401-09a9-41d2-adee-53af1d846afa|45691293-2bb4-4b8f-934b-44406955b310",
+          ""
         ],
         [
           "clearance|148962500|85275000|9f063053-7b7f-474e-aae1-d94d235e6408|d2bcc4d6-8288-41ab-9c9e-645e88c583af",
           "Unavoidable due to pad spacing"
         ],
         [
+          "clearance|149100000|94200000|2822778d-2b53-4538-8b7a-1e6e181188a5|2f471c6a-0c3c-441d-81ac-0b5c47959da1",
+          ""
+        ],
+        [
+          "clearance|149100000|94900000|0b94eac2-43c0-46cd-a326-f5cefc826048|2f471c6a-0c3c-441d-81ac-0b5c47959da1",
+          ""
+        ],
+        [
           "clearance|149237500|93600000|39f6e5bc-29c1-4c03-b3a1-b3860f05cba5|500fdb66-a75e-4289-b5f6-a0e41a7ae282",
           "Unavoidable due to pad spacing"
         ],
         [
-          "clearance|149237500|94800000|39f6e5bc-29c1-4c03-b3a1-b3860f05cba5|7ff04b52-dd6b-4ba7-a9d1-092f3ed1d31d",
-          "Unavoidable due to pad spacing"
-        ],
-        [
-          "clearance|149237500|94800000|39f6e5bc-29c1-4c03-b3a1-b3860f05cba5|83a0b4da-7d47-43c8-93e1-ef14c68a52c5",
-          "Unavoidable due to pad spacing"
+          "clearance|149400000|87600000|516dbeba-a96a-4cd7-a5f3-f5850925abf4|ed1f1923-f2ab-4fd4-8d07-50b1f0a5cbaa",
+          "Intentional, GND Via to couple to."
         ],
         [
           "clearance|149400000|87600000|ed1f1923-f2ab-4fd4-8d07-50b1f0a5cbaa|f0eee07e-10fc-4ca6-8475-3c50397ad852",
           "Intentional, GND Via to couple to"
         ],
         [
-          "clearance|149700000|95350000|35807a29-af82-4337-bb80-4f85760a100a|39f6e5bc-29c1-4c03-b3a1-b3860f05cba5",
-          "Unavoidable due to pad spacing"
-        ],
-        [
           "clearance|149900000|87600000|0acea614-c028-40f4-9713-d98c9fd6aee5|ed1f1923-f2ab-4fd4-8d07-50b1f0a5cbaa",
           "Intentional, GND via to couple to"
         ],
         [
-          "clearance|149900000|94200000|7ff04b52-dd6b-4ba7-a9d1-092f3ed1d31d|ae8e8682-17ee-4322-9380-a0ed7cdf1929",
-          "Unavoidable due to pad spacing"
+          "clearance|149900000|94200000|2f471c6a-0c3c-441d-81ac-0b5c47959da1|666e8a5d-843f-4a08-8253-eef496ee4831",
+          ""
+        ],
+        [
+          "clearance|149900000|94200000|2f471c6a-0c3c-441d-81ac-0b5c47959da1|ae8e8682-17ee-4322-9380-a0ed7cdf1929",
+          ""
+        ],
+        [
+          "clearance|149900000|94800000|2f471c6a-0c3c-441d-81ac-0b5c47959da1|39f6e5bc-29c1-4c03-b3a1-b3860f05cba5",
+          ""
+        ],
+        [
+          "clearance|149900000|94800000|2f471c6a-0c3c-441d-81ac-0b5c47959da1|7cd3645e-8755-4acb-a364-6a8892268823",
+          ""
         ],
         [
           "clearance|150037500|93600000|500fdb66-a75e-4289-b5f6-a0e41a7ae282|bf87db5c-5ea5-47e7-8e82-b661556ca63e",
           "Unavoidable due to pad spacing"
         ],
         [
-          "clearance|150700000|95150000|41868823-711a-4715-9e75-04292fcfb9eb|83a0b4da-7d47-43c8-93e1-ef14c68a52c5",
-          "Unavoidable due to pad spacing"
+          "clearance|150900000|103400000|b41efc52-3bf4-46b6-bd09-748fac874f29|bce18660-9734-4ec2-9b88-c1a06d55ddb9",
+          ""
         ],
         [
           "clearance|150900000|103750000|58d42269-ec1a-49b2-8d33-dbf6b28e5779|68ed40e9-e986-4746-ac00-169d477776ac",
           "Unavoidable due to pad spacing"
         ],
         [
-          "clearance|150900000|104250000|c69207f2-0133-4f62-9f14-b29dc1365a04|e64dc083-2faf-414d-a467-7a635b2aeea1",
-          "Unavoidable due to pad spacing"
+          "clearance|150900000|103750000|58d42269-ec1a-49b2-8d33-dbf6b28e5779|b41efc52-3bf4-46b6-bd09-748fac874f29",
+          ""
         ],
         [
           "clearance|150900000|104250000|e64dc083-2faf-414d-a467-7a635b2aeea1|58d42269-ec1a-49b2-8d33-dbf6b28e5779",
           "Unavoidable due to pad spacing"
         ],
         [
-          "clearance|151600000|103400000|4005b1ed-38d3-45b9-9438-e6c85f1d59c8|dc3f31c1-4241-41fb-99c5-a51ad46c8bbb",
-          "Unavoidable due to pad spacing"
+          "clearance|150900000|88600000|0fcd578f-0c96-4c1e-8946-63bdfd1e071c|2148abbe-b2fc-451a-bf6b-b9d70a26b2c5",
+          ""
         ],
         [
-          "clearance|151600000|103900000|dc3f31c1-4241-41fb-99c5-a51ad46c8bbb|f86cdd94-1305-4ef4-ac98-76b5f06e457e",
-          "Unavoidable due to pad spacing"
+          "clearance|151400000|88500000|2148abbe-b2fc-451a-bf6b-b9d70a26b2c5|eeee8897-18ab-43bc-b4d0-f16c19ca5ddb",
+          ""
         ],
         [
-          "clearance|151600000|103900000|dc3f31c1-4241-41fb-99c5-a51ad46c8bbb|fb075248-0de6-4ce2-88c6-dfd1030b7f2a",
-          "Unavoidable due to pad spacing"
+          "clearance|151400000|88700000|2148abbe-b2fc-451a-bf6b-b9d70a26b2c5|334a3a23-8311-4701-a379-e41cf769f0fa",
+          ""
         ],
         [
-          "clearance|151600000|104400000|be142414-3d25-4f3e-a70d-d7c2197516b6|c0c0274d-34e2-484a-aa5a-e9ad9b5a4dca",
-          "Unavoidable due to pad spacing"
+          "clearance|151600000|103900000|bce18660-9734-4ec2-9b88-c1a06d55ddb9|be142414-3d25-4f3e-a70d-d7c2197516b6",
+          ""
         ],
         [
-          "clearance|152200000|87600000|0fcd578f-0c96-4c1e-8946-63bdfd1e071c|2148abbe-b2fc-451a-bf6b-b9d70a26b2c5",
-          "Intentional, GND via to couple to"
+          "clearance|151600000|103900000|bce18660-9734-4ec2-9b88-c1a06d55ddb9|e8485d46-a1ec-44bb-ab3c-7fa07d45079e",
+          ""
+        ],
+        [
+          "clearance|152200000|90200000|ca1bd285-95f1-4c26-95d3-146190dcddd5|fa326800-170f-4014-b7d3-a439e9be6997",
+          ""
+        ],
+        [
+          "clearance|152200000|98550000|0e8a3ec9-f3eb-46dc-8755-919de0af743b|3b5a3bce-4ed5-49ca-b393-77c82954d251",
+          ""
+        ],
+        [
+          "clearance|152300000|104050000|3423383a-c198-4ad0-bcdc-ef5a9239e28a|58d42269-ec1a-49b2-8d33-dbf6b28e5779",
+          ""
         ],
         [
           "clearance|152300000|104050000|58d42269-ec1a-49b2-8d33-dbf6b28e5779|6861f71c-aa6e-4ea0-b49b-fe85dd8654a6",
           "Unavoidable due to pad spacing"
         ],
         [
-          "clearance|152300000|104250000|d0dec21c-f3e2-43f1-ada6-f3fdc792c0c2|e64dc083-2faf-414d-a467-7a635b2aeea1",
-          "Unavoidable due to pad spacing"
+          "clearance|152900000|88500000|dc056d5d-05c8-4dbe-91b0-b6a950641b86|fa326800-170f-4014-b7d3-a439e9be6997",
+          ""
         ],
         [
-          "clearance|152500000|104400000|3423383a-c198-4ad0-bcdc-ef5a9239e28a|d0dec21c-f3e2-43f1-ada6-f3fdc792c0c2",
-          "Unavoidable due to pad spacing"
+          "clearance|152900000|89000000|e930efd6-956e-45e3-ac50-a3df74edd95b|fa326800-170f-4014-b7d3-a439e9be6997",
+          ""
         ],
         [
-          "clearance|152500000|104400000|3423383a-c198-4ad0-bcdc-ef5a9239e28a|dc3f31c1-4241-41fb-99c5-a51ad46c8bbb",
-          "Unavoidable due to pad spacing"
+          "clearance|153237500|88837500|2813b952-df99-4f9d-8feb-42c52d84b372|fa326800-170f-4014-b7d3-a439e9be6997",
+          ""
         ],
         [
-          "clearance|152500000|104400000|be142414-3d25-4f3e-a70d-d7c2197516b6|d0dec21c-f3e2-43f1-ada6-f3fdc792c0c2",
-          "Unavoidable due to pad spacing"
+          "clearance|153237500|88837500|3e329f2f-c362-4346-8773-97a9feb7a358|fa326800-170f-4014-b7d3-a439e9be6997",
+          ""
         ],
         [
-          "clearance|152700000|87600000|2148abbe-b2fc-451a-bf6b-b9d70a26b2c5|2a4af931-66fb-4eaf-a47e-2fcd90b62439",
-          "Intentional, GND via to couple to"
-        ],
-        [
-          "clearance|152700000|87600000|2148abbe-b2fc-451a-bf6b-b9d70a26b2c5|4e7c23f2-06dd-46d7-a5ab-36af895c60fa",
-          "Intentional, GND Via to couple to"
+          "clearance|153862500|88175000|57d8f370-5ab8-4954-be61-ca31baf4eab3|e930efd6-956e-45e3-ac50-a3df74edd95b",
+          ""
         ],
         [
           "clearance|153862500|88700000|7f4a86fc-0f42-411d-a878-ff8733ce8cf9|57d8f370-5ab8-4954-be61-ca31baf4eab3",
@@ -248,40 +264,28 @@
           "Unavoidable due to pad spacing"
         ],
         [
-          "clearance|153862500|91900000|69ab3e3b-42ee-40e1-89e8-d79128c6f265|7b8ec59d-3e4e-4c7d-8010-b7a62d19e496",
-          "Unavoidable due to pad spacing"
-        ],
-        [
           "clearance|153862500|91900000|69ab3e3b-42ee-40e1-89e8-d79128c6f265|ad79dbcc-e47e-47a8-8da6-bcc649dc3abb",
           "Unavoidable due to pad spacing, unused pad anyway"
         ],
         [
-          "clearance|154462500|91237500|7b8ec59d-3e4e-4c7d-8010-b7a62d19e496|ae390cd5-abb2-43a5-8e99-70d25468fed0",
-          "Unavoidable due to pad spacing"
+          "clearance|154462500|89637500|66986d14-56f4-467e-b482-b53dbf864832|7f4a86fc-0f42-411d-a878-ff8733ce8cf9",
+          ""
         ],
         [
-          "clearance|154462500|92037500|4f14596c-7d0c-491e-a504-c8488a5c8e28|7b8ec59d-3e4e-4c7d-8010-b7a62d19e496",
-          "Unavoidable due to pad spacing"
+          "clearance|154462500|90437500|ae390cd5-abb2-43a5-8e99-70d25468fed0|e8b9bc70-667d-44b1-b15d-7ec5c09027de",
+          ""
         ],
         [
-          "clearance|155062500|88175000|57d8f370-5ab8-4954-be61-ca31baf4eab3|9d4fd45e-3314-46da-9cdc-cfcbdcc1df88",
-          "Unavoidable due to pad spacing"
+          "clearance|154462500|91237500|e8b9bc70-667d-44b1-b15d-7ec5c09027de|f5a1799b-fb7e-4a1d-9b81-172bbc1acb4c",
+          ""
         ],
         [
-          "clearance|155062500|88175000|57d8f370-5ab8-4954-be61-ca31baf4eab3|f82e0980-5998-4303-a208-8b242f11e0b7",
-          "Unavoidable due to pad spacing. Pad not in use anyway"
+          "clearance|155062500|88975000|1bb833f3-c284-4390-b402-a63e8df31120|7f4a86fc-0f42-411d-a878-ff8733ce8cf9",
+          ""
         ],
         [
-          "clearance|155262500|88837500|1bb833f3-c284-4390-b402-a63e8df31120|9d4fd45e-3314-46da-9cdc-cfcbdcc1df88",
-          "Unavoidable due to pad spacing"
-        ],
-        [
-          "clearance|155262500|88837500|1bb833f3-c284-4390-b402-a63e8df31120|b99da4a6-c6e3-4cf4-95b9-146fcf0868d6",
-          "Unavoidable due to pad spacing"
-        ],
-        [
-          "clearance|155262500|89637500|66986d14-56f4-467e-b482-b53dbf864832|9d4fd45e-3314-46da-9cdc-cfcbdcc1df88",
-          "Unavoidable due to pad spacing"
+          "clearance|155062500|91375000|ad79dbcc-e47e-47a8-8da6-bcc649dc3abb|f5a1799b-fb7e-4a1d-9b81-172bbc1acb4c",
+          ""
         ],
         [
           "clearance|155631250|90531250|44249726-050d-4358-b6b6-0b783ced999b|ad79dbcc-e47e-47a8-8da6-bcc649dc3abb",
@@ -289,19 +293,7 @@
         ],
         [
           "clearance|155725000|91100000|ad79dbcc-e47e-47a8-8da6-bcc649dc3abb|cfbb6927-7d45-4ab7-84d4-cb04c89ee56e",
-          "Expected, hard to avoid due to pad spacing"
-        ],
-        [
-          "clearance|156100000|86750000|50534a2c-565f-4398-94ad-1ba1bdf31ef1|786e9814-25d1-420e-8cf1-56321779a2ae",
-          "Intentional, GND Via to couple to."
-        ],
-        [
-          "clearance|156100000|87200000|746ebab1-5202-405a-b384-4b6ae0770717|786e9814-25d1-420e-8cf1-56321779a2ae",
-          "Intentional, GND Via to couple to."
-        ],
-        [
-          "clearance|156100000|87200000|786e9814-25d1-420e-8cf1-56321779a2ae|b44485a6-19a9-4f96-995d-74aba0ce75af",
-          "Intentional, GND Via to couple to"
+          ""
         ]
       ],
       "meta": {
@@ -435,6 +427,7 @@
         0.0,
         0.2,
         0.25,
+        0.3,
         0.4,
         0.5,
         0.6,
