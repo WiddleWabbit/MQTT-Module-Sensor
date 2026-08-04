@@ -1,5 +1,7 @@
 # MQTT Module - Current Sensors
 
+*Currently In Testing - Not Yet Tested*
+
 This module is a plug-in board for the [MQTT Modular Controller Board](https://github.com/WiddleWabbit/MQTT-ModularControllerBoard). It powers and reads up to three 4-20mA current sensors with high-side sensing at approximately 25V, providing 15-bit resolution measurements.
 
 ## Features
