@@ -1,4 +1,4 @@
-26580129733810206
+26583853532306557
 3PEAK OpAmps
 S5TSOT23-5-A_TPK
 
@@ -67871,6 +67871,13 @@ RESC3225X70N
 0
 2
 2
+KOHERELEC Inductors
+SMD57x52mm
+XAL40XX
+Inductor
+0
+2
+2
 LED_SMD
 LED-APA102-2020
 http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf
@@ -69135,6 +69142,13 @@ LED_THT
 LED_VCCLite_5381H7_6.35x6.35mm
 Yellow 5381 Series LED VCCLite https://vcclite.com/wp-content/uploads/wpallimport/files/files/5381Series.pdf http://static.vcclite.com/pdf/Mounting%20Hole%20Pattern%202.pdf
 Yellow 5381 Series LED
+0
+2
+2
+LITTELFUSE Diodes
+DO-214AA_Bidirectional
+Diode SMB (DO-214AA)
+Diode SMB (DO-214AA)
 0
 2
 2
@@ -98645,7 +98659,7 @@ Integrated Circuit
 10
 TEXAS INSTRUMENTS ICs
 SOT95P280X110-6N
-TPS563200
+TPS563200, TPS54308DDCR
 Integrated Circuit
 0
 6

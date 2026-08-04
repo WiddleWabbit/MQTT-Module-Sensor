@@ -187,9 +187,9 @@
 	(net 43 "Net-(U503--)")
 	(net 44 "Net-(U503-+)")
 	(net 45 "Net-(D301-A)")
-	(net 46 "Net-(D501-A1)")
-	(net 47 "Net-(D504-A1)")
-	(net 48 "Net-(D507-A1)")
+	(net 46 "Net-(D401-A1)")
+	(net 47 "Net-(D404-A1)")
+	(net 48 "Net-(D407-A1)")
 	(net 49 "/SensorRecievers/Sensor1")
 	(net 50 "/SensorRecievers/Sensor2")
 	(net 51 "/SensorRecievers/Sensor3")
@@ -499,26 +499,26 @@
 	)
 	(footprint "LITTELFUSE Diodes:SODFL3619X98N"
 		(layer "F.Cu")
-		(uuid "0e704d51-395c-4f5d-bf80-d23e47a0d899")
-		(at 136.1732 117.47 180)
+		(uuid "035c68f2-3863-4405-a6d0-faa8213d9967")
+		(at 123.0375 120.3 180)
 		(descr "SOD−123FL_2.7")
 		(tags "TVS Diode (Uni-directional)")
-		(property "Reference" "D504"
-			(at -0.1268 -3.33 90)
+		(property "Reference" "D401"
+			(at -0.8 -2.1 0)
 			(layer "F.SilkS")
-			(uuid "ba5f3a6c-5246-4cc6-8f94-9694dca35975")
+			(uuid "05da23e2-ea07-4fd1-afd2-3ea1e12f27d6")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.6)
+					(size 1.27 1.27)
+					(thickness 0.254)
 				)
 			)
 		)
-		(property "Value" "13.3V 0.1uA Leak"
+		(property "Value" "28V 1uA Leak"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
-			(uuid "c4251b6a-1204-43e2-ac97-fcc8053e16e5")
+			(uuid "f0738b79-e90c-47c1-9024-e699b3fae5c4")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -530,7 +530,7 @@
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "fad148e3-740a-4ce1-aca1-46f3703655b5")
+			(uuid "d57c6f65-8217-4888-a60f-393346ce2d3e")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -538,11 +538,11 @@
 				)
 			)
 		)
-		(property "Description" "TVS Diode, Low leakage, Uni-directional, 400W"
+		(property "Description" "TVS Diode, Uni-directional, 200W"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "b3e0cb6f-de4f-498e-861f-20feec29fcea")
+			(uuid "5291ebd9-1ce2-408f-9f32-8d2f672bbb24")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -555,7 +555,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "9e119824-e55d-4afb-8bfa-917c6e719b1c")
+			(uuid "951d4941-8761-4ba4-9ddc-8b6d5b3ab260")
 			(effects
 				(font
 					(size 1 1)
@@ -563,12 +563,12 @@
 				)
 			)
 		)
-		(property "Mouser Part Number" "576-SMF4L13AT1G"
+		(property "Manufacturer" "Littelfuse"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "9d00f0bd-127b-4193-adb5-ad83617736e1")
+			(uuid "dd39386a-233c-4b3a-b928-c9a89ba8268d")
 			(effects
 				(font
 					(size 1 1)
@@ -576,12 +576,12 @@
 				)
 			)
 		)
-		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Littelfuse/SMF4L13AT1G?qs=OcgtsXO%252B3gst%2FkI5Xf9O6g%3D%3D"
+		(property "Manufacturer Part No" "SMF28A"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "3735a6e5-971b-4ab0-8e9e-483e7b5dc8d7")
+			(uuid "f4f09c8b-1695-4065-b50b-d0fe0351c1e6")
 			(effects
 				(font
 					(size 1 1)
@@ -589,38 +589,12 @@
 				)
 			)
 		)
-		(property "Manufacturer" "LITTELFUSE"
+		(property "JLCPCB Part #" "C720061"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "f5e6fa56-d5a2-4382-94f6-4e0ff46d6fb6")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part No" "SMF4L13AT1G"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "189ab73b-5446-4200-929c-7a3929f66508")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "JLCPCB Part #" "C27031045"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "5a203f8f-fccf-4abe-a37f-1c64923657ce")
+			(uuid "d3a86744-43e4-4467-b38a-2bf92d3228e1")
 			(effects
 				(font
 					(size 1 1)
@@ -633,7 +607,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "56c07848-292d-4fc3-86d6-aae2aa1a9234")
+			(uuid "77876f17-9a61-496d-bf85-14964118083a")
 			(effects
 				(font
 					(size 1 1)
@@ -641,7 +615,20 @@
 				)
 			)
 		)
-		(path "/04cb4c22-9f48-453c-9321-ed5f92a048ae/74baa2e7-b13a-49c6-b9fa-e6760bc05d63")
+		(property "Package" "SOD-123FL"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "450f834a-b269-4c8b-b5a3-c1415a0d9630")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(path "/04cb4c22-9f48-453c-9321-ed5f92a048ae/ed9bbd37-23a8-4c63-924b-fcd291a04846")
 		(sheetname "/SensorRecievers/")
 		(sheetfile "sensorrecievers.kicad_sch")
 		(attr smd)
@@ -653,7 +640,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "570ede05-d802-433d-87f4-4e99459e123b")
+			(uuid "c2be0544-b026-4ad1-9a12-8fcc5a8c2149")
 		)
 		(fp_line
 			(start -2.11 -0.95)
@@ -663,27 +650,38 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "b60792e2-fac2-424d-b46a-bf1b14df7ede")
+			(uuid "cc4083a4-666c-4c9d-a11e-b80ac9a1918b")
+		)
+		(fp_circle
+			(center -2.6 0)
+			(end -2.6 0.1)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(fill yes)
+			(layer "F.SilkS")
+			(uuid "9b46e1a0-7791-428b-a5aa-bfef9c5ca643")
 		)
 		(fp_line
-			(start 2.4 0.775)
-			(end 2.4 -0.8)
+			(start 2.4 1)
+			(end 2.4 -1)
 			(stroke
 				(width 0.05)
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "93efc5a4-c4f9-460a-badc-ce20227af0cc")
+			(uuid "9a626867-3ada-4312-9e33-e67a3c127037")
 		)
 		(fp_line
-			(start 2.4 -0.8)
-			(end 1.7 -0.8)
+			(start 2.4 -1)
+			(end 1.7 -1)
 			(stroke
 				(width 0.05)
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "b1240646-35a0-4af5-9a84-f516dc65e98e")
+			(uuid "7d69202c-3121-4f3b-aa3e-bd229e179924")
 		)
 		(fp_line
 			(start 1.7 1.3)
@@ -693,57 +691,57 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "86186015-5695-4fc7-8ce3-d6534e2b07a6")
+			(uuid "f124d2c9-77ac-4292-98cc-e36542dad6ec")
 		)
 		(fp_line
-			(start 1.7 0.775)
-			(end 2.4 0.775)
+			(start 1.7 1)
+			(end 2.4 1)
 			(stroke
 				(width 0.05)
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "4004f315-14be-4d57-b6e9-a1525de6d9a2")
+			(uuid "5d0b4a73-a130-4508-8fa6-c222690c845f")
 		)
 		(fp_line
-			(start 1.7 0.775)
+			(start 1.7 1)
 			(end 1.7 1.3)
 			(stroke
 				(width 0.05)
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "e3d91e83-aa91-4857-be83-8da04ee57127")
+			(uuid "9457623f-5180-4b05-b903-f2bcfd736351")
 		)
 		(fp_line
-			(start 1.7 -0.8)
+			(start 1.7 -1)
 			(end 1.7 -1.3)
 			(stroke
 				(width 0.05)
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "4972379b-4ec2-43cd-84a7-f75ba7917154")
+			(uuid "dd55df6f-c7b0-40ee-965a-de7e75d6d03a")
 		)
 		(fp_line
 			(start -1.7 1.3)
-			(end -1.7 0.8)
+			(end -1.7 1)
 			(stroke
 				(width 0.05)
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "23368836-006d-4537-86b7-565e97dc5aa5")
+			(uuid "273e730e-5368-41d0-a50b-09c2702e264c")
 		)
 		(fp_line
-			(start -1.7 0.8)
-			(end -2.4 0.8)
+			(start -1.7 1)
+			(end -2.4 1)
 			(stroke
 				(width 0.05)
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "c7497297-49e2-47c6-ab6f-136ea2f2d4a7")
+			(uuid "fe24762a-430e-4f6c-9cdf-93ea2efbc886")
 		)
 		(fp_line
 			(start -2.26 -1.3)
@@ -753,17 +751,17 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "53790348-6d4d-4833-bb73-a78b81325df2")
+			(uuid "889f8f15-9efe-4dc7-a42a-d4bec5569924")
 		)
 		(fp_line
-			(start -2.4 0.8)
+			(start -2.4 1)
 			(end -2.4 -1.3)
 			(stroke
 				(width 0.05)
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "6e65b116-0588-448d-b4bb-0674446ae072")
+			(uuid "70ef7488-b5d6-42d7-8494-3f6464adda85")
 		)
 		(fp_line
 			(start -2.4 -1.3)
@@ -773,7 +771,7 @@
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "1451ba6f-62dd-4e87-8be9-9c572c96f872")
+			(uuid "5b8a0338-8897-4a00-ac7f-78e2f65f7b1a")
 		)
 		(fp_line
 			(start 1.35 0.95)
@@ -783,7 +781,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "3b48a747-9de0-44b9-a633-b0b3ff03f114")
+			(uuid "86ee4f5c-aba1-4b02-b606-25070c8c432d")
 		)
 		(fp_line
 			(start 1.35 -0.95)
@@ -793,7 +791,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "7d8d9e1a-a289-405d-b00e-e51400e510cb")
+			(uuid "329cf0de-4694-492c-b8e5-93e640d74688")
 		)
 		(fp_line
 			(start -1.35 0.95)
@@ -803,7 +801,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "a6cbbf41-4ced-478d-aaf1-d8787fa3d63b")
+			(uuid "7827fdd1-d771-4044-8bfd-811854b0a50d")
 		)
 		(fp_line
 			(start -1.35 -0.34)
@@ -813,7 +811,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "c73c2cf9-d62f-4f3d-b072-48bf6dfda61f")
+			(uuid "e86879f9-66fc-41ce-8755-972b6eef0df8")
 		)
 		(fp_line
 			(start -1.35 -0.95)
@@ -823,36 +821,36 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "bf935af2-4d67-4b6c-99cd-7768943e2dcc")
+			(uuid "79fa3ebd-5b57-4a31-abe8-94bfb7e7da8e")
 		)
 		(fp_text user "${REFERENCE}"
 			(at -0.1 2.5 0)
 			(layer "F.Fab")
-			(uuid "a1f9e56e-569b-47e7-b7b5-261db8cfd148")
+			(uuid "3c6357e0-41b7-4fa6-aacc-54e13c0fff36")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.6)
+					(size 1.27 1.27)
+					(thickness 0.254)
 				)
 			)
 		)
 		(pad "1" smd rect
-			(at -1.5 0 270)
-			(size 1.12 1.22)
+			(at -1.455 0 270)
+			(size 1.4 1.31)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 47 "Net-(D504-A1)")
+			(net 46 "Net-(D401-A1)")
 			(pinfunction "A1")
 			(pintype "passive")
-			(uuid "60ddc1cb-69be-4493-9228-a77d29b70b15")
+			(uuid "c4ee3d9b-2b4d-4967-a6e9-1c2b0f817a2b")
 		)
 		(pad "2" smd rect
-			(at 1.5 0 270)
-			(size 1.12 1.22)
+			(at 1.455 0 270)
+			(size 1.4 1.31)
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net 1 "GND")
 			(pinfunction "A2")
 			(pintype "passive")
-			(uuid "294f7ecf-60c4-4ca7-baa4-6d5819b866de")
+			(uuid "be684d48-0be5-4b30-8ea5-9e4037a6b023")
 		)
 		(embedded_fonts no)
 		(model "C:/Users/Nathan/OneDrive/Documents/Family/001 - House/015 - Water Tanks/002 - Circuitry Components/001 - Footprints/LIB_SMF4L13AT1G/SMF4L13AT1G/3D/SMF4L13AT1G.stp"
@@ -1435,7 +1433,7 @@
 			(at 1.635 0 90)
 			(size 0.88 2.81)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 48 "Net-(D507-A1)")
+			(net 48 "Net-(D407-A1)")
 			(pinfunction "2")
 			(pintype "passive")
 			(uuid "3385661c-7519-4535-bfcf-21e1a7e20bc6")
@@ -2469,376 +2467,6 @@
 			)
 		)
 	)
-	(footprint "LITTELFUSE Diodes:SODFL3619X98N"
-		(layer "F.Cu")
-		(uuid "26b780b9-e954-4c13-98f4-90211dc96f8e")
-		(at 146.1732 117.47)
-		(descr "SOD−123FL_2.7")
-		(tags "TVS Diode (Uni-directional)")
-		(property "Reference" "D506"
-			(at -1.4732 2.13 180)
-			(layer "F.SilkS")
-			(uuid "6a468379-c23d-466d-9faf-d71c0c0266bc")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.6)
-				)
-			)
-		)
-		(property "Value" "13.3V 0.1uA Leak"
-			(at 0 0 0)
-			(layer "F.SilkS")
-			(hide yes)
-			(uuid "49a03c14-5b50-4073-a1aa-0b330058b0d9")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.254)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.littelfuse.com/media?resourcetype=datasheets&itemid=f093622a-2591-4e70-85e6-32321d2f8c5a&filename=tvs-diode-smf4l-t1g-datasheet"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "2e13e70f-4639-44a9-a4b4-12d12ba9ae64")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Description" "TVS Diode, Low leakage, Uni-directional, 400W"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "6818ad4e-510d-48bc-8d06-38d507927e52")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Height" "0.98"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "8e5548eb-0bee-4b62-a59f-ceb8859db362")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Mouser Part Number" "576-SMF4L13AT1G"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e7744723-44fa-4947-8106-76115ebeb381")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Littelfuse/SMF4L13AT1G?qs=OcgtsXO%252B3gst%2FkI5Xf9O6g%3D%3D"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "cf55a6ea-a0ab-4038-a7c7-205d3a74aa48")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "LITTELFUSE"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "c856f454-06cf-4509-8a49-036ddc434acf")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part No" "SMF4L13AT1G"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "b9eb5f16-aa9f-481a-a305-f47c5cdca6ba")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "JLCPCB Part #" "C27031045"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "c72d20e2-6ab5-4189-884e-3b4587f9d7e0")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Part Type" "Extended"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "b8a9d96e-e523-450c-b29a-093a3cc01d7f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(path "/04cb4c22-9f48-453c-9321-ed5f92a048ae/a7c68045-3b83-456e-8502-95afe545c8cb")
-		(sheetname "/SensorRecievers/")
-		(sheetfile "sensorrecievers.kicad_sch")
-		(attr smd)
-		(fp_line
-			(start -2.11 -0.95)
-			(end 1.35 -0.95)
-			(stroke
-				(width 0.2)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "dd0b9185-fe42-474e-9abc-f95c97040e3e")
-		)
-		(fp_line
-			(start -1.35 0.95)
-			(end 1.35 0.95)
-			(stroke
-				(width 0.2)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "d9f998d0-281d-4030-9ece-2161a0dd3b15")
-		)
-		(fp_line
-			(start -2.4 -1.3)
-			(end -2.26 -1.3)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "6813dd46-a393-4798-a9a0-d46cae8e4198")
-		)
-		(fp_line
-			(start -2.4 0.8)
-			(end -2.4 -1.3)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "fa5c564c-049a-44f1-978b-4adfbed56bd6")
-		)
-		(fp_line
-			(start -2.26 -1.3)
-			(end 1.7 -1.3)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "675c2597-833d-491f-aa81-1fddaca735a1")
-		)
-		(fp_line
-			(start -1.7 0.8)
-			(end -2.4 0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "8ac9a640-a006-4145-809f-47ed8551d24a")
-		)
-		(fp_line
-			(start -1.7 1.3)
-			(end -1.7 0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "f90385ea-632a-47c9-9d40-0915d59d42cf")
-		)
-		(fp_line
-			(start 1.7 -0.8)
-			(end 1.7 -1.3)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "fc5ae36c-1fa8-4eda-bc0b-9da73e50a296")
-		)
-		(fp_line
-			(start 1.7 0.775)
-			(end 1.7 1.3)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "a80b24a6-f45e-4cb5-850b-5b5be73ad581")
-		)
-		(fp_line
-			(start 1.7 0.775)
-			(end 2.4 0.775)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "e3bad656-6eef-40a6-82b5-4933f867ddde")
-		)
-		(fp_line
-			(start 1.7 1.3)
-			(end -1.7 1.3)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "ffbe63ea-c202-41d5-847c-a5651b94a29e")
-		)
-		(fp_line
-			(start 2.4 -0.8)
-			(end 1.7 -0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "456cbc56-1e60-4635-b0ed-71afaad4e72e")
-		)
-		(fp_line
-			(start 2.4 0.775)
-			(end 2.4 -0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "a1b3f245-7515-46a3-b196-dd8873c2c8d2")
-		)
-		(fp_line
-			(start -1.35 -0.95)
-			(end 1.35 -0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "da24572c-3866-4025-9b25-77d9f3eefea6")
-		)
-		(fp_line
-			(start -1.35 -0.34)
-			(end -0.74 -0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "a407741a-70f8-42b5-8a24-89a7c63a16ce")
-		)
-		(fp_line
-			(start -1.35 0.95)
-			(end -1.35 -0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "94d17b53-fd38-41cb-ae6c-3fbb580dab4b")
-		)
-		(fp_line
-			(start 1.35 -0.95)
-			(end 1.35 0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "163f9f89-901e-46b9-83da-54c09847b841")
-		)
-		(fp_line
-			(start 1.35 0.95)
-			(end -1.35 0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "ed5a33a6-0b50-4767-96f9-b26409053317")
-		)
-		(fp_text user "${REFERENCE}"
-			(at -0.1 2.5 0)
-			(layer "F.Fab")
-			(uuid "e36a3ea1-d1e1-4a4a-8930-3ed10c0f05ac")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.6)
-				)
-			)
-		)
-		(pad "1" smd rect
-			(at -1.5 0 90)
-			(size 1.12 1.22)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 50 "/SensorRecievers/Sensor2")
-			(pinfunction "A1")
-			(pintype "passive")
-			(uuid "316c14d8-adc9-4a63-bcc8-dc312b0a2eda")
-		)
-		(pad "2" smd rect
-			(at 1.5 0 90)
-			(size 1.12 1.22)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 1 "GND")
-			(pinfunction "A2")
-			(pintype "passive")
-			(uuid "b1a84376-32ca-4e1e-8501-322f1200e20f")
-		)
-		(embedded_fonts no)
-		(model "C:/Users/Nathan/OneDrive/Documents/Family/001 - House/015 - Water Tanks/002 - Circuitry Components/001 - Footprints/LIB_SMF4L13AT1G/SMF4L13AT1G/3D/SMF4L13AT1G.stp"
-			(offset
-				(xyz 0 0 0)
-			)
-			(scale
-				(xyz 1 1 1)
-			)
-			(rotate
-				(xyz 0 0 0)
-			)
-		)
-	)
 	(footprint "3PEAK OpAmps:S5TSOT23-5-A_TPK"
 		(layer "F.Cu")
 		(uuid "28e52832-94f2-43a7-89fe-0a42788dceb1")
@@ -3478,376 +3106,6 @@
 			)
 		)
 	)
-	(footprint "LITTELFUSE Diodes:SODFL3619X98N"
-		(layer "F.Cu")
-		(uuid "29fb6256-3582-46c6-adbb-f6f0b42f1792")
-		(at 149.1732 120.37 180)
-		(descr "SOD−123FL_2.7")
-		(tags "TVS Diode (Uni-directional)")
-		(property "Reference" "D507"
-			(at 1.2732 -2.23 180)
-			(layer "F.SilkS")
-			(uuid "9244d303-534c-467a-b5cb-19159ab7118a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.6)
-				)
-			)
-		)
-		(property "Value" "13.3V 0.1uA Leak"
-			(at 0 0 0)
-			(layer "F.SilkS")
-			(hide yes)
-			(uuid "a5a56c5e-13e0-483e-bf63-6d94f37bbe66")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.254)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.littelfuse.com/media?resourcetype=datasheets&itemid=f093622a-2591-4e70-85e6-32321d2f8c5a&filename=tvs-diode-smf4l-t1g-datasheet"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "35366282-1e81-4a6c-a7c3-02e796f26198")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Description" "TVS Diode, Low leakage, Uni-directional, 400W"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "0b73588b-d7d4-4c1a-8ffd-abed07a41b91")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Height" "0.98"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "87b674bb-ebca-415d-b052-1072640e1a8f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Mouser Part Number" "576-SMF4L13AT1G"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "78f907fe-88db-4b9f-a0ee-e6ff70a06c59")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Littelfuse/SMF4L13AT1G?qs=OcgtsXO%252B3gst%2FkI5Xf9O6g%3D%3D"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "5e8c0424-72ee-4e85-90ab-8a5d3a2ce371")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "LITTELFUSE"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "2ab5f1a3-1f80-47a0-843a-d69ac5865239")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part No" "SMF4L13AT1G"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "c44b40bc-dd01-41c7-8a75-d030e3af44f9")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "JLCPCB Part #" "C27031045"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "9de6c7ce-f0cb-4b6b-a925-358a5d72506a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Part Type" "Extended"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "8a33f9ec-978c-4513-a741-64a5d2c99450")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(path "/04cb4c22-9f48-453c-9321-ed5f92a048ae/b2e9c440-05b8-4c11-9af8-4f937c96777e")
-		(sheetname "/SensorRecievers/")
-		(sheetfile "sensorrecievers.kicad_sch")
-		(attr smd)
-		(fp_line
-			(start -1.35 0.95)
-			(end 1.35 0.95)
-			(stroke
-				(width 0.2)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "05323dd1-75fb-457e-8bcc-85f271afe196")
-		)
-		(fp_line
-			(start -2.11 -0.95)
-			(end 1.35 -0.95)
-			(stroke
-				(width 0.2)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "8c74b4f6-24eb-4253-b3ea-bf9e5cf83b0e")
-		)
-		(fp_line
-			(start 2.4 0.775)
-			(end 2.4 -0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "90577c1f-c56e-4f00-845f-7ab6d51d3d4b")
-		)
-		(fp_line
-			(start 2.4 -0.8)
-			(end 1.7 -0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "e05fe20a-3874-4c43-a84d-e0f72dc49b51")
-		)
-		(fp_line
-			(start 1.7 1.3)
-			(end -1.7 1.3)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "e7af85ab-d8e4-4746-98c6-bd660f03cb8e")
-		)
-		(fp_line
-			(start 1.7 0.775)
-			(end 2.4 0.775)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "51b30bbf-4f61-4d64-bd78-9b8ac2fec1ed")
-		)
-		(fp_line
-			(start 1.7 0.775)
-			(end 1.7 1.3)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "4f36f965-1802-4505-8fca-4100cf61780f")
-		)
-		(fp_line
-			(start 1.7 -0.8)
-			(end 1.7 -1.3)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "20c69432-5bcc-4df1-bc2f-d5f88faf5cc6")
-		)
-		(fp_line
-			(start -1.7 1.3)
-			(end -1.7 0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "0525bde9-20da-4137-8c77-1da64d2013cd")
-		)
-		(fp_line
-			(start -1.7 0.8)
-			(end -2.4 0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "46da7201-8cd7-4a95-956e-b70e59d1a033")
-		)
-		(fp_line
-			(start -2.26 -1.3)
-			(end 1.7 -1.3)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "05f3c42b-fce5-47e6-a2be-9acbf5360a82")
-		)
-		(fp_line
-			(start -2.4 0.8)
-			(end -2.4 -1.3)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "9a3bbea8-8137-4c3b-82c2-780c40681d36")
-		)
-		(fp_line
-			(start -2.4 -1.3)
-			(end -2.26 -1.3)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "ed7f63f0-fbd6-463e-ba8d-dcfe08651b91")
-		)
-		(fp_line
-			(start 1.35 0.95)
-			(end -1.35 0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "b4686a73-e141-4c4e-8c00-f9d6f8a425cd")
-		)
-		(fp_line
-			(start 1.35 -0.95)
-			(end 1.35 0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "654d4b6c-bfcd-4efc-a323-b68cc522d54b")
-		)
-		(fp_line
-			(start -1.35 0.95)
-			(end -1.35 -0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "cec7fa68-56a5-4595-80bd-ba7d97de9fc4")
-		)
-		(fp_line
-			(start -1.35 -0.34)
-			(end -0.74 -0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "ac53b6d5-83a4-4853-bde3-cdeee45e51d1")
-		)
-		(fp_line
-			(start -1.35 -0.95)
-			(end 1.35 -0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "a5a17c4e-bd83-43c5-9e5f-234d59cabac5")
-		)
-		(fp_text user "${REFERENCE}"
-			(at -0.1 2.5 0)
-			(layer "F.Fab")
-			(uuid "1d9dd1f0-e124-49e9-98f4-5d13ecd57276")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.6)
-				)
-			)
-		)
-		(pad "1" smd rect
-			(at -1.5 0 270)
-			(size 1.12 1.22)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 48 "Net-(D507-A1)")
-			(pinfunction "A1")
-			(pintype "passive")
-			(uuid "afeb61dd-ebc7-4187-8a00-65d9c26aa974")
-		)
-		(pad "2" smd rect
-			(at 1.5 0 270)
-			(size 1.12 1.22)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 1 "GND")
-			(pinfunction "A2")
-			(pintype "passive")
-			(uuid "defd0d55-e426-4877-82de-11fe738c33c0")
-		)
-		(embedded_fonts no)
-		(model "C:/Users/Nathan/OneDrive/Documents/Family/001 - House/015 - Water Tanks/002 - Circuitry Components/001 - Footprints/LIB_SMF4L13AT1G/SMF4L13AT1G/3D/SMF4L13AT1G.stp"
-			(offset
-				(xyz 0 0 0)
-			)
-			(scale
-				(xyz 1 1 1)
-			)
-			(rotate
-				(xyz 0 0 0)
-			)
-		)
-	)
 	(footprint "JLCPCB Basic:RESC2013X65N"
 		(layer "F.Cu")
 		(uuid "39930446-ab2a-427c-a7ae-6a9f46dd378e")
@@ -4141,376 +3399,6 @@
 			)
 		)
 	)
-	(footprint "LITTELFUSE Diodes:SODFL3619X98N"
-		(layer "F.Cu")
-		(uuid "3abbee67-7ae6-4c12-be0a-1d7b20547700")
-		(at 159.0732 120.320001)
-		(descr "SOD−123FL_2.7")
-		(tags "TVS Diode (Uni-directional)")
-		(property "Reference" "D509"
-			(at 0.0268 3.379999 90)
-			(layer "F.SilkS")
-			(uuid "46e3b41a-171b-4e91-8f5b-6e67d24ca931")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.6)
-				)
-			)
-		)
-		(property "Value" "13.3V 0.1uA Leak"
-			(at 0 0 0)
-			(layer "F.SilkS")
-			(hide yes)
-			(uuid "3815181f-2ecb-40b7-a49d-cf5ccd748fa7")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.254)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.littelfuse.com/media?resourcetype=datasheets&itemid=f093622a-2591-4e70-85e6-32321d2f8c5a&filename=tvs-diode-smf4l-t1g-datasheet"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "677e1c7c-3de4-4df0-8fd5-666c7d644319")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Description" "TVS Diode, Low leakage, Uni-directional, 400W"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "aa3b53e6-a5ec-4473-9e3d-2d9a206060b6")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Height" "0.98"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "3de37a11-c167-41dc-8812-3d29bea96ae6")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Mouser Part Number" "576-SMF4L13AT1G"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "691c87f3-56c2-4461-88b3-38997a14f65f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Littelfuse/SMF4L13AT1G?qs=OcgtsXO%252B3gst%2FkI5Xf9O6g%3D%3D"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "7f4dd9fb-4f9c-4e92-b18f-480036ca0ca4")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "LITTELFUSE"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "8a6d252e-125c-41d5-bbf7-ffb91be26184")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part No" "SMF4L13AT1G"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "65454645-2dd9-45d7-a31f-3892b69d53d2")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "JLCPCB Part #" "C27031045"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e23d539f-c59c-4998-9d1d-5200c7ca15a1")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Part Type" "Extended"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "591be3e2-a341-4456-90fc-d9b56ce94e8d")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(path "/04cb4c22-9f48-453c-9321-ed5f92a048ae/136789d5-4208-4216-a891-ec1aef519e80")
-		(sheetname "/SensorRecievers/")
-		(sheetfile "sensorrecievers.kicad_sch")
-		(attr smd)
-		(fp_line
-			(start -2.11 -0.95)
-			(end 1.35 -0.95)
-			(stroke
-				(width 0.2)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "da05e53f-da93-4eb3-be3e-229909309512")
-		)
-		(fp_line
-			(start -1.35 0.95)
-			(end 1.35 0.95)
-			(stroke
-				(width 0.2)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "3c2add1b-981b-41b7-9c22-63eaacb41d1f")
-		)
-		(fp_line
-			(start -2.4 -1.3)
-			(end -2.26 -1.3)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "a498d6a7-bb96-4b19-a84e-aed95e7f0226")
-		)
-		(fp_line
-			(start -2.4 0.8)
-			(end -2.4 -1.3)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "b4da1059-4715-4182-b802-ce086a745f9d")
-		)
-		(fp_line
-			(start -2.26 -1.3)
-			(end 1.7 -1.3)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "7f0e91db-be82-4b64-b416-1799975337b5")
-		)
-		(fp_line
-			(start -1.7 0.8)
-			(end -2.4 0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "c115dd40-9375-418c-93ff-5566266f9b8e")
-		)
-		(fp_line
-			(start -1.7 1.3)
-			(end -1.7 0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "fd517f34-b87b-4014-ac22-66658c399734")
-		)
-		(fp_line
-			(start 1.7 -0.8)
-			(end 1.7 -1.3)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "57c88ab2-9518-49fc-8a38-3ebaa131cf91")
-		)
-		(fp_line
-			(start 1.7 0.775)
-			(end 1.7 1.3)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "5cc34d4e-f221-4ce3-a0a7-934b69df4278")
-		)
-		(fp_line
-			(start 1.7 0.775)
-			(end 2.4 0.775)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "bcb4c0a6-7730-4664-b85a-28100aea71b1")
-		)
-		(fp_line
-			(start 1.7 1.3)
-			(end -1.7 1.3)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "fb44cfda-7247-4fba-83bf-89c08743fcb7")
-		)
-		(fp_line
-			(start 2.4 -0.8)
-			(end 1.7 -0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "103e8ceb-1678-4255-82da-85fb5bf76da6")
-		)
-		(fp_line
-			(start 2.4 0.775)
-			(end 2.4 -0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "dfd08a6f-d088-4897-994d-bb00ba039b97")
-		)
-		(fp_line
-			(start -1.35 -0.95)
-			(end 1.35 -0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "53fbac88-6d06-4d1b-8d29-1f00e13df5c8")
-		)
-		(fp_line
-			(start -1.35 -0.34)
-			(end -0.74 -0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "3db8bcbc-4bb4-43f5-825c-fce8d6ed9a08")
-		)
-		(fp_line
-			(start -1.35 0.95)
-			(end -1.35 -0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "63eeee94-029a-4938-8ac7-eb397651741e")
-		)
-		(fp_line
-			(start 1.35 -0.95)
-			(end 1.35 0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "9f4efe62-0f4b-4242-8a1f-eff6bd93b732")
-		)
-		(fp_line
-			(start 1.35 0.95)
-			(end -1.35 0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "9610f39b-2910-429e-9df9-ea3f67d128ea")
-		)
-		(fp_text user "${REFERENCE}"
-			(at -0.1 2.5 0)
-			(layer "F.Fab")
-			(uuid "048ab585-d476-49cd-9d8c-0027cbb37a01")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.6)
-				)
-			)
-		)
-		(pad "1" smd rect
-			(at -1.5 0 90)
-			(size 1.12 1.22)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 51 "/SensorRecievers/Sensor3")
-			(pinfunction "A1")
-			(pintype "passive")
-			(uuid "8d435a70-71cd-4728-863e-2207563f07d1")
-		)
-		(pad "2" smd rect
-			(at 1.5 0 90)
-			(size 1.12 1.22)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 1 "GND")
-			(pinfunction "A2")
-			(pintype "passive")
-			(uuid "3228f52b-dc03-4fb5-b97f-6aaf9972f4d4")
-		)
-		(embedded_fonts no)
-		(model "C:/Users/Nathan/OneDrive/Documents/Family/001 - House/015 - Water Tanks/002 - Circuitry Components/001 - Footprints/LIB_SMF4L13AT1G/SMF4L13AT1G/3D/SMF4L13AT1G.stp"
-			(offset
-				(xyz 0 0 0)
-			)
-			(scale
-				(xyz 1 1 1)
-			)
-			(rotate
-				(xyz 0 0 0)
-			)
-		)
-	)
 	(footprint "BOURNS Fuses:FUSC3226X110N"
 		(layer "F.Cu")
 		(uuid "3c0680a5-a793-41c9-b64e-e28525578616")
@@ -4786,7 +3674,7 @@
 			(at 1.635 0 90)
 			(size 0.88 2.81)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 47 "Net-(D504-A1)")
+			(net 47 "Net-(D404-A1)")
 			(pinfunction "2")
 			(pintype "passive")
 			(uuid "45e3b832-9a81-4297-9c76-27d4ccbe1ffe")
@@ -6159,6 +5047,742 @@
 			)
 		)
 	)
+	(footprint "LITTELFUSE Diodes:SODFL3619X98N"
+		(layer "F.Cu")
+		(uuid "421f8e7f-2e04-44a2-9bad-a9cf41ff32ff")
+		(at 141.2625 117.5)
+		(descr "SOD−123FL_2.7")
+		(tags "TVS Diode (Uni-directional)")
+		(property "Reference" "D405"
+			(at -0.8 -2.1 0)
+			(layer "F.SilkS")
+			(uuid "c07eaba4-edbd-469c-8766-ffe3a3dc0c7e")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.254)
+				)
+			)
+		)
+		(property "Value" "28V 1uA Leak"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "b1191316-660a-4e8b-97d1-36d28c17b97a")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.254)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.littelfuse.com/media?resourcetype=datasheets&itemid=f093622a-2591-4e70-85e6-32321d2f8c5a&filename=tvs-diode-smf4l-t1g-datasheet"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "5faca8fd-be31-4d68-9e50-8f9fc549806e")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" "TVS Diode, Uni-directional, 200W"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "9128ea68-c6cc-4186-b1fe-4b0cb3e56381")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Height" "0.98"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "24353df4-9032-4e34-987a-574265de9105")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Littelfuse"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "3a0ee3bb-fe0a-480c-ba7c-a67fad9d21c8")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer Part No" "SMF28A"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "538ed09d-43a9-4912-9b56-c5521aa76e07")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "JLCPCB Part #" "C720061"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "93329bbb-da39-4d94-81c0-abf8455135b6")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Part Type" "Extended"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "16f82a9e-f6d0-48cc-b0f2-8c502c82ad79")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Package" "SOD-123FL"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a7ef50b8-aec1-43af-9bed-4a3df6ba47a1")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(path "/04cb4c22-9f48-453c-9321-ed5f92a048ae/0bc67131-633f-4d5d-925c-0df57782da48")
+		(sheetname "/SensorRecievers/")
+		(sheetfile "sensorrecievers.kicad_sch")
+		(attr smd)
+		(fp_line
+			(start -2.11 -0.95)
+			(end 1.35 -0.95)
+			(stroke
+				(width 0.2)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "64aff316-aa4b-4d7e-bd13-74742bdf4f2a")
+		)
+		(fp_line
+			(start -1.35 0.95)
+			(end 1.35 0.95)
+			(stroke
+				(width 0.2)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "433a6135-fb58-4efe-89a7-fa15641c12a3")
+		)
+		(fp_circle
+			(center -2.6 0)
+			(end -2.6 0.1)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(fill yes)
+			(layer "F.SilkS")
+			(uuid "8ad8ff09-f8fe-4afc-bcd9-690ecfcb5157")
+		)
+		(fp_line
+			(start -2.4 -1.3)
+			(end -2.26 -1.3)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "1f19f966-0ee7-4673-a0c9-639235cdf39c")
+		)
+		(fp_line
+			(start -2.4 1)
+			(end -2.4 -1.3)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "936f3292-ef3a-414f-b167-57176b7be52e")
+		)
+		(fp_line
+			(start -2.26 -1.3)
+			(end 1.7 -1.3)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "0058b000-b89a-456e-b5d7-9116d6aa793d")
+		)
+		(fp_line
+			(start -1.7 1)
+			(end -2.4 1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "d36d424b-7575-4202-832d-5b7d6c357824")
+		)
+		(fp_line
+			(start -1.7 1.3)
+			(end -1.7 1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "dfea0743-9105-46bb-b3ae-9144812e9f98")
+		)
+		(fp_line
+			(start 1.7 -1)
+			(end 1.7 -1.3)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "eee7d6e7-87f8-42a8-b916-b0755b90f25f")
+		)
+		(fp_line
+			(start 1.7 1)
+			(end 1.7 1.3)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "d6d0cc78-c228-473b-ada8-534073e4743d")
+		)
+		(fp_line
+			(start 1.7 1)
+			(end 2.4 1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "46e6a7d6-7175-4c1d-99ce-ccfcb2b129db")
+		)
+		(fp_line
+			(start 1.7 1.3)
+			(end -1.7 1.3)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "7577e65a-e02b-4f85-b394-8c65c5e85392")
+		)
+		(fp_line
+			(start 2.4 -1)
+			(end 1.7 -1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "0677a6b6-bee2-41f4-b1e0-1af87ea41a83")
+		)
+		(fp_line
+			(start 2.4 1)
+			(end 2.4 -1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "abde91bd-959c-49f2-815e-4ec3a18296a0")
+		)
+		(fp_line
+			(start -1.35 -0.95)
+			(end 1.35 -0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "55210b55-0c69-47b4-9be4-0ea713549532")
+		)
+		(fp_line
+			(start -1.35 -0.34)
+			(end -0.74 -0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "713f027e-52a6-4043-8c01-d02e769a6af8")
+		)
+		(fp_line
+			(start -1.35 0.95)
+			(end -1.35 -0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "62ddb22f-6dce-47b5-bff0-3adaf6a5a0c2")
+		)
+		(fp_line
+			(start 1.35 -0.95)
+			(end 1.35 0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "224152e1-af3a-4afc-8b26-98f57e089bf7")
+		)
+		(fp_line
+			(start 1.35 0.95)
+			(end -1.35 0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "dd5e9fa6-d0cc-495a-a66a-25c6e9c7a83c")
+		)
+		(fp_text user "${REFERENCE}"
+			(at -0.1 2.5 0)
+			(layer "F.Fab")
+			(uuid "dc09d0e9-45ed-46f7-a84e-507df0e84e19")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.254)
+				)
+			)
+		)
+		(pad "1" smd rect
+			(at -1.455 0 90)
+			(size 1.4 1.31)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net 47 "Net-(D404-A1)")
+			(pinfunction "A1")
+			(pintype "passive")
+			(uuid "8307e48a-fd63-449e-9a30-562d3cdf9075")
+		)
+		(pad "2" smd rect
+			(at 1.455 0 90)
+			(size 1.4 1.31)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net 50 "/SensorRecievers/Sensor2")
+			(pinfunction "A2")
+			(pintype "passive")
+			(uuid "46e20387-f6c1-4cd4-a398-c1278d95ecb4")
+		)
+		(embedded_fonts no)
+		(model "C:/Users/Nathan/OneDrive/Documents/Family/001 - House/015 - Water Tanks/002 - Circuitry Components/001 - Footprints/LIB_SMF4L13AT1G/SMF4L13AT1G/3D/SMF4L13AT1G.stp"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
+	)
+	(footprint "LITTELFUSE Diodes:SODFL3619X98N"
+		(layer "F.Cu")
+		(uuid "4a4aabad-cdf1-4726-8e4b-938a0fd1959b")
+		(at 148.9 120.3 180)
+		(descr "SOD−123FL_2.7")
+		(tags "TVS Diode (Uni-directional)")
+		(property "Reference" "D407"
+			(at -0.8 -2.1 0)
+			(layer "F.SilkS")
+			(uuid "8a6f0b84-83c6-463d-8e8e-699c0c10cda5")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.254)
+				)
+			)
+		)
+		(property "Value" "28V 1uA Leak"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "ed47f48d-ddb7-4596-a621-4eff0ae34c6b")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.254)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.littelfuse.com/media?resourcetype=datasheets&itemid=f093622a-2591-4e70-85e6-32321d2f8c5a&filename=tvs-diode-smf4l-t1g-datasheet"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "23584953-4e70-4855-9f1f-b347a96da117")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" "TVS Diode, Uni-directional, 200W"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "ff42544f-f011-4619-bea2-552451fedb37")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Height" "0.98"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "c55fdd37-a2e2-4668-a6d1-d354b6ad5db8")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Littelfuse"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "150344d6-c9ed-49b8-ad12-34344d99f216")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer Part No" "SMF28A"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "36ac3fe2-47c4-465e-9c9c-acc1d6edae06")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "JLCPCB Part #" "C720061"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "384f9c5d-3fc1-4e7e-99cf-8cbdfc71e671")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Part Type" "Extended"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "64333325-4cf9-436f-8f08-a0a2641394d0")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Package" "SOD-123FL"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "570def93-5d8f-45c7-92cc-9dcd40e8da28")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(path "/04cb4c22-9f48-453c-9321-ed5f92a048ae/97694a29-3f05-472f-b9b0-59975bb657dd")
+		(sheetname "/SensorRecievers/")
+		(sheetfile "sensorrecievers.kicad_sch")
+		(attr smd)
+		(fp_line
+			(start -1.35 0.95)
+			(end 1.35 0.95)
+			(stroke
+				(width 0.2)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "649bb653-7ece-444a-9ffd-53070eeeb14d")
+		)
+		(fp_line
+			(start -2.11 -0.95)
+			(end 1.35 -0.95)
+			(stroke
+				(width 0.2)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "9baa3306-0004-4310-a5ee-ca684f586865")
+		)
+		(fp_circle
+			(center -2.6 0)
+			(end -2.6 0.1)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(fill yes)
+			(layer "F.SilkS")
+			(uuid "5fca5a9c-4862-4a4e-be33-29f00debb690")
+		)
+		(fp_line
+			(start 2.4 1)
+			(end 2.4 -1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "6bd19bfc-2598-44e8-bbec-86b18bbf5a06")
+		)
+		(fp_line
+			(start 2.4 -1)
+			(end 1.7 -1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "e7dd00dd-905e-4285-9901-2e79af15b825")
+		)
+		(fp_line
+			(start 1.7 1.3)
+			(end -1.7 1.3)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "1044d7f9-93f8-46a7-b311-e9702d61dce1")
+		)
+		(fp_line
+			(start 1.7 1)
+			(end 2.4 1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "faca51ad-381e-4b4e-aa77-ed50300b8f9d")
+		)
+		(fp_line
+			(start 1.7 1)
+			(end 1.7 1.3)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "a93ac302-d047-4d12-880a-e4244e517a80")
+		)
+		(fp_line
+			(start 1.7 -1)
+			(end 1.7 -1.3)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "6b647fcf-f337-417f-9008-26057f32c002")
+		)
+		(fp_line
+			(start -1.7 1.3)
+			(end -1.7 1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "92165f54-9fb8-4fbf-83da-e4280acb0e3a")
+		)
+		(fp_line
+			(start -1.7 1)
+			(end -2.4 1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "5d11a221-326f-4bbc-9b4c-f370259dd7d4")
+		)
+		(fp_line
+			(start -2.26 -1.3)
+			(end 1.7 -1.3)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "4600e852-0f11-4928-99a8-3e1312200e8c")
+		)
+		(fp_line
+			(start -2.4 1)
+			(end -2.4 -1.3)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "694bb932-ec08-49ff-931b-c61d579708c9")
+		)
+		(fp_line
+			(start -2.4 -1.3)
+			(end -2.26 -1.3)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "b69b9ffb-f0b5-47d4-87ab-dfd8126a00ce")
+		)
+		(fp_line
+			(start 1.35 0.95)
+			(end -1.35 0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "e6cd9fa3-9584-4270-90d5-e6ad4cd71ff3")
+		)
+		(fp_line
+			(start 1.35 -0.95)
+			(end 1.35 0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "3d2cf134-3c2f-4dde-8cc2-54d2dd650c0a")
+		)
+		(fp_line
+			(start -1.35 0.95)
+			(end -1.35 -0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "94963033-f8c3-43e1-ba6c-b1715fd1b066")
+		)
+		(fp_line
+			(start -1.35 -0.34)
+			(end -0.74 -0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "3378be68-1bc9-4027-8db3-741e0fd7362c")
+		)
+		(fp_line
+			(start -1.35 -0.95)
+			(end 1.35 -0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "814db464-f9da-4123-b30d-d3ee252999dc")
+		)
+		(fp_text user "${REFERENCE}"
+			(at -0.1 2.5 0)
+			(layer "F.Fab")
+			(uuid "9d15e8af-cc47-46c6-97ab-66c349f1e47f")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.254)
+				)
+			)
+		)
+		(pad "1" smd rect
+			(at -1.455 0 270)
+			(size 1.4 1.31)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net 48 "Net-(D407-A1)")
+			(pinfunction "A1")
+			(pintype "passive")
+			(uuid "ae7b7c83-a5e6-4ee6-b49c-dfdb604651b8")
+		)
+		(pad "2" smd rect
+			(at 1.455 0 270)
+			(size 1.4 1.31)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net 1 "GND")
+			(pinfunction "A2")
+			(pintype "passive")
+			(uuid "d4fe00f5-1a4e-424a-80e9-37d15d93177c")
+		)
+		(embedded_fonts no)
+		(model "C:/Users/Nathan/OneDrive/Documents/Family/001 - House/015 - Water Tanks/002 - Circuitry Components/001 - Footprints/LIB_SMF4L13AT1G/SMF4L13AT1G/3D/SMF4L13AT1G.stp"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
+	)
 	(footprint "Package_QFP:TQFP-32_7x7mm_P0.8mm"
 		(layer "F.Cu")
 		(uuid "4b012881-9a2c-4797-a24b-60feff515b3b")
@@ -7140,7 +6764,7 @@
 			(at 1.635 0 90)
 			(size 0.88 2.81)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 46 "Net-(D501-A1)")
+			(net 46 "Net-(D401-A1)")
 			(pinfunction "2")
 			(pintype "passive")
 			(uuid "6ac26ed3-fcce-4fbb-8f7e-4b359e95fe9f")
@@ -8642,376 +8266,6 @@
 			)
 		)
 	)
-	(footprint "LITTELFUSE Diodes:SODFL3619X98N"
-		(layer "F.Cu")
-		(uuid "6c3c52e7-1a39-442a-a0b9-13fb4ec4079d")
-		(at 133.1732 120.37)
-		(descr "SOD−123FL_2.7")
-		(tags "TVS Diode (Uni-directional)")
-		(property "Reference" "D503"
-			(at -0.1732 2.13 180)
-			(layer "F.SilkS")
-			(uuid "84a790a7-f643-4c5b-a800-ff206fad68b5")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.6)
-				)
-			)
-		)
-		(property "Value" "13.3V 0.1uA Leak"
-			(at 0 0 0)
-			(layer "F.SilkS")
-			(hide yes)
-			(uuid "48540d7a-3611-47df-b8cb-3e801fc3d1e7")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.254)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.littelfuse.com/media?resourcetype=datasheets&itemid=f093622a-2591-4e70-85e6-32321d2f8c5a&filename=tvs-diode-smf4l-t1g-datasheet"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "8d26030c-bfe4-46cc-939f-6888df6bd383")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Description" "TVS Diode, Low leakage, Uni-directional, 400W"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "9e85cbd2-69af-4308-9b43-b8742dc1c9ee")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Height" "0.98"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "b17f1285-899c-451b-9c5b-5db98ea38850")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Mouser Part Number" "576-SMF4L13AT1G"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "c604140b-bbac-484d-810c-dd3f237e79b5")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Littelfuse/SMF4L13AT1G?qs=OcgtsXO%252B3gst%2FkI5Xf9O6g%3D%3D"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "3fc4294e-3896-4f05-83ad-3b1ecf9e799d")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "LITTELFUSE"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "6d74f41a-e856-4851-9be9-4e1cade39ebe")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part No" "SMF4L13AT1G"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "b999ce6e-6047-48c2-a339-9ec5244acbf7")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "JLCPCB Part #" "C27031045"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "3f2874cd-6813-42cd-bb3c-b0dc183c168b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Part Type" "Extended"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "8061eb7c-0937-435d-bcd5-01fddbfc2bb6")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(path "/04cb4c22-9f48-453c-9321-ed5f92a048ae/51305dae-c062-4aa8-abf0-ce9d5565334b")
-		(sheetname "/SensorRecievers/")
-		(sheetfile "sensorrecievers.kicad_sch")
-		(attr smd)
-		(fp_line
-			(start -2.11 -0.95)
-			(end 1.35 -0.95)
-			(stroke
-				(width 0.2)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "8d28cf92-72be-4572-8563-87647bf94551")
-		)
-		(fp_line
-			(start -1.35 0.95)
-			(end 1.35 0.95)
-			(stroke
-				(width 0.2)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "9d74fc76-c7f3-4f4e-b03f-58f38ce70f8a")
-		)
-		(fp_line
-			(start -2.4 -1.3)
-			(end -2.26 -1.3)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "0f83cea5-8f83-43c1-947e-908ca98587b2")
-		)
-		(fp_line
-			(start -2.4 0.8)
-			(end -2.4 -1.3)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "cfd1c4fe-ec65-4ec6-a43f-61aba402bde9")
-		)
-		(fp_line
-			(start -2.26 -1.3)
-			(end 1.7 -1.3)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "d211c492-6309-421c-a96a-4300ca5a68db")
-		)
-		(fp_line
-			(start -1.7 0.8)
-			(end -2.4 0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "cbaa7435-7b8e-4a7b-9742-30e5d925a469")
-		)
-		(fp_line
-			(start -1.7 1.3)
-			(end -1.7 0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "0092a562-9b6c-4dfd-9c47-96252cee9c65")
-		)
-		(fp_line
-			(start 1.7 -0.8)
-			(end 1.7 -1.3)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "75983610-3b38-4788-ba54-596d77802bd5")
-		)
-		(fp_line
-			(start 1.7 0.775)
-			(end 1.7 1.3)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "7dd8439a-8764-4523-b1b9-3874a5cc6c62")
-		)
-		(fp_line
-			(start 1.7 0.775)
-			(end 2.4 0.775)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "3e76dd48-6435-4cdb-830b-014b2bef0c6c")
-		)
-		(fp_line
-			(start 1.7 1.3)
-			(end -1.7 1.3)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "346886e4-d247-4ee6-b1d8-b9fa04388bbd")
-		)
-		(fp_line
-			(start 2.4 -0.8)
-			(end 1.7 -0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "deb3ed61-aac0-44ef-ada7-babc6c13c8f2")
-		)
-		(fp_line
-			(start 2.4 0.775)
-			(end 2.4 -0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "03bca875-86d1-4948-9ad8-68116f454159")
-		)
-		(fp_line
-			(start -1.35 -0.95)
-			(end 1.35 -0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "632ab65d-d9e5-4177-b3db-ac3f1df27340")
-		)
-		(fp_line
-			(start -1.35 -0.34)
-			(end -0.74 -0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "bf035a14-6757-4dac-8b09-9fada33289f6")
-		)
-		(fp_line
-			(start -1.35 0.95)
-			(end -1.35 -0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "d4c2680c-0550-47dd-8634-222817dfeea0")
-		)
-		(fp_line
-			(start 1.35 -0.95)
-			(end 1.35 0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "a0522028-0ebd-4fa6-88ba-e98b0908c2bd")
-		)
-		(fp_line
-			(start 1.35 0.95)
-			(end -1.35 0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "443f8553-8973-490f-976c-b78bf9650d5d")
-		)
-		(fp_text user "${REFERENCE}"
-			(at -0.1 2.5 0)
-			(layer "F.Fab")
-			(uuid "944c1126-968d-4882-a066-4bac56cc6a23")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.6)
-				)
-			)
-		)
-		(pad "1" smd rect
-			(at -1.5 0 90)
-			(size 1.12 1.22)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 49 "/SensorRecievers/Sensor1")
-			(pinfunction "A1")
-			(pintype "passive")
-			(uuid "f6127844-a01a-4e41-b6b0-8c18f02ceb93")
-		)
-		(pad "2" smd rect
-			(at 1.5 0 90)
-			(size 1.12 1.22)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 1 "GND")
-			(pinfunction "A2")
-			(pintype "passive")
-			(uuid "2fe83ca0-df25-43a7-93a2-c47271425abd")
-		)
-		(embedded_fonts no)
-		(model "C:/Users/Nathan/OneDrive/Documents/Family/001 - House/015 - Water Tanks/002 - Circuitry Components/001 - Footprints/LIB_SMF4L13AT1G/SMF4L13AT1G/3D/SMF4L13AT1G.stp"
-			(offset
-				(xyz 0 0 0)
-			)
-			(scale
-				(xyz 1 1 1)
-			)
-			(rotate
-				(xyz 0 0 0)
-			)
-		)
-	)
 	(footprint "JLCPCB Basic:RESC2013X65N"
 		(layer "F.Cu")
 		(uuid "6f9fc5bd-c0c2-41eb-8da0-70ea286c9fff")
@@ -10274,376 +9528,6 @@
 			)
 		)
 	)
-	(footprint "LITTELFUSE Diodes:SODFL3619X98N"
-		(layer "F.Cu")
-		(uuid "79c25543-5606-4e15-a40c-9c3674b33c6b")
-		(at 128.1732 120.37)
-		(descr "SOD−123FL_2.7")
-		(tags "TVS Diode (Uni-directional)")
-		(property "Reference" "D502"
-			(at 0.0268 3.33 90)
-			(layer "F.SilkS")
-			(uuid "c30c060c-daa5-4d86-903b-b85dd91823f3")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.6)
-				)
-			)
-		)
-		(property "Value" "13.3V 0.1uA Leak"
-			(at 0 0 0)
-			(layer "F.SilkS")
-			(hide yes)
-			(uuid "5b5f2870-1e2a-4ea1-be55-d7ae39736939")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.254)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.littelfuse.com/media?resourcetype=datasheets&itemid=f093622a-2591-4e70-85e6-32321d2f8c5a&filename=tvs-diode-smf4l-t1g-datasheet"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "255485c2-2dfb-4fa1-bc94-61a9d681a88c")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Description" "TVS Diode, Low leakage, Uni-directional, 400W"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "d63a9a66-e35f-47f3-bce6-7cf7ef295771")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Height" "0.98"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f7f5d74d-ce41-428d-aff7-e8850a990571")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Mouser Part Number" "576-SMF4L13AT1G"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "689f965b-c669-481f-9abd-e29384c5bd4a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Littelfuse/SMF4L13AT1G?qs=OcgtsXO%252B3gst%2FkI5Xf9O6g%3D%3D"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e455f94b-a454-49ee-b4db-c35f3f41dfa6")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "LITTELFUSE"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "7e88b548-6fc6-44be-9b9c-d94d371ba7d3")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part No" "SMF4L13AT1G"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "51718741-18ee-423a-be48-5b3cc83107ea")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "JLCPCB Part #" "C27031045"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "22188bbd-626d-45c8-980e-c36631fe24f6")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Part Type" "Extended"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "753762b6-ab88-4a69-819a-28eb12fbcce7")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(path "/04cb4c22-9f48-453c-9321-ed5f92a048ae/d9282fd9-e88a-44ba-9ea2-e84cdadc9c96")
-		(sheetname "/SensorRecievers/")
-		(sheetfile "sensorrecievers.kicad_sch")
-		(attr smd)
-		(fp_line
-			(start -2.11 -0.95)
-			(end 1.35 -0.95)
-			(stroke
-				(width 0.2)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "86510ecc-ad6f-4557-83fd-3741cd6a551a")
-		)
-		(fp_line
-			(start -1.35 0.95)
-			(end 1.35 0.95)
-			(stroke
-				(width 0.2)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "b244fae4-1cbc-4148-b069-d105f12f4bbd")
-		)
-		(fp_line
-			(start -2.4 -1.3)
-			(end -2.26 -1.3)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "729ff602-533c-4864-856f-582652c015d8")
-		)
-		(fp_line
-			(start -2.4 0.8)
-			(end -2.4 -1.3)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "7e7d3d3b-8586-4ac3-a1a7-ad19aa710c9b")
-		)
-		(fp_line
-			(start -2.26 -1.3)
-			(end 1.7 -1.3)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "34131d95-cac4-48c8-92ee-cb1cbd7ad62c")
-		)
-		(fp_line
-			(start -1.7 0.8)
-			(end -2.4 0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "eb0f63cf-327a-413e-b01f-75ff5a8db0ce")
-		)
-		(fp_line
-			(start -1.7 1.3)
-			(end -1.7 0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "b1dd6512-f15f-48ba-b11e-341cc1b6a50b")
-		)
-		(fp_line
-			(start 1.7 -0.8)
-			(end 1.7 -1.3)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "6b6967d4-6370-4930-8269-c659c6d50b48")
-		)
-		(fp_line
-			(start 1.7 0.775)
-			(end 1.7 1.3)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "01886aa4-fdfd-4561-9b49-a79e8db1d937")
-		)
-		(fp_line
-			(start 1.7 0.775)
-			(end 2.4 0.775)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "61b3bc79-7ce7-4e44-a8ef-f088b5076c78")
-		)
-		(fp_line
-			(start 1.7 1.3)
-			(end -1.7 1.3)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "29fe364e-a6a3-40b0-a36b-09caa3d79851")
-		)
-		(fp_line
-			(start 2.4 -0.8)
-			(end 1.7 -0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "d5c1c9a0-b61a-4575-a42d-54a69b7f9269")
-		)
-		(fp_line
-			(start 2.4 0.775)
-			(end 2.4 -0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "bd286ae6-b7f0-4a31-82be-1734fa8e073a")
-		)
-		(fp_line
-			(start -1.35 -0.95)
-			(end 1.35 -0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "9338db22-713e-48e1-817c-f230f41a9bc0")
-		)
-		(fp_line
-			(start -1.35 -0.34)
-			(end -0.74 -0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "e16be3bc-823d-42ad-9a7e-e499f6946e73")
-		)
-		(fp_line
-			(start -1.35 0.95)
-			(end -1.35 -0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "c023469f-f8ba-4460-aa0d-2c1415171a25")
-		)
-		(fp_line
-			(start 1.35 -0.95)
-			(end 1.35 0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "601dccf1-6e0c-4bb6-9847-b80fbb9942c2")
-		)
-		(fp_line
-			(start 1.35 0.95)
-			(end -1.35 0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "76afd37f-fb01-42be-affc-8c3167542325")
-		)
-		(fp_text user "${REFERENCE}"
-			(at -0.1 2.5 0)
-			(layer "F.Fab")
-			(uuid "4293702f-7066-4788-8679-dc3752944398")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.6)
-				)
-			)
-		)
-		(pad "1" smd rect
-			(at -1.5 0 90)
-			(size 1.12 1.22)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 46 "Net-(D501-A1)")
-			(pinfunction "A1")
-			(pintype "passive")
-			(uuid "689068e3-b4a9-4acd-a05b-852a52d3ac13")
-		)
-		(pad "2" smd rect
-			(at 1.5 0 90)
-			(size 1.12 1.22)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 49 "/SensorRecievers/Sensor1")
-			(pinfunction "A2")
-			(pintype "passive")
-			(uuid "0e82cf5c-2f09-4055-adff-007538720ef8")
-		)
-		(embedded_fonts no)
-		(model "C:/Users/Nathan/OneDrive/Documents/Family/001 - House/015 - Water Tanks/002 - Circuitry Components/001 - Footprints/LIB_SMF4L13AT1G/SMF4L13AT1G/3D/SMF4L13AT1G.stp"
-			(offset
-				(xyz 0 0 0)
-			)
-			(scale
-				(xyz 1 1 1)
-			)
-			(rotate
-				(xyz 0 0 0)
-			)
-		)
-	)
 	(footprint "JLCPCB Basic:RESC2013X65N"
 		(layer "F.Cu")
 		(uuid "79d59e12-e463-4eab-8d0a-886d038da377")
@@ -10910,7 +9794,7 @@
 			(at -0.95 0 90)
 			(size 1 1.45)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 47 "Net-(D504-A1)")
+			(net 47 "Net-(D404-A1)")
 			(pinfunction "1")
 			(pintype "passive")
 			(uuid "1d79e2d6-612c-462d-aa1c-fc62c0315707")
@@ -11182,7 +10066,7 @@
 			(at 1.4732 0 180)
 			(size 1.1176 1.7526)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 46 "Net-(D501-A1)")
+			(net 46 "Net-(D401-A1)")
 			(pinfunction "2")
 			(pintype "passive")
 			(uuid "a2907b80-b1dc-4b44-84c7-c052361284c6")
@@ -11466,7 +10350,7 @@
 			(at -0.95 0 90)
 			(size 1 1.45)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 48 "Net-(D507-A1)")
+			(net 48 "Net-(D407-A1)")
 			(pinfunction "1")
 			(pintype "passive")
 			(uuid "c54c1cd3-33ab-4278-8d37-3bfafb0d3518")
@@ -11791,26 +10675,26 @@
 	)
 	(footprint "LITTELFUSE Diodes:SODFL3619X98N"
 		(layer "F.Cu")
-		(uuid "801d59bc-e7fb-451a-bace-27d2ae723947")
-		(at 123.2732 120.320001 180)
+		(uuid "80bc706e-5af9-409f-9ad2-21f55eb2e1a0")
+		(at 136.1 117.4 180)
 		(descr "SOD−123FL_2.7")
 		(tags "TVS Diode (Uni-directional)")
-		(property "Reference" "D501"
-			(at -0.1268 -3.279999 90)
+		(property "Reference" "D404"
+			(at -0.8 -2.1 0)
 			(layer "F.SilkS")
-			(uuid "4ca8c204-872a-4465-afb6-e75efbdc7728")
+			(uuid "7d7d1875-88c1-49b4-92c9-8aed92a30db0")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.6)
+					(size 1.27 1.27)
+					(thickness 0.254)
 				)
 			)
 		)
-		(property "Value" "13.3V 0.1uA Leak"
+		(property "Value" "28V 1uA Leak"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
-			(uuid "e5564a53-8647-4e86-ae47-79665ebf57cb")
+			(uuid "094f0f5d-9879-484b-85db-9e2f1c327169")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11822,7 +10706,7 @@
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "63e57fd0-55b4-49be-bc19-2cbc4a03d71f")
+			(uuid "937f1c85-6130-44f5-8c8e-c5db0546ce75")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11830,11 +10714,11 @@
 				)
 			)
 		)
-		(property "Description" "TVS Diode, Low leakage, Uni-directional, 400W"
+		(property "Description" "TVS Diode, Uni-directional, 200W"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "2aa8f4cf-add5-4fb8-b112-462edbfc49d3")
+			(uuid "9c5c7f6f-98c7-4594-89de-fdfed6451df0")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11847,7 +10731,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "9ebde26b-378f-42da-9f3f-e2a242186dc7")
+			(uuid "d8466905-1783-46b6-9760-f3315a2f697e")
 			(effects
 				(font
 					(size 1 1)
@@ -11855,12 +10739,12 @@
 				)
 			)
 		)
-		(property "Mouser Part Number" "576-SMF4L13AT1G"
+		(property "Manufacturer" "Littelfuse"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "13ae1085-e2e7-4d66-a5be-77de06801473")
+			(uuid "2fc5cdf5-0d4a-4796-868b-c3f74078e557")
 			(effects
 				(font
 					(size 1 1)
@@ -11868,12 +10752,12 @@
 				)
 			)
 		)
-		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Littelfuse/SMF4L13AT1G?qs=OcgtsXO%252B3gst%2FkI5Xf9O6g%3D%3D"
+		(property "Manufacturer Part No" "SMF28A"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "d6c23742-f360-4f6e-8a15-988aae886e97")
+			(uuid "74e3a43b-90b8-4790-9885-b64653fa5037")
 			(effects
 				(font
 					(size 1 1)
@@ -11881,38 +10765,12 @@
 				)
 			)
 		)
-		(property "Manufacturer" "LITTELFUSE"
+		(property "JLCPCB Part #" "C720061"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "dd34c5e6-4238-496c-98cd-e555b113e1b7")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part No" "SMF4L13AT1G"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "0ac9c554-78b2-44cf-98e5-7fa878b4559f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "JLCPCB Part #" "C27031045"
-			(at 0 0 180)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e87cb3db-91f0-4c9d-94c2-45588ffd487e")
+			(uuid "8793b2aa-5aab-4e91-a23e-b107cd469992")
 			(effects
 				(font
 					(size 1 1)
@@ -11925,7 +10783,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "ea55abd4-10d9-49cb-a345-1c6842e80dfd")
+			(uuid "1e27ae31-7b0e-4616-8918-a136112738a4")
 			(effects
 				(font
 					(size 1 1)
@@ -11933,7 +10791,20 @@
 				)
 			)
 		)
-		(path "/04cb4c22-9f48-453c-9321-ed5f92a048ae/fe5b048b-59ab-42fb-8d30-a46e4503ed87")
+		(property "Package" "SOD-123FL"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "c9ebb28f-c1b8-4f16-86d9-6706e5655285")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(path "/04cb4c22-9f48-453c-9321-ed5f92a048ae/1ec73b1c-cf7f-43e3-9302-b474802c6b6e")
 		(sheetname "/SensorRecievers/")
 		(sheetfile "sensorrecievers.kicad_sch")
 		(attr smd)
@@ -11945,7 +10816,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "c974cbbc-8d84-4427-a69e-bb3251187286")
+			(uuid "1b164659-b16b-417b-b289-d90ae065202c")
 		)
 		(fp_line
 			(start -2.11 -0.95)
@@ -11955,27 +10826,38 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "0eaf917b-c298-4d23-b5c6-512aad32f4df")
+			(uuid "085f95bb-7b9b-43b8-a66e-082d2221af9a")
+		)
+		(fp_circle
+			(center -2.6 0)
+			(end -2.6 0.1)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(fill yes)
+			(layer "F.SilkS")
+			(uuid "be4aa3f0-1b9c-4b18-bcdf-f9749bd5b7d0")
 		)
 		(fp_line
-			(start 2.4 0.775)
-			(end 2.4 -0.8)
+			(start 2.4 1)
+			(end 2.4 -1)
 			(stroke
 				(width 0.05)
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "39acf041-b401-4107-a7aa-8b70f67e273e")
+			(uuid "f3935d24-3511-45b0-b0f9-8e7c55c16fde")
 		)
 		(fp_line
-			(start 2.4 -0.8)
-			(end 1.7 -0.8)
+			(start 2.4 -1)
+			(end 1.7 -1)
 			(stroke
 				(width 0.05)
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "68f9e8b5-9360-4e3f-9149-8d8c88b761b8")
+			(uuid "575e54a1-4f5b-4985-b6fd-eb8bf4faafd0")
 		)
 		(fp_line
 			(start 1.7 1.3)
@@ -11985,57 +10867,57 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "1d0358f2-7974-4288-bccd-0428ce30fc42")
+			(uuid "da3b44a4-3731-486e-869a-f66f40ee81a3")
 		)
 		(fp_line
-			(start 1.7 0.775)
-			(end 2.4 0.775)
+			(start 1.7 1)
+			(end 2.4 1)
 			(stroke
 				(width 0.05)
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "b2e41471-a6b2-4f74-84bd-73ee2cbe1e71")
+			(uuid "dbb7f36b-693f-420f-8930-1eb1755eeff8")
 		)
 		(fp_line
-			(start 1.7 0.775)
+			(start 1.7 1)
 			(end 1.7 1.3)
 			(stroke
 				(width 0.05)
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "367fe4c7-5a49-4024-85b2-7d41a4552003")
+			(uuid "746b337d-ad14-4dc0-9950-72af31aedc15")
 		)
 		(fp_line
-			(start 1.7 -0.8)
+			(start 1.7 -1)
 			(end 1.7 -1.3)
 			(stroke
 				(width 0.05)
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "04827a4e-9d5c-4a9d-b4ca-3a2067e030b0")
+			(uuid "3c018774-9fa7-45ff-9c1d-52d367756370")
 		)
 		(fp_line
 			(start -1.7 1.3)
-			(end -1.7 0.8)
+			(end -1.7 1)
 			(stroke
 				(width 0.05)
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "f551f274-195f-4c20-9c6f-d922eaeff57c")
+			(uuid "9736f15a-d40b-4c1d-800d-0019620257eb")
 		)
 		(fp_line
-			(start -1.7 0.8)
-			(end -2.4 0.8)
+			(start -1.7 1)
+			(end -2.4 1)
 			(stroke
 				(width 0.05)
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "46e74122-bca2-4db6-93ac-6ff5e2c507dc")
+			(uuid "de74e838-0668-4930-a129-8f8484df0c8d")
 		)
 		(fp_line
 			(start -2.26 -1.3)
@@ -12045,17 +10927,17 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "306577f8-1402-4b92-80d5-10d20273a25d")
+			(uuid "c31f7c15-2991-495a-97e5-e5f44aa7f205")
 		)
 		(fp_line
-			(start -2.4 0.8)
+			(start -2.4 1)
 			(end -2.4 -1.3)
 			(stroke
 				(width 0.05)
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "08ddc470-c772-45e0-bc55-16af55bbc6c2")
+			(uuid "845c5f1d-189a-4131-bdda-eb2f839141d5")
 		)
 		(fp_line
 			(start -2.4 -1.3)
@@ -12065,7 +10947,7 @@
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "195a9557-af82-43dd-a50a-a06124189746")
+			(uuid "11eec095-1020-479b-ad73-edc37f50b630")
 		)
 		(fp_line
 			(start 1.35 0.95)
@@ -12075,7 +10957,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "f9afe5e5-ddd6-4b60-b60c-e05a0cf24145")
+			(uuid "4c3a04c8-755e-4aa6-9326-444cc3c7c40d")
 		)
 		(fp_line
 			(start 1.35 -0.95)
@@ -12085,7 +10967,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "2c49b834-ddcb-4f85-8b3e-69e1764c893c")
+			(uuid "39a943a9-0037-4d40-a61a-ce68ea51912a")
 		)
 		(fp_line
 			(start -1.35 0.95)
@@ -12095,7 +10977,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "d02ce0f4-fae9-4c35-9efe-b324ce2a1d1a")
+			(uuid "49621e2d-7cf7-4b5e-931f-94b6dfe659d1")
 		)
 		(fp_line
 			(start -1.35 -0.34)
@@ -12105,7 +10987,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "f1db4a82-e398-4e78-84be-aa761b73e392")
+			(uuid "9d61d1a6-7770-4edd-bbc0-ac0c025eb1e7")
 		)
 		(fp_line
 			(start -1.35 -0.95)
@@ -12115,36 +10997,36 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "3fe0b9d6-632c-432e-84d0-3b74f470cbcd")
+			(uuid "e190c76d-e1d7-42ff-b688-4f63e0a31ed1")
 		)
 		(fp_text user "${REFERENCE}"
 			(at -0.1 2.5 0)
 			(layer "F.Fab")
-			(uuid "3ce0c2a5-7ed9-4fc2-a7d0-5025bbc4d871")
+			(uuid "4b5b2380-6299-4d0f-a965-b4ae245a8eac")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.6)
+					(size 1.27 1.27)
+					(thickness 0.254)
 				)
 			)
 		)
 		(pad "1" smd rect
-			(at -1.5 0 270)
-			(size 1.12 1.22)
+			(at -1.455 0 270)
+			(size 1.4 1.31)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 46 "Net-(D501-A1)")
+			(net 47 "Net-(D404-A1)")
 			(pinfunction "A1")
 			(pintype "passive")
-			(uuid "42e34a4f-2b82-4aad-9ab8-d82e2acec170")
+			(uuid "668aae41-0fa6-46d5-b97d-c9229a265704")
 		)
 		(pad "2" smd rect
-			(at 1.5 0 270)
-			(size 1.12 1.22)
+			(at 1.455 0 270)
+			(size 1.4 1.31)
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net 1 "GND")
 			(pinfunction "A2")
 			(pintype "passive")
-			(uuid "6a5c0f1e-2afc-442e-a88c-b79fd7f85e15")
+			(uuid "85de82ad-6746-4737-b102-3b82d47bcf15")
 		)
 		(embedded_fonts no)
 		(model "C:/Users/Nathan/OneDrive/Documents/Family/001 - House/015 - Water Tanks/002 - Circuitry Components/001 - Footprints/LIB_SMF4L13AT1G/SMF4L13AT1G/3D/SMF4L13AT1G.stp"
@@ -13265,7 +12147,7 @@
 			(at 1.4732 0 180)
 			(size 1.1176 1.7526)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 47 "Net-(D504-A1)")
+			(net 47 "Net-(D404-A1)")
 			(pinfunction "2")
 			(pintype "passive")
 			(uuid "9d2e6964-cc0c-4952-b76d-75d6412b4661")
@@ -13285,26 +12167,26 @@
 	)
 	(footprint "LITTELFUSE Diodes:SODFL3619X98N"
 		(layer "F.Cu")
-		(uuid "90ad85a7-bc4f-4f9c-9f3e-5820ad57bc71")
-		(at 141.1732 117.47)
+		(uuid "8f54163e-f4f7-4a1d-82f9-63118e25851d")
+		(at 159.2625 120.4)
 		(descr "SOD−123FL_2.7")
 		(tags "TVS Diode (Uni-directional)")
-		(property "Reference" "D505"
-			(at 0.0268 3.33 90)
+		(property "Reference" "D409"
+			(at -0.8 -2.1 0)
 			(layer "F.SilkS")
-			(uuid "aa20d868-52ff-41d3-b49a-500f225f2d80")
+			(uuid "6b9e8ce1-7d05-41f4-938c-83224a820644")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.6)
+					(size 1.27 1.27)
+					(thickness 0.254)
 				)
 			)
 		)
-		(property "Value" "13.3V 0.1uA Leak"
+		(property "Value" "28V 1uA Leak"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
-			(uuid "8a7a1f88-06c1-43ee-9a11-f85172a114eb")
+			(uuid "bf170744-c7e8-450d-828e-10b736295a95")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13316,7 +12198,7 @@
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "b3fe7a48-10ef-4dd0-ac07-66eb0b02564e")
+			(uuid "154989a2-b497-47ab-beec-d67e54fa3081")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13324,11 +12206,11 @@
 				)
 			)
 		)
-		(property "Description" "TVS Diode, Low leakage, Uni-directional, 400W"
+		(property "Description" "TVS Diode, Uni-directional, 200W"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "534a8808-c0b6-4d73-b3df-4ec1e16063bd")
+			(uuid "a5b1e5c1-54f0-42ae-91ea-c120eb3bf41e")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13341,7 +12223,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "533e0647-e397-422c-b9b9-0468f3a58584")
+			(uuid "b7fc4670-086b-41da-ae2b-c40af67f7d29")
 			(effects
 				(font
 					(size 1 1)
@@ -13349,12 +12231,12 @@
 				)
 			)
 		)
-		(property "Mouser Part Number" "576-SMF4L13AT1G"
+		(property "Manufacturer" "Littelfuse"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "15ab0670-c5f2-4f5f-bb93-c71929878ac8")
+			(uuid "10d0026f-1dc3-4441-abba-f8d59e12c3d2")
 			(effects
 				(font
 					(size 1 1)
@@ -13362,12 +12244,12 @@
 				)
 			)
 		)
-		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Littelfuse/SMF4L13AT1G?qs=OcgtsXO%252B3gst%2FkI5Xf9O6g%3D%3D"
+		(property "Manufacturer Part No" "SMF28A"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "81845e70-74db-4ddb-a38a-5328ccfcfa62")
+			(uuid "c8596f8c-9144-4aed-a452-56281fe29bc8")
 			(effects
 				(font
 					(size 1 1)
@@ -13375,38 +12257,12 @@
 				)
 			)
 		)
-		(property "Manufacturer" "LITTELFUSE"
+		(property "JLCPCB Part #" "C720061"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "c4ec5d0c-b9a5-44e9-ae43-fc264282e1ca")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part No" "SMF4L13AT1G"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "d3ea0ffb-2e95-42ee-9b4d-fe35750d4b5b")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "JLCPCB Part #" "C27031045"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "b8c55089-09de-4ae3-a097-49fc4758765b")
+			(uuid "3d3a634c-969a-4b5f-8fd6-de99ed255536")
 			(effects
 				(font
 					(size 1 1)
@@ -13419,7 +12275,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "96095e0e-493d-4c2c-9e3e-8d4519f06283")
+			(uuid "ecb98295-407d-4fc9-9702-a704e62cbb30")
 			(effects
 				(font
 					(size 1 1)
@@ -13427,7 +12283,20 @@
 				)
 			)
 		)
-		(path "/04cb4c22-9f48-453c-9321-ed5f92a048ae/868bbf93-f41b-45d6-8117-d35d4eafa53f")
+		(property "Package" "SOD-123FL"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "11e14f96-8cc5-4afc-aed5-70cfa512f966")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(path "/04cb4c22-9f48-453c-9321-ed5f92a048ae/ad4c42e4-388f-4737-94b5-76cb8bb571b1")
 		(sheetname "/SensorRecievers/")
 		(sheetfile "sensorrecievers.kicad_sch")
 		(attr smd)
@@ -13439,7 +12308,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "f9198cc7-0a40-4bcd-9108-18a3f35d42c0")
+			(uuid "9aa5a5a9-ed32-4d81-8ece-256ca7a76c4b")
 		)
 		(fp_line
 			(start -1.35 0.95)
@@ -13449,7 +12318,18 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "74ee5744-ddc2-4a4b-b339-82514bc540f2")
+			(uuid "2022f533-3ea8-43d7-b646-146365e66977")
+		)
+		(fp_circle
+			(center -2.6 0)
+			(end -2.6 0.1)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(fill yes)
+			(layer "F.SilkS")
+			(uuid "2423134a-7ef3-4784-864d-09788800df64")
 		)
 		(fp_line
 			(start -2.4 -1.3)
@@ -13459,17 +12339,17 @@
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "97f75683-6664-4135-8511-e6f0cfd4b09c")
+			(uuid "c9f5dfd0-b562-4003-8932-281a4e4cb259")
 		)
 		(fp_line
-			(start -2.4 0.8)
+			(start -2.4 1)
 			(end -2.4 -1.3)
 			(stroke
 				(width 0.05)
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "6f0f1070-c5e2-43c8-b962-d7a85aa86f2a")
+			(uuid "ecf77a77-2429-497a-b2e3-5506e1256655")
 		)
 		(fp_line
 			(start -2.26 -1.3)
@@ -13479,57 +12359,57 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "19cd9166-d7b3-4cef-bb9a-558775726858")
+			(uuid "76777a46-698d-45c4-9082-c4dc4b0ca1ee")
 		)
 		(fp_line
-			(start -1.7 0.8)
-			(end -2.4 0.8)
+			(start -1.7 1)
+			(end -2.4 1)
 			(stroke
 				(width 0.05)
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "a29c65a5-e072-4194-9c28-7c9d3d4b45db")
+			(uuid "b004b57c-688e-4b52-aefc-2f24b4b6e27d")
 		)
 		(fp_line
 			(start -1.7 1.3)
-			(end -1.7 0.8)
+			(end -1.7 1)
 			(stroke
 				(width 0.05)
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "b324240e-3894-4442-b494-4bd8bbcae753")
+			(uuid "2a037a20-99fd-4138-b281-30a4fae63960")
 		)
 		(fp_line
-			(start 1.7 -0.8)
+			(start 1.7 -1)
 			(end 1.7 -1.3)
 			(stroke
 				(width 0.05)
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "9b6faef6-88c9-4c13-8053-4870482e5e57")
+			(uuid "f04ae509-41b2-4fd3-a55c-6251ebb64e50")
 		)
 		(fp_line
-			(start 1.7 0.775)
+			(start 1.7 1)
 			(end 1.7 1.3)
 			(stroke
 				(width 0.05)
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "84f44adf-c17f-47d5-bdc4-a4473d19ec4a")
+			(uuid "096669fb-e58d-4df8-9395-26094647d56f")
 		)
 		(fp_line
-			(start 1.7 0.775)
-			(end 2.4 0.775)
+			(start 1.7 1)
+			(end 2.4 1)
 			(stroke
 				(width 0.05)
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "8a21f3f7-223b-4bff-a254-4a1819d75719")
+			(uuid "9a26fd25-bdd1-4e4c-b4b7-40f2db28ba81")
 		)
 		(fp_line
 			(start 1.7 1.3)
@@ -13539,27 +12419,27 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "7d32202c-1d8f-4f6a-abd2-ae8a39222fbf")
+			(uuid "e39f9735-8929-4e3a-8a8d-c6c6da84988a")
 		)
 		(fp_line
-			(start 2.4 -0.8)
-			(end 1.7 -0.8)
+			(start 2.4 -1)
+			(end 1.7 -1)
 			(stroke
 				(width 0.05)
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "ba714d8a-af43-4ce1-9feb-34b2f1c136bd")
+			(uuid "83f816f2-d06d-4779-a996-160f53a73727")
 		)
 		(fp_line
-			(start 2.4 0.775)
-			(end 2.4 -0.8)
+			(start 2.4 1)
+			(end 2.4 -1)
 			(stroke
 				(width 0.05)
 				(type default)
 			)
 			(layer "F.CrtYd")
-			(uuid "0d06aabb-462d-4ba5-b010-533b58496af2")
+			(uuid "b9b610ab-b3f3-421a-b828-13fdea1e1147")
 		)
 		(fp_line
 			(start -1.35 -0.95)
@@ -13569,7 +12449,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "22241137-117b-44c1-b084-d1a0fd1def41")
+			(uuid "96e77922-863c-4ca7-bf5d-e5d7cda5c7b6")
 		)
 		(fp_line
 			(start -1.35 -0.34)
@@ -13579,7 +12459,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "b9d6414e-9898-4c75-9bad-e56de9b90c8d")
+			(uuid "0a337655-4223-4687-a7ec-57c836a8a329")
 		)
 		(fp_line
 			(start -1.35 0.95)
@@ -13589,7 +12469,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "e44a900a-5d13-45ba-909c-4e4e777a54c8")
+			(uuid "59bfaf87-113b-49cd-86f4-e3b89b4ea6ea")
 		)
 		(fp_line
 			(start 1.35 -0.95)
@@ -13599,7 +12479,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "c840b971-bede-46a0-930c-b2dddbda40c9")
+			(uuid "ea72b7ee-f381-43ee-84dd-515ef42588f6")
 		)
 		(fp_line
 			(start 1.35 0.95)
@@ -13609,36 +12489,36 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "b8cf75a5-148e-48f9-ade9-d4e28279838b")
+			(uuid "2f485b74-a30a-46da-8afd-d65c597ed5cd")
 		)
 		(fp_text user "${REFERENCE}"
 			(at -0.1 2.5 0)
 			(layer "F.Fab")
-			(uuid "76d23e28-37e3-42cd-af1a-e3537f05309a")
+			(uuid "f118994a-0e63-4bf1-bc87-231f5353f6fe")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.6)
+					(size 1.27 1.27)
+					(thickness 0.254)
 				)
 			)
 		)
 		(pad "1" smd rect
-			(at -1.5 0 90)
-			(size 1.12 1.22)
+			(at -1.455 0 90)
+			(size 1.4 1.31)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 47 "Net-(D504-A1)")
+			(net 51 "/SensorRecievers/Sensor3")
 			(pinfunction "A1")
 			(pintype "passive")
-			(uuid "0ffd11fe-6500-4800-aac8-dd21a198e4b0")
+			(uuid "d44da7ff-1dc7-4b8d-b81f-d28e7d00ccbc")
 		)
 		(pad "2" smd rect
-			(at 1.5 0 90)
-			(size 1.12 1.22)
+			(at 1.455 0 90)
+			(size 1.4 1.31)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 50 "/SensorRecievers/Sensor2")
+			(net 1 "GND")
 			(pinfunction "A2")
 			(pintype "passive")
-			(uuid "b8039de1-269b-402d-b81d-95fc728e1b3e")
+			(uuid "8254b85d-fb7e-408c-bc06-bc842df1f87d")
 		)
 		(embedded_fonts no)
 		(model "C:/Users/Nathan/OneDrive/Documents/Family/001 - House/015 - Water Tanks/002 - Circuitry Components/001 - Footprints/LIB_SMF4L13AT1G/SMF4L13AT1G/3D/SMF4L13AT1G.stp"
@@ -15263,376 +14143,6 @@
 			)
 		)
 	)
-	(footprint "LITTELFUSE Diodes:SODFL3619X98N"
-		(layer "F.Cu")
-		(uuid "b1c8ce27-df55-4243-aa8f-6c2da5386269")
-		(at 154.0732 120.37)
-		(descr "SOD−123FL_2.7")
-		(tags "TVS Diode (Uni-directional)")
-		(property "Reference" "D508"
-			(at 0.0268 3.43 90)
-			(layer "F.SilkS")
-			(uuid "0c7a81e2-70e8-475c-b074-cfdd559af115")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.6)
-				)
-			)
-		)
-		(property "Value" "13.3V 0.1uA Leak"
-			(at 0 0 0)
-			(layer "F.SilkS")
-			(hide yes)
-			(uuid "3831f174-d1ef-4692-b9e0-cfc3a38a5c41")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.254)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.littelfuse.com/media?resourcetype=datasheets&itemid=f093622a-2591-4e70-85e6-32321d2f8c5a&filename=tvs-diode-smf4l-t1g-datasheet"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e7de6067-925b-4bb9-b23f-51c8ce689b8d")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Description" "TVS Diode, Low leakage, Uni-directional, 400W"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "b2a005b2-d83d-4824-ac2b-1415413b6da6")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Height" "0.98"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "812d7867-ad27-4993-ac3e-d14b37113b3a")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Mouser Part Number" "576-SMF4L13AT1G"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "41e57887-a280-4304-8a9a-893b9ec91710")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Littelfuse/SMF4L13AT1G?qs=OcgtsXO%252B3gst%2FkI5Xf9O6g%3D%3D"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "9029ce63-de5c-454c-b7fe-c656b28a6b8f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "LITTELFUSE"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "6d59791b-d636-4639-b558-f53c9bcb86bc")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer Part No" "SMF4L13AT1G"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "ee70e413-cca9-4678-9415-45b31e961e1c")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "JLCPCB Part #" "C27031045"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "dff544da-1847-4e31-90c7-acc80de6eb35")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Part Type" "Extended"
-			(at 0 0 0)
-			(unlocked yes)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "898cb826-05b1-4765-b502-be42a3ee80a6")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-		(path "/04cb4c22-9f48-453c-9321-ed5f92a048ae/41bb731d-eb49-4901-abb0-cb786538d9bb")
-		(sheetname "/SensorRecievers/")
-		(sheetfile "sensorrecievers.kicad_sch")
-		(attr smd)
-		(fp_line
-			(start -2.11 -0.95)
-			(end 1.35 -0.95)
-			(stroke
-				(width 0.2)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "a1514401-9b8f-41ca-8433-fdad91cc240e")
-		)
-		(fp_line
-			(start -1.35 0.95)
-			(end 1.35 0.95)
-			(stroke
-				(width 0.2)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "28c0576d-d318-46c4-b7d6-d374a5f69dcd")
-		)
-		(fp_line
-			(start -2.4 -1.3)
-			(end -2.26 -1.3)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "7b3df7cc-060a-4566-a047-d53257db64c1")
-		)
-		(fp_line
-			(start -2.4 0.8)
-			(end -2.4 -1.3)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "cd7969c0-ba43-4502-9415-f728436eecc3")
-		)
-		(fp_line
-			(start -2.26 -1.3)
-			(end 1.7 -1.3)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "6e7596f4-2e26-441e-9da8-fc15702a222e")
-		)
-		(fp_line
-			(start -1.7 0.8)
-			(end -2.4 0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "fb42aa9e-335b-4539-9ffe-8dbca9962bcd")
-		)
-		(fp_line
-			(start -1.7 1.3)
-			(end -1.7 0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "d8f97232-1630-4620-9667-9a2824942ef2")
-		)
-		(fp_line
-			(start 1.7 -0.8)
-			(end 1.7 -1.3)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "f716c2eb-510c-4cd2-9ae4-4c8904c8e72f")
-		)
-		(fp_line
-			(start 1.7 0.775)
-			(end 1.7 1.3)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "606e1a48-7bb1-453e-8116-e9957c2ec948")
-		)
-		(fp_line
-			(start 1.7 0.775)
-			(end 2.4 0.775)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "45dc3eb2-3bf1-4f48-82a8-f00f96293d40")
-		)
-		(fp_line
-			(start 1.7 1.3)
-			(end -1.7 1.3)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "cc1ccab2-f87e-4fae-83b3-d7540eb5378a")
-		)
-		(fp_line
-			(start 2.4 -0.8)
-			(end 1.7 -0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "96db3417-d044-45d3-a09c-dce21c0cd53b")
-		)
-		(fp_line
-			(start 2.4 0.775)
-			(end 2.4 -0.8)
-			(stroke
-				(width 0.05)
-				(type default)
-			)
-			(layer "F.CrtYd")
-			(uuid "e555135c-7303-4fc7-9bd4-717bb10ea585")
-		)
-		(fp_line
-			(start -1.35 -0.95)
-			(end 1.35 -0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "5fd51a3b-e787-4e26-a597-7e7b4b4166e4")
-		)
-		(fp_line
-			(start -1.35 -0.34)
-			(end -0.74 -0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "586bfc51-2b2d-4a9d-bc6f-7b23bdf73503")
-		)
-		(fp_line
-			(start -1.35 0.95)
-			(end -1.35 -0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "71c76529-eb4d-45d7-8114-5ffe0a2eee95")
-		)
-		(fp_line
-			(start 1.35 -0.95)
-			(end 1.35 0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "f368bbc7-951b-4cbd-bdfe-bf1ceea10d35")
-		)
-		(fp_line
-			(start 1.35 0.95)
-			(end -1.35 0.95)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "e037a05b-9853-47d9-b3cd-b26f02d38a5c")
-		)
-		(fp_text user "${REFERENCE}"
-			(at -0.1 2.5 0)
-			(layer "F.Fab")
-			(uuid "b171dd4a-2074-45b2-ba87-9f3dee7555cd")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.6)
-				)
-			)
-		)
-		(pad "1" smd rect
-			(at -1.5 0 90)
-			(size 1.12 1.22)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 48 "Net-(D507-A1)")
-			(pinfunction "A1")
-			(pintype "passive")
-			(uuid "d15a1e8a-15d3-4e59-ae44-3011d1c68dbf")
-		)
-		(pad "2" smd rect
-			(at 1.5 0 90)
-			(size 1.12 1.22)
-			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 51 "/SensorRecievers/Sensor3")
-			(pinfunction "A2")
-			(pintype "passive")
-			(uuid "70ff7db4-056d-4d80-bac4-c926a9d05cc8")
-		)
-		(embedded_fonts no)
-		(model "C:/Users/Nathan/OneDrive/Documents/Family/001 - House/015 - Water Tanks/002 - Circuitry Components/001 - Footprints/LIB_SMF4L13AT1G/SMF4L13AT1G/3D/SMF4L13AT1G.stp"
-			(offset
-				(xyz 0 0 0)
-			)
-			(scale
-				(xyz 1 1 1)
-			)
-			(rotate
-				(xyz 0 0 0)
-			)
-		)
-	)
 	(footprint "JLCPCB Basic:CAPC2012X140N"
 		(layer "F.Cu")
 		(uuid "beaad1d5-1f6b-49c9-be06-f58f52071d53")
@@ -16211,6 +14721,742 @@
 		)
 		(embedded_fonts no)
 		(model "C:/Users/Nathan/OneDrive/Documents/Family/001 - House/015 - Water Tanks/002 - Circuitry Components/002 - Custom Libraries/JLCPCB Basic/LIB_CC0603KRX7R9BB104/CC0603KRX7R9BB104/3D/CC0603KRX7R9BB104.stp"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
+	)
+	(footprint "LITTELFUSE Diodes:SODFL3619X98N"
+		(layer "F.Cu")
+		(uuid "c151da0e-26d5-4c6c-99bd-e30ae142a9ab")
+		(at 154.0625 120.3)
+		(descr "SOD−123FL_2.7")
+		(tags "TVS Diode (Uni-directional)")
+		(property "Reference" "D408"
+			(at -0.8 -2.1 0)
+			(layer "F.SilkS")
+			(uuid "75cb190d-abf4-449a-9253-3bb14941494e")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.254)
+				)
+			)
+		)
+		(property "Value" "28V 1uA Leak"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "de527f03-a6fd-4f6e-8e38-c2e0ab7b474d")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.254)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.littelfuse.com/media?resourcetype=datasheets&itemid=f093622a-2591-4e70-85e6-32321d2f8c5a&filename=tvs-diode-smf4l-t1g-datasheet"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "aed9529e-52ce-41e3-9526-33c223ef2b9d")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" "TVS Diode, Uni-directional, 200W"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "8a086bf4-68d4-4872-85a0-b1d934576240")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Height" "0.98"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "9d1d6d1a-bff2-4ea5-af0c-51e53d6e63b5")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Littelfuse"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "2df51af3-a3d2-4448-82da-e6e4cc3c37fd")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer Part No" "SMF28A"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "c0323638-2b95-47d1-acca-a98b27a23599")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "JLCPCB Part #" "C720061"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "87a8cc9e-481f-4301-88be-f6b55224535c")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Part Type" "Extended"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "19bec930-26c0-48b7-95b3-4e52a6421d3d")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Package" "SOD-123FL"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "d1781231-eb4f-43ce-a525-28e6e39561b2")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(path "/04cb4c22-9f48-453c-9321-ed5f92a048ae/c28d80cf-f5ff-4e8e-8e0c-ea62e5f2b5ef")
+		(sheetname "/SensorRecievers/")
+		(sheetfile "sensorrecievers.kicad_sch")
+		(attr smd)
+		(fp_line
+			(start -2.11 -0.95)
+			(end 1.35 -0.95)
+			(stroke
+				(width 0.2)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "21eeffae-7df0-4038-81d2-b245392440d3")
+		)
+		(fp_line
+			(start -1.35 0.95)
+			(end 1.35 0.95)
+			(stroke
+				(width 0.2)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "0e74194f-6c2a-4425-af9b-d58d834a4e54")
+		)
+		(fp_circle
+			(center -2.6 0)
+			(end -2.6 0.1)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(fill yes)
+			(layer "F.SilkS")
+			(uuid "ce1aa4ec-33af-4411-97e0-b1fe3b7658f5")
+		)
+		(fp_line
+			(start -2.4 -1.3)
+			(end -2.26 -1.3)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "aca2cc8f-b871-4677-97b8-91866174770c")
+		)
+		(fp_line
+			(start -2.4 1)
+			(end -2.4 -1.3)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "d741742e-3650-494f-a224-94a4fc5255d4")
+		)
+		(fp_line
+			(start -2.26 -1.3)
+			(end 1.7 -1.3)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "74155c49-fa11-4f5c-92d7-bea3744c058c")
+		)
+		(fp_line
+			(start -1.7 1)
+			(end -2.4 1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "810c088d-9992-4ccd-8899-55651c40f076")
+		)
+		(fp_line
+			(start -1.7 1.3)
+			(end -1.7 1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "b0d83278-8113-4d40-8ceb-c7a9f075d578")
+		)
+		(fp_line
+			(start 1.7 -1)
+			(end 1.7 -1.3)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "0a7f1ccd-e96c-40a0-a514-b00ae0733954")
+		)
+		(fp_line
+			(start 1.7 1)
+			(end 1.7 1.3)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "790c04f8-b2fa-46ae-89f8-16cf986cc37c")
+		)
+		(fp_line
+			(start 1.7 1)
+			(end 2.4 1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "1d2acfee-b4e8-419c-aaed-39c568b135f5")
+		)
+		(fp_line
+			(start 1.7 1.3)
+			(end -1.7 1.3)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "1ba8b62e-f9bf-4e1c-a8b9-be9a06de7ed4")
+		)
+		(fp_line
+			(start 2.4 -1)
+			(end 1.7 -1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "795461b8-89bf-464f-9cd6-7b8224b5f672")
+		)
+		(fp_line
+			(start 2.4 1)
+			(end 2.4 -1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "ae6a5133-c388-48d6-a911-8f25b7ba5a34")
+		)
+		(fp_line
+			(start -1.35 -0.95)
+			(end 1.35 -0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "860c8b6d-08e6-4a8d-b007-beb72db7eaba")
+		)
+		(fp_line
+			(start -1.35 -0.34)
+			(end -0.74 -0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "76d87a61-f3fa-4704-ba61-c74f6a948126")
+		)
+		(fp_line
+			(start -1.35 0.95)
+			(end -1.35 -0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "a639e6fb-718e-4e93-91f9-ebafa2d674fd")
+		)
+		(fp_line
+			(start 1.35 -0.95)
+			(end 1.35 0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "6fcee938-d005-48bb-9950-97c815fea838")
+		)
+		(fp_line
+			(start 1.35 0.95)
+			(end -1.35 0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "5dd9342a-5adf-44c6-8c62-385a894005d4")
+		)
+		(fp_text user "${REFERENCE}"
+			(at -0.1 2.5 0)
+			(layer "F.Fab")
+			(uuid "51da38e0-60ad-4d71-9fa9-9284a6fcaef6")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.254)
+				)
+			)
+		)
+		(pad "1" smd rect
+			(at -1.455 0 90)
+			(size 1.4 1.31)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net 48 "Net-(D407-A1)")
+			(pinfunction "A1")
+			(pintype "passive")
+			(uuid "fbf34f81-045c-48df-97fb-93c64f7484ac")
+		)
+		(pad "2" smd rect
+			(at 1.455 0 90)
+			(size 1.4 1.31)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net 51 "/SensorRecievers/Sensor3")
+			(pinfunction "A2")
+			(pintype "passive")
+			(uuid "7c2583de-a35a-4833-9f5f-999ecb3a0dbf")
+		)
+		(embedded_fonts no)
+		(model "C:/Users/Nathan/OneDrive/Documents/Family/001 - House/015 - Water Tanks/002 - Circuitry Components/001 - Footprints/LIB_SMF4L13AT1G/SMF4L13AT1G/3D/SMF4L13AT1G.stp"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
+	)
+	(footprint "LITTELFUSE Diodes:SODFL3619X98N"
+		(layer "F.Cu")
+		(uuid "c3dedec2-d381-4e7f-bbf6-332ed41a1673")
+		(at 133.4 120.3)
+		(descr "SOD−123FL_2.7")
+		(tags "TVS Diode (Uni-directional)")
+		(property "Reference" "D403"
+			(at -0.8 -2.1 0)
+			(layer "F.SilkS")
+			(uuid "471da67a-eadf-49a7-88d9-6b60d5b8ec31")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.254)
+				)
+			)
+		)
+		(property "Value" "28V 1uA Leak"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "4745cfc9-f378-44e0-9317-bf031f7524ac")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.254)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.littelfuse.com/media?resourcetype=datasheets&itemid=f093622a-2591-4e70-85e6-32321d2f8c5a&filename=tvs-diode-smf4l-t1g-datasheet"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "4c8c8cf6-967e-4226-9a39-9fa2f2cc59e6")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" "TVS Diode, Uni-directional, 200W"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "70552778-6930-43d2-9831-4addd37ec215")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Height" "0.98"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "11137b24-8ebb-4c80-ba94-2337cd01518f")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Littelfuse"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "6abdc67f-d8e9-413e-9487-76fc92ad3ebf")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer Part No" "SMF28A"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "845a2fb1-9d19-4365-a490-46f2e690544c")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "JLCPCB Part #" "C720061"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "4151ba8f-53cd-47be-93fd-47dd8ac1c32b")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Part Type" "Extended"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "fbcd6306-f55b-4adf-b233-83f65d09834d")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Package" "SOD-123FL"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "8a0aefe4-d687-4832-852e-b8298b105af9")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(path "/04cb4c22-9f48-453c-9321-ed5f92a048ae/956c65ac-b84d-483b-925e-882cfb9036f4")
+		(sheetname "/SensorRecievers/")
+		(sheetfile "sensorrecievers.kicad_sch")
+		(attr smd)
+		(fp_line
+			(start -2.11 -0.95)
+			(end 1.35 -0.95)
+			(stroke
+				(width 0.2)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "ce2e9e76-ea2a-44d3-ba85-9edc32b2e687")
+		)
+		(fp_line
+			(start -1.35 0.95)
+			(end 1.35 0.95)
+			(stroke
+				(width 0.2)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "ba2f4ae7-8f6d-4045-bed7-cd31fe3dd325")
+		)
+		(fp_circle
+			(center -2.6 0)
+			(end -2.6 0.1)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(fill yes)
+			(layer "F.SilkS")
+			(uuid "42d69d1b-e80e-421b-848e-555eaab31a8d")
+		)
+		(fp_line
+			(start -2.4 -1.3)
+			(end -2.26 -1.3)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "96e51538-2064-409c-8529-a7287bb4bf35")
+		)
+		(fp_line
+			(start -2.4 1)
+			(end -2.4 -1.3)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "0685bf6a-9ecb-4a01-8605-66700c52a39f")
+		)
+		(fp_line
+			(start -2.26 -1.3)
+			(end 1.7 -1.3)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "39fc1ca0-3d8f-4762-a3f6-e69dea54426d")
+		)
+		(fp_line
+			(start -1.7 1)
+			(end -2.4 1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "967c5a72-f23d-4a7e-bcf7-57c178136aa5")
+		)
+		(fp_line
+			(start -1.7 1.3)
+			(end -1.7 1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "1000580c-5bb1-4b47-8508-b4f67aa895e6")
+		)
+		(fp_line
+			(start 1.7 -1)
+			(end 1.7 -1.3)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "d0e13138-25ff-4d05-9428-6bfedb4689f7")
+		)
+		(fp_line
+			(start 1.7 1)
+			(end 1.7 1.3)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "57b269a8-590b-40e7-bad1-bdfe1661e349")
+		)
+		(fp_line
+			(start 1.7 1)
+			(end 2.4 1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "37a64422-8d97-4f85-a40f-435d4c336609")
+		)
+		(fp_line
+			(start 1.7 1.3)
+			(end -1.7 1.3)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "60d5cb98-f5ca-4041-9c3c-b175b72730f2")
+		)
+		(fp_line
+			(start 2.4 -1)
+			(end 1.7 -1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "bb028d11-e1c5-4748-b09d-226acc1bc902")
+		)
+		(fp_line
+			(start 2.4 1)
+			(end 2.4 -1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "ec98d5b9-0b9f-4f9e-9d97-b08b89c636f2")
+		)
+		(fp_line
+			(start -1.35 -0.95)
+			(end 1.35 -0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "8aeeef69-8fc2-4b7b-9f38-fb16c2830513")
+		)
+		(fp_line
+			(start -1.35 -0.34)
+			(end -0.74 -0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "fd4cdff7-3254-4bf0-889f-83c0b75562f7")
+		)
+		(fp_line
+			(start -1.35 0.95)
+			(end -1.35 -0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "22d53cc5-13ad-4a92-b1bc-fea470835820")
+		)
+		(fp_line
+			(start 1.35 -0.95)
+			(end 1.35 0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "65c8a6a4-bb98-4199-8f64-a7a4e90e918e")
+		)
+		(fp_line
+			(start 1.35 0.95)
+			(end -1.35 0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "ca3ae446-2b31-4a58-914c-8d2b0916e651")
+		)
+		(fp_text user "${REFERENCE}"
+			(at -0.1 2.5 0)
+			(layer "F.Fab")
+			(uuid "2f3cc60d-6eea-48cb-9076-ba072a62c633")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.254)
+				)
+			)
+		)
+		(pad "1" smd rect
+			(at -1.455 0 90)
+			(size 1.4 1.31)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net 49 "/SensorRecievers/Sensor1")
+			(pinfunction "A1")
+			(pintype "passive")
+			(uuid "2e3e23de-e2ab-4c08-89a0-87ee5dbec5cc")
+		)
+		(pad "2" smd rect
+			(at 1.455 0 90)
+			(size 1.4 1.31)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net 1 "GND")
+			(pinfunction "A2")
+			(pintype "passive")
+			(uuid "00715041-bbf5-48ea-832e-9e21758c6772")
+		)
+		(embedded_fonts no)
+		(model "C:/Users/Nathan/OneDrive/Documents/Family/001 - House/015 - Water Tanks/002 - Circuitry Components/001 - Footprints/LIB_SMF4L13AT1G/SMF4L13AT1G/3D/SMF4L13AT1G.stp"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -17401,7 +16647,7 @@
 			(at 1.4732 0 180)
 			(size 1.1176 1.7526)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 48 "Net-(D507-A1)")
+			(net 48 "Net-(D407-A1)")
 			(pinfunction "2")
 			(pintype "passive")
 			(uuid "6ccdb60e-2ceb-4e0d-bae7-dd526f619b8b")
@@ -18669,6 +17915,374 @@
 			)
 		)
 	)
+	(footprint "LITTELFUSE Diodes:SODFL3619X98N"
+		(layer "F.Cu")
+		(uuid "e5e3e754-1984-4800-aa18-a530ac01bdef")
+		(at 128.2 120.3)
+		(descr "SOD−123FL_2.7")
+		(tags "TVS Diode (Uni-directional)")
+		(property "Reference" "D402"
+			(at -0.8 -2.1 0)
+			(layer "F.SilkS")
+			(uuid "24fa9ae1-cde1-456a-8dbf-c50749b903fa")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.254)
+				)
+			)
+		)
+		(property "Value" "28V 1uA Leak"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "68122d7a-bf63-4128-b4cc-c45a06869930")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.254)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.littelfuse.com/media?resourcetype=datasheets&itemid=f093622a-2591-4e70-85e6-32321d2f8c5a&filename=tvs-diode-smf4l-t1g-datasheet"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "0b7056ac-27ed-4b70-a3e8-f60892b27ef6")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" "TVS Diode, Uni-directional, 200W"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "84a8f2f4-e450-46cb-bf72-b60b3cd54450")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Height" "0.98"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "322e0222-fc91-4678-9000-501471dce413")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Littelfuse"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "75cf3235-c5f6-4681-8bcb-02c15eed24a0")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer Part No" "SMF28A"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "50a030be-eae9-443f-a818-dc2a16e58f2e")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "JLCPCB Part #" "C720061"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "4d203fbc-c7f9-4258-91ad-61b82436e75e")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Part Type" "Extended"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "b11395af-5007-4b25-84b8-c707ebf1388e")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Package" "SOD-123FL"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "883824af-f505-4e1e-8c10-96d06b243972")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(path "/04cb4c22-9f48-453c-9321-ed5f92a048ae/f060aa06-b762-4276-8e11-5e0259bd8222")
+		(sheetname "/SensorRecievers/")
+		(sheetfile "sensorrecievers.kicad_sch")
+		(attr smd)
+		(fp_line
+			(start -2.11 -0.95)
+			(end 1.35 -0.95)
+			(stroke
+				(width 0.2)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "ed7a3d42-129d-4e52-9a3e-a7d0e47f0c9f")
+		)
+		(fp_line
+			(start -1.35 0.95)
+			(end 1.35 0.95)
+			(stroke
+				(width 0.2)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "e1a2e1b2-8ac9-491a-8e72-e50b972b07bc")
+		)
+		(fp_circle
+			(center -2.6 0)
+			(end -2.6 0.1)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(fill yes)
+			(layer "F.SilkS")
+			(uuid "939c180e-6995-4567-8cc4-ae0a0ade6983")
+		)
+		(fp_line
+			(start -2.4 -1.3)
+			(end -2.26 -1.3)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "c32aa410-b112-41ca-a8f5-99e279ec9f71")
+		)
+		(fp_line
+			(start -2.4 1)
+			(end -2.4 -1.3)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "d1c67afd-267a-47ec-b5f0-740a5d97decd")
+		)
+		(fp_line
+			(start -2.26 -1.3)
+			(end 1.7 -1.3)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "622cd182-3732-4bb6-9640-c15c3cafdd4a")
+		)
+		(fp_line
+			(start -1.7 1)
+			(end -2.4 1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "b72eca6a-bed4-487d-83db-0ba687335f71")
+		)
+		(fp_line
+			(start -1.7 1.3)
+			(end -1.7 1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "1dc1f555-04e7-444e-9a3b-9375b2f8e300")
+		)
+		(fp_line
+			(start 1.7 -1)
+			(end 1.7 -1.3)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "9d1d4db0-3a2e-40f9-847b-c28eae2e7833")
+		)
+		(fp_line
+			(start 1.7 1)
+			(end 1.7 1.3)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "dd80457f-8c14-48c7-bd97-e9dc553528a3")
+		)
+		(fp_line
+			(start 1.7 1)
+			(end 2.4 1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "9eae8f5a-0680-4871-9557-2d3e9399ef38")
+		)
+		(fp_line
+			(start 1.7 1.3)
+			(end -1.7 1.3)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "2aeb9cc4-4287-4dae-8f7e-72ead8a5491b")
+		)
+		(fp_line
+			(start 2.4 -1)
+			(end 1.7 -1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "9281d61a-161c-4064-8640-b906f67bece2")
+		)
+		(fp_line
+			(start 2.4 1)
+			(end 2.4 -1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "67b13c4a-0db1-47c7-a263-590e669e7d96")
+		)
+		(fp_line
+			(start -1.35 -0.95)
+			(end 1.35 -0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "9d55b2e2-1547-41be-9f86-3a5a554beba2")
+		)
+		(fp_line
+			(start -1.35 -0.34)
+			(end -0.74 -0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "d3ecd254-5ee6-4f00-8d78-50c5afa90860")
+		)
+		(fp_line
+			(start -1.35 0.95)
+			(end -1.35 -0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "47d04d44-5763-4e4d-a425-08408f17ccb7")
+		)
+		(fp_line
+			(start 1.35 -0.95)
+			(end 1.35 0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "5eba5d94-2424-42cd-8b18-aceacd1ea7b0")
+		)
+		(fp_line
+			(start 1.35 0.95)
+			(end -1.35 0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "055c01d2-9e21-4ab8-9490-df98ea948c8f")
+		)
+		(fp_text user "${REFERENCE}"
+			(at -0.1 2.5 0)
+			(layer "F.Fab")
+			(uuid "09df5c98-d2b4-4d57-8eea-cf66eda5646e")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.254)
+				)
+			)
+		)
+		(pad "1" smd rect
+			(at -1.455 0 90)
+			(size 1.4 1.31)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net 46 "Net-(D401-A1)")
+			(pinfunction "A1")
+			(pintype "passive")
+			(uuid "0caaf969-6424-4bc6-b209-cfb3a88e303f")
+		)
+		(pad "2" smd rect
+			(at 1.455 0 90)
+			(size 1.4 1.31)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net 49 "/SensorRecievers/Sensor1")
+			(pinfunction "A2")
+			(pintype "passive")
+			(uuid "059ec3e8-c0a2-4df8-b059-a8d0e860b9c1")
+		)
+		(embedded_fonts no)
+		(model "C:/Users/Nathan/OneDrive/Documents/Family/001 - House/015 - Water Tanks/002 - Circuitry Components/001 - Footprints/LIB_SMF4L13AT1G/SMF4L13AT1G/3D/SMF4L13AT1G.stp"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
+	)
 	(footprint "PANASONIC Capacitors:EEE0GA101SR"
 		(layer "F.Cu")
 		(uuid "e74723b7-375c-494d-9be2-10c492d12e68")
@@ -19712,7 +19326,7 @@
 			(at -0.95 0 90)
 			(size 1 1.45)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net 46 "Net-(D501-A1)")
+			(net 46 "Net-(D401-A1)")
 			(pinfunction "1")
 			(pintype "passive")
 			(uuid "0c0dfeb1-59cf-470d-b9af-7d60e922dac5")
@@ -20623,6 +20237,374 @@
 		)
 		(embedded_fonts no)
 		(model "C:/Users/Nathan/OneDrive/Documents/Family/001 - House/015 - Water Tanks/002 - Circuitry Components/002 - Custom Libraries/JLCPCB Basic/LIB_CC0603KRX7R9BB104/CC0603KRX7R9BB104/3D/CC0603KRX7R9BB104.stp"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
+	)
+	(footprint "LITTELFUSE Diodes:SODFL3619X98N"
+		(layer "F.Cu")
+		(uuid "fbf9998e-570a-45d9-bbc3-d4f309623460")
+		(at 146.4 117.5)
+		(descr "SOD−123FL_2.7")
+		(tags "TVS Diode (Uni-directional)")
+		(property "Reference" "D406"
+			(at -0.8 -2.1 0)
+			(layer "F.SilkS")
+			(uuid "e875dbe4-b0b9-466c-8385-fc720f81938f")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.254)
+				)
+			)
+		)
+		(property "Value" "28V 1uA Leak"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "8ca0456c-ae28-4260-bae1-cc5bdadd61cd")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.254)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.littelfuse.com/media?resourcetype=datasheets&itemid=f093622a-2591-4e70-85e6-32321d2f8c5a&filename=tvs-diode-smf4l-t1g-datasheet"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "5e1792eb-c8dd-43a2-a868-b97a00e5231b")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" "TVS Diode, Uni-directional, 200W"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "29e2f640-6826-4f59-97d2-a8637c4ae9a6")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Height" "0.98"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "228a28d3-c19b-4339-920c-88a904760bb6")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Littelfuse"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "6029979d-ac40-4a8a-8463-a054de4a0cc6")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer Part No" "SMF28A"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "3454ac84-9d8f-4fee-bc5b-41af7fec6573")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "JLCPCB Part #" "C720061"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "62a48faa-bb1c-45b8-b48d-260c46ee6849")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Part Type" "Extended"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "ef11b159-5a8c-4525-8776-cb767c07ed5a")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Package" "SOD-123FL"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "c47c61e6-5f34-4e68-9350-fe74dd6b0a5b")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(path "/04cb4c22-9f48-453c-9321-ed5f92a048ae/d5cfb76f-8497-4b29-8516-b761a66740f1")
+		(sheetname "/SensorRecievers/")
+		(sheetfile "sensorrecievers.kicad_sch")
+		(attr smd)
+		(fp_line
+			(start -2.11 -0.95)
+			(end 1.35 -0.95)
+			(stroke
+				(width 0.2)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "550fbb9d-66f4-4f94-9863-6785ee61120d")
+		)
+		(fp_line
+			(start -1.35 0.95)
+			(end 1.35 0.95)
+			(stroke
+				(width 0.2)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "2cf4f442-270e-47bf-880e-ca4412dae25e")
+		)
+		(fp_circle
+			(center -2.6 0)
+			(end -2.6 0.1)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(fill yes)
+			(layer "F.SilkS")
+			(uuid "6885c32c-843d-48ad-8c27-344c2c01a7c4")
+		)
+		(fp_line
+			(start -2.4 -1.3)
+			(end -2.26 -1.3)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "27609f1f-c5db-4676-a3f0-2f1009b697ff")
+		)
+		(fp_line
+			(start -2.4 1)
+			(end -2.4 -1.3)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "e806604b-7ada-41b2-98ae-e5cd019ef05f")
+		)
+		(fp_line
+			(start -2.26 -1.3)
+			(end 1.7 -1.3)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "66ff72c1-297f-466f-84da-6493768e4fa0")
+		)
+		(fp_line
+			(start -1.7 1)
+			(end -2.4 1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "7ca4d656-24e5-4f35-b4ca-a99477f64e9d")
+		)
+		(fp_line
+			(start -1.7 1.3)
+			(end -1.7 1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "a20a8f45-ce4c-4d0c-8699-8a20b906432c")
+		)
+		(fp_line
+			(start 1.7 -1)
+			(end 1.7 -1.3)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "85da0351-c332-4e6e-850c-332ebaccbd55")
+		)
+		(fp_line
+			(start 1.7 1)
+			(end 1.7 1.3)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "cc756edb-dbde-4746-b970-ebb471bdf684")
+		)
+		(fp_line
+			(start 1.7 1)
+			(end 2.4 1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "7305d853-5e20-42c2-a192-0c14f1c08729")
+		)
+		(fp_line
+			(start 1.7 1.3)
+			(end -1.7 1.3)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "61f2f981-1074-4965-8c41-11790482778d")
+		)
+		(fp_line
+			(start 2.4 -1)
+			(end 1.7 -1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "15f621d1-a69c-449f-a354-fa709bc3ca77")
+		)
+		(fp_line
+			(start 2.4 1)
+			(end 2.4 -1)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(layer "F.CrtYd")
+			(uuid "bded0f55-11e2-497d-9dd4-6e327f16aee4")
+		)
+		(fp_line
+			(start -1.35 -0.95)
+			(end 1.35 -0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "1d502672-1f0e-465c-800b-08d95e42cda2")
+		)
+		(fp_line
+			(start -1.35 -0.34)
+			(end -0.74 -0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "cf6dc0c9-dd10-457e-9b72-9cfa31629b62")
+		)
+		(fp_line
+			(start -1.35 0.95)
+			(end -1.35 -0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "57eae935-4604-4f8c-808a-9d76608d5c94")
+		)
+		(fp_line
+			(start 1.35 -0.95)
+			(end 1.35 0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "cdcf9493-d971-452a-8556-06c8bf09b771")
+		)
+		(fp_line
+			(start 1.35 0.95)
+			(end -1.35 0.95)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "c09dc22e-8f5f-4fb3-b6f4-47e1d1c3b37e")
+		)
+		(fp_text user "${REFERENCE}"
+			(at -0.1 2.5 0)
+			(layer "F.Fab")
+			(uuid "5ca9da87-bd21-40ed-860a-bf40e05f824b")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.254)
+				)
+			)
+		)
+		(pad "1" smd rect
+			(at -1.455 0 90)
+			(size 1.4 1.31)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net 50 "/SensorRecievers/Sensor2")
+			(pinfunction "A1")
+			(pintype "passive")
+			(uuid "275a08cd-d2f7-49ac-98a9-7a94fb5aa440")
+		)
+		(pad "2" smd rect
+			(at 1.455 0 90)
+			(size 1.4 1.31)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net 1 "GND")
+			(pinfunction "A2")
+			(pintype "passive")
+			(uuid "c0d47c49-4f92-4230-b6c4-b82d75ca64ef")
+		)
+		(embedded_fonts no)
+		(model "C:/Users/Nathan/OneDrive/Documents/Family/001 - House/015 - Water Tanks/002 - Circuitry Components/001 - Footprints/LIB_SMF4L13AT1G/SMF4L13AT1G/3D/SMF4L13AT1G.stp"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -23084,14 +23066,6 @@
 		(uuid "13ab3ab2-d249-4bf0-8f48-8915372224ce")
 	)
 	(segment
-		(start 147.6732 120.37)
-		(end 146.523201 120.37)
-		(width 0.5)
-		(layer "F.Cu")
-		(net 1)
-		(uuid "13dff308-b607-41c3-8a8d-302587ba1ee4")
-	)
-	(segment
 		(start 146.1375 90.4375)
 		(end 147.4 90.4375)
 		(width 0.5)
@@ -23124,12 +23098,12 @@
 		(uuid "3801bc01-fe89-4a14-a6ea-22c5e676bd26")
 	)
 	(segment
-		(start 146.523201 120.37)
-		(end 146.4732 120.420001)
-		(width 0.25)
+		(start 146.23 120.37)
+		(end 146.1 120.5)
+		(width 0.5)
 		(layer "F.Cu")
 		(net 1)
-		(uuid "3f51afc5-0dcf-4574-acd5-491ab4c277c7")
+		(uuid "3a940834-d299-4e59-9d85-b673b4f6616d")
 	)
 	(segment
 		(start 153.3 107.1)
@@ -23140,6 +23114,14 @@
 		(uuid "3f66a5fd-aee8-423b-a994-ad07ff79eda1")
 	)
 	(segment
+		(start 121.1732 121.520001)
+		(end 121.1732 120.920001)
+		(width 0.5)
+		(layer "F.Cu")
+		(net 1)
+		(uuid "42fc3288-3034-4811-a841-31972371fe86")
+	)
+	(segment
 		(start 157 108.2)
 		(end 157 109.363201)
 		(width 0.4)
@@ -23148,20 +23130,20 @@
 		(uuid "43e22b85-4a02-4b73-aceb-9ab69db9761e")
 	)
 	(segment
+		(start 134.1764 117.47)
+		(end 134.8125 117.47)
+		(width 0.5)
+		(layer "F.Cu")
+		(net 1)
+		(uuid "44f8510d-dc50-44fd-b5e6-cdc5e2a8444e")
+	)
+	(segment
 		(start 148.9232 113.135)
 		(end 147.8732 113.135)
 		(width 0.25)
 		(layer "F.Cu")
 		(net 1)
 		(uuid "491ad210-4824-4ecc-a631-fab719849baf")
-	)
-	(segment
-		(start 161.1732 120.920001)
-		(end 160.5732 120.320001)
-		(width 0.5)
-		(layer "F.Cu")
-		(net 1)
-		(uuid "50572658-ad58-4acf-80fc-876131fbf7d0")
 	)
 	(segment
 		(start 126.9943 111.835)
@@ -23178,6 +23160,14 @@
 		(layer "F.Cu")
 		(net 1)
 		(uuid "602336f3-d52e-4002-a9a4-e32d2089dab8")
+	)
+	(segment
+		(start 121.1732 120.920001)
+		(end 121.7732 120.320001)
+		(width 0.5)
+		(layer "F.Cu")
+		(net 1)
+		(uuid "64a909cc-4ff6-497f-9138-53774ae522ad")
 	)
 	(segment
 		(start 154.4625 89.6375)
@@ -23244,14 +23234,6 @@
 		(uuid "7a009cee-1187-493a-9e36-387f9b18ddd2")
 	)
 	(segment
-		(start 121.1732 121.520001)
-		(end 121.1732 120.920001)
-		(width 0.5)
-		(layer "F.Cu")
-		(net 1)
-		(uuid "7e569a6f-4e75-41ed-87d0-ead7ec3af640")
-	)
-	(segment
 		(start 130.78 89.1)
 		(end 130.78 91)
 		(width 0.25)
@@ -23284,6 +23266,14 @@
 		(uuid "9ad739a0-f79b-41cf-9c66-1de8902ac013")
 	)
 	(segment
+		(start 133.4 117.6)
+		(end 134.0464 117.6)
+		(width 0.5)
+		(layer "F.Cu")
+		(net 1)
+		(uuid "a4644fe7-72e0-4859-a90b-c62471a44478")
+	)
+	(segment
 		(start 129.7 94.5)
 		(end 130.1 94.5)
 		(width 0.25)
@@ -23292,12 +23282,20 @@
 		(uuid "a6ae247a-5b3d-4d30-9dbf-7ba0bcabe705")
 	)
 	(segment
+		(start 134.8125 117.47)
+		(end 134.8825 117.4)
+		(width 0.5)
+		(layer "F.Cu")
+		(net 1)
+		(uuid "af7ddcfc-8ffe-47d2-8347-30d7443ed6f0")
+	)
+	(segment
 		(start 161.1732 121.420001)
 		(end 161.1732 120.920001)
 		(width 0.5)
 		(layer "F.Cu")
 		(net 1)
-		(uuid "b3a59cb3-3afb-427f-97fe-ac6d3444aad3")
+		(uuid "b3822fa3-86ab-4b14-b4f2-e4236be93647")
 	)
 	(segment
 		(start 136.1821 111.6821)
@@ -23316,20 +23314,20 @@
 		(uuid "b79fbc41-034f-4c51-a5f9-e7765606cbea")
 	)
 	(segment
-		(start 134.1764 117.47)
-		(end 134.6732 117.47)
-		(width 0.5)
-		(layer "F.Cu")
-		(net 1)
-		(uuid "b7d9710a-a045-48ae-9c8c-3afbef0f5067")
-	)
-	(segment
 		(start 155.664582 89.6375)
 		(end 155.751041 89.551041)
 		(width 0.25)
 		(layer "F.Cu")
 		(net 1)
 		(uuid "c0325d63-1513-45e2-916f-a7e1c98973f6")
+	)
+	(segment
+		(start 147.6732 120.37)
+		(end 146.23 120.37)
+		(width 0.5)
+		(layer "F.Cu")
+		(net 1)
+		(uuid "c4abe997-ca41-4709-b248-94be959ba1ff")
 	)
 	(segment
 		(start 143.14 91.06)
@@ -23348,14 +23346,6 @@
 		(uuid "ce0cca56-9962-4cde-9fdf-703a60f0f10f")
 	)
 	(segment
-		(start 121.1732 120.920001)
-		(end 121.7732 120.320001)
-		(width 0.5)
-		(layer "F.Cu")
-		(net 1)
-		(uuid "cfceae1a-1b65-4354-b1ca-277618cd288f")
-	)
-	(segment
 		(start 146.198 104.4)
 		(end 145.9 104.102)
 		(width 0.25)
@@ -23372,12 +23362,36 @@
 		(uuid "da36e47b-5ae3-446c-a3a4-d4dae1199d1a")
 	)
 	(segment
+		(start 161.1732 120.920001)
+		(end 160.7175 120.464301)
+		(width 0.5)
+		(layer "F.Cu")
+		(net 1)
+		(uuid "dec418e2-d6ac-4d88-9c69-d243f66e9ebf")
+	)
+	(segment
 		(start 131.21 97.01)
 		(end 131.21 98.3)
 		(width 0.25)
 		(layer "F.Cu")
 		(net 1)
 		(uuid "df2e315d-1934-4e46-8191-2f9800337a9d")
+	)
+	(segment
+		(start 160.7175 120.464301)
+		(end 160.7175 120.4)
+		(width 0.5)
+		(layer "F.Cu")
+		(net 1)
+		(uuid "dfd13d5b-259f-4e6e-a6ee-bbcb4cb952ed")
+	)
+	(segment
+		(start 134.0464 117.6)
+		(end 134.1764 117.47)
+		(width 0.5)
+		(layer "F.Cu")
+		(net 1)
+		(uuid "e0c9efb2-5d9c-4210-a679-7b2ed29b6da0")
 	)
 	(segment
 		(start 152.2 97.7)
@@ -23394,14 +23408,6 @@
 		(layer "F.Cu")
 		(net 1)
 		(uuid "e30456e8-f8c7-4f1f-aabf-0ff170a4a052")
-	)
-	(segment
-		(start 134.0464 117.6)
-		(end 134.1764 117.47)
-		(width 0.5)
-		(layer "F.Cu")
-		(net 1)
-		(uuid "e61df3a2-6759-4bc3-b973-4e2b71820dd3")
 	)
 	(segment
 		(start 135.823201 120.37)
@@ -23466,14 +23472,6 @@
 		(layer "F.Cu")
 		(net 1)
 		(uuid "f94a8095-ac7c-4390-b57d-6db1a1e72bab")
-	)
-	(segment
-		(start 133.4 117.6)
-		(end 134.0464 117.6)
-		(width 0.5)
-		(layer "F.Cu")
-		(net 1)
-		(uuid "ffba8acb-c508-4323-a88c-11d45f75d3fc")
 	)
 	(via
 		(at 146.4732 107.535)
@@ -23710,7 +23708,7 @@
 		(uuid "496fa854-c56c-49db-9d0b-95ac15e14b1c")
 	)
 	(via
-		(at 146.4732 120.420001)
+		(at 146.1 120.5)
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
@@ -23737,7 +23735,7 @@
 		(uuid "54c503a3-c7c7-45a9-a9cf-59d78b19f481")
 	)
 	(via
-		(at 133.7 83.8)
+		(at 133.7 82.1)
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
@@ -23809,7 +23807,7 @@
 		(uuid "786e9814-25d1-420e-8cf1-56321779a2ae")
 	)
 	(via
-		(at 125 82.8)
+		(at 120.4 82.7)
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
@@ -23872,7 +23870,7 @@
 		(uuid "9e749959-0524-4575-a7e4-7c1a0bb9f067")
 	)
 	(via
-		(at 137.4 83.8)
+		(at 137.5 82.1)
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
@@ -25972,12 +25970,12 @@
 		(uuid "08c43a4e-f42e-4bee-bf49-93f2c349b4e0")
 	)
 	(segment
-		(start 139.6732 117.47)
-		(end 137.6732 117.47)
+		(start 137.555 117.4)
+		(end 137.7925 117.4)
 		(width 0.5)
 		(layer "F.Cu")
 		(net 47)
-		(uuid "1003ce85-de0d-4db1-87ac-425cab75e925")
+		(uuid "2638cbfa-83ba-4d0d-8fdd-4c23f19c203f")
 	)
 	(segment
 		(start 139.4089 114.085)
@@ -25988,12 +25986,28 @@
 		(uuid "74cce577-7504-4dfb-9ba8-58ac3e3413df")
 	)
 	(segment
+		(start 139.6732 117.47)
+		(end 137.625 117.47)
+		(width 0.5)
+		(layer "F.Cu")
+		(net 47)
+		(uuid "7e612a30-4f30-4b59-b160-1c1ac0eb1069")
+	)
+	(segment
 		(start 139.7589 117.3843)
 		(end 139.6732 117.47)
 		(width 0.25)
 		(layer "F.Cu")
 		(net 47)
 		(uuid "99192047-4367-450c-880f-5a54bdc06f4f")
+	)
+	(segment
+		(start 137.625 117.47)
+		(end 137.555 117.4)
+		(width 0.5)
+		(layer "F.Cu")
+		(net 47)
+		(uuid "e12f2af7-d8d6-4460-aaaa-9de0911ade3e")
 	)
 	(segment
 		(start 139.6732 119.0268)
@@ -26044,6 +26058,22 @@
 		(uuid "750be674-dbdc-4154-bd7d-573d4ddd23e7")
 	)
 	(segment
+		(start 152.5732 120.37)
+		(end 150.625 120.37)
+		(width 0.5)
+		(layer "F.Cu")
+		(net 48)
+		(uuid "7ef0a975-b7fc-4855-804d-5dcd2d6a4a4d")
+	)
+	(segment
+		(start 150.625 120.37)
+		(end 150.555 120.3)
+		(width 0.5)
+		(layer "F.Cu")
+		(net 48)
+		(uuid "9a173989-5726-4565-971b-81f14d173075")
+	)
+	(segment
 		(start 152.5732 117.5268)
 		(end 152.6 117.5)
 		(width 0.25)
@@ -26090,14 +26120,6 @@
 		(layer "F.Cu")
 		(net 48)
 		(uuid "e3d99e82-2745-40fa-a8f1-7d8a57829483")
-	)
-	(segment
-		(start 152.5732 120.37)
-		(end 150.6732 120.37)
-		(width 0.5)
-		(layer "F.Cu")
-		(net 48)
-		(uuid "f1ed31f8-7125-4edd-9c76-b952c466ab48")
 	)
 	(segment
 		(start 129.6464 117.435)
@@ -26277,6 +26299,14 @@
 	)
 	(segment
 		(start 155.5732 120.37)
+		(end 157.7775 120.37)
+		(width 0.5)
+		(layer "F.Cu")
+		(net 51)
+		(uuid "34a1eacd-b70c-4398-9a0d-f08b61af3d4f")
+	)
+	(segment
+		(start 155.5732 120.37)
 		(end 155.5732 117.5268)
 		(width 0.5)
 		(layer "F.Cu")
@@ -26308,20 +26338,20 @@
 		(uuid "8b4de024-5373-4feb-9135-ab50be1b1e33")
 	)
 	(segment
-		(start 155.5732 120.37)
-		(end 157.523201 120.37)
-		(width 0.5)
-		(layer "F.Cu")
-		(net 51)
-		(uuid "a61e58f8-f09e-498f-8bf2-864993b66e80")
-	)
-	(segment
-		(start 157.523201 120.37)
-		(end 157.5732 120.320001)
+		(start 157.8075 120.4)
+		(end 157.653199 120.4)
 		(width 0.25)
 		(layer "F.Cu")
 		(net 51)
-		(uuid "b4bed8f8-64f4-4e5f-bd85-b7c4258c25e1")
+		(uuid "b0547aa6-9324-47fd-80c0-91f5cda2e2c5")
+	)
+	(segment
+		(start 157.7775 120.37)
+		(end 157.8075 120.4)
+		(width 0.5)
+		(layer "F.Cu")
+		(net 51)
+		(uuid "bccf3cd6-f0b3-4ab7-9e2d-33fb4058202d")
 	)
 	(segment
 		(start 149.1 133.1)
@@ -26338,6 +26368,14 @@
 		(layer "F.Cu")
 		(net 51)
 		(uuid "cdc3ccef-91f5-49ee-ae16-b5b2b07ac209")
+	)
+	(segment
+		(start 157.653199 120.4)
+		(end 157.5732 120.320001)
+		(width 0.25)
+		(layer "F.Cu")
+		(net 51)
+		(uuid "d0b5fb22-6b84-4cd3-b63e-7fa348d4f0bd")
 	)
 	(segment
 		(start 156.0614 116.985)
