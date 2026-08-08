@@ -1,12 +1,12 @@
 %TF.GenerationSoftware,KiCad,Pcbnew,9.0.6*%
-%TF.CreationDate,2026-08-08T08:50:57+08:00*%
+%TF.CreationDate,2026-08-08T09:12:27+08:00*%
 %TF.ProjectId,MQTT-Module-CurrentSensors,4d515454-2d4d-46f6-9475-6c652d437572,rev?*%
 %TF.SameCoordinates,Original*%
 %TF.FileFunction,Soldermask,Top*%
 %TF.FilePolarity,Negative*%
 %FSLAX45Y45*%
 G04 Gerber Fmt 4.5, Leading zero omitted, Abs format (unit mm)*
-G04 Created by KiCad (PCBNEW 9.0.6) date 2026-08-08 08:50:57*
+G04 Created by KiCad (PCBNEW 9.0.6) date 2026-08-08 09:12:27*
 %MOMM*%
 %LPD*%
 G01*

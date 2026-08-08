@@ -417,7 +417,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "MCU_Microchip_ATmega:ATmega328PB-A"
+		(symbol "MICROCHIPTECH Microcontrollers:ATmega328PB-A"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -459,6 +459,51 @@
 				)
 			)
 			(property "Description" "20MHz, 32kB Flash, 2kB SRAM, 1kB EEPROM, TQFP-32"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Manufacturer" "Microchip Tech"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Manufacturer Part No" "ATMEGA328PB-AU"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "JLCPCB Part #" "C132230"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Package" "TQFP-32(7x7)"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Part Type" "Extended"
 				(at 0 0 0)
 				(effects
 					(font
@@ -3374,6 +3419,212 @@
 		)
 	)
 	(symbol
+		(lib_id "MICROCHIPTECH Microcontrollers:ATmega328PB-A")
+		(at 93.98 86.36 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "7c2305a4-4a84-45c3-9770-bf2ea3d92b11")
+		(property "Reference" "U202"
+			(at 96.1233 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "ATmega328PB-A"
+			(at 96.1233 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_QFP:TQFP-32_7x7mm_P0.8mm"
+			(at 93.98 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://ww1.microchip.com/downloads/en/DeviceDoc/40001906C.pdf"
+			(at 93.98 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "20MHz, 32kB Flash, 2kB SRAM, 1kB EEPROM, TQFP-32"
+			(at 93.98 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Microchip Tech"
+			(at 93.98 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer Part No" "ATMEGA328PB-AU"
+			(at 93.98 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "JLCPCB Part #" "C132230"
+			(at 93.98 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Package" "TQFP-32(7x7)"
+			(at 93.98 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Part Type" "Extended"
+			(at 93.98 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "3"
+			(uuid "99cf1f05-3b6b-4e6e-b196-a7607ba940b2")
+		)
+		(pin "20"
+			(uuid "8157a17a-f16f-44dd-8af6-43ae438d16ad")
+		)
+		(pin "22"
+			(uuid "c7ec6ace-6d67-4912-80db-185e841e3fdd")
+		)
+		(pin "6"
+			(uuid "f3d2d2ca-ed57-4867-a6af-f43418660c28")
+		)
+		(pin "12"
+			(uuid "9e17b75e-a910-4b94-8eeb-151720eafe9b")
+		)
+		(pin "14"
+			(uuid "5b736031-fc45-4cf7-a90f-ee56f4b006ae")
+		)
+		(pin "15"
+			(uuid "ab52bbb2-5189-4d20-8e3a-58ad90dadeac")
+		)
+		(pin "19"
+			(uuid "c55ebcc1-a934-4c54-936d-5ff277f4800f")
+		)
+		(pin "4"
+			(uuid "6c8b5865-7b79-43a5-bb0f-f21ad9f3ff9e")
+		)
+		(pin "21"
+			(uuid "c3ea8f7a-a034-4998-996b-4e3e36b9343f")
+		)
+		(pin "5"
+			(uuid "07ddf079-93c1-40b9-bcde-70c3113b5040")
+		)
+		(pin "18"
+			(uuid "4c181a56-3f6e-48e5-a5ce-74549d8dd5f2")
+		)
+		(pin "13"
+			(uuid "4c2ec27c-5c25-498d-b26f-68646e68db6d")
+		)
+		(pin "29"
+			(uuid "d48c04a4-9f40-449b-8d51-78e77264475c")
+		)
+		(pin "31"
+			(uuid "e3b7c9ad-796f-46d6-b8ca-94d45e598644")
+		)
+		(pin "9"
+			(uuid "f533db6f-e577-4340-aef5-3ceab83515c3")
+		)
+		(pin "30"
+			(uuid "bf171a62-7016-415b-9431-a8c49de99075")
+		)
+		(pin "23"
+			(uuid "c4161bbc-aa3a-4cc5-b591-b41d6d7106f9")
+		)
+		(pin "24"
+			(uuid "7f8579c0-38d8-4cea-998f-f411c80d47ce")
+		)
+		(pin "27"
+			(uuid "9a60bb3b-8721-45ad-8837-3bf80fab738f")
+		)
+		(pin "28"
+			(uuid "c250cef5-ba91-4fc3-85ad-6b634b2e381c")
+		)
+		(pin "1"
+			(uuid "e9d53d6f-f044-4fc8-b8e1-cc6b0fe2617d")
+		)
+		(pin "17"
+			(uuid "cfada105-543c-469e-9206-73b09072b9cc")
+		)
+		(pin "25"
+			(uuid "8cee89b2-c4a7-4424-b6cd-5bdd105060d9")
+		)
+		(pin "32"
+			(uuid "a6a41886-cb3b-40b4-b8c1-299f16d81357")
+		)
+		(pin "26"
+			(uuid "2d43b4d6-b209-4bbe-befc-fbe03aef0209")
+		)
+		(pin "11"
+			(uuid "5aefa0b6-d86b-4d10-99d1-a90485ad1bf9")
+		)
+		(pin "7"
+			(uuid "8f51d1b1-654e-45cf-8393-e5a4ba72d5d4")
+		)
+		(pin "16"
+			(uuid "c4c79c9b-15f7-4f45-bf5e-3e2766505c98")
+		)
+		(pin "8"
+			(uuid "bae481c2-4508-4b95-b7ee-0b2ae3510380")
+		)
+		(pin "2"
+			(uuid "7ddae28d-7a40-4b7a-b676-4c9b3829589a")
+		)
+		(pin "10"
+			(uuid "d6d8a03a-5653-4fa7-aa6b-b8d63ed3d4c1")
+		)
+		(instances
+			(project ""
+				(path "/fcdc4d99-6273-4901-9910-bd8fd00b962f/aa87b2dd-90b3-41b3-8e99-8dcc5f11db59"
+					(reference "U202")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:+3V3")
 		(at 247.65 46.99 270)
 		(unit 1)
@@ -3806,167 +4057,6 @@
 			(project "MQTT-Module-CurrentSensors"
 				(path "/fcdc4d99-6273-4901-9910-bd8fd00b962f/aa87b2dd-90b3-41b3-8e99-8dcc5f11db59"
 					(reference "C202")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "MCU_Microchip_ATmega:ATmega328PB-A")
-		(at 93.98 86.36 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "ea3228d1-1cea-4431-a744-87b550057ac5")
-		(property "Reference" "U201"
-			(at 96.1233 124.46 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "ATmega328PB-A"
-			(at 96.1233 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_QFP:TQFP-32_7x7mm_P0.8mm"
-			(at 93.98 86.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://ww1.microchip.com/downloads/en/DeviceDoc/40001906C.pdf"
-			(at 93.98 86.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "20MHz, 32kB Flash, 2kB SRAM, 1kB EEPROM, TQFP-32"
-			(at 93.98 86.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "22"
-			(uuid "39c18329-211b-446f-8d22-4fe4d5355ac7")
-		)
-		(pin "20"
-			(uuid "163d02c8-72d8-4f4d-8082-a2e8dd728922")
-		)
-		(pin "19"
-			(uuid "952b568f-3263-46c3-9e30-e8bf8d1df10d")
-		)
-		(pin "16"
-			(uuid "8a88959d-6a9d-4ea9-ab16-bf62ca331192")
-		)
-		(pin "3"
-			(uuid "6ad1904b-89e9-4038-9c8e-1c3c59267db8")
-		)
-		(pin "21"
-			(uuid "7a472b18-f14c-45a7-ae1e-31d2d99d21da")
-		)
-		(pin "6"
-			(uuid "417fd008-7c8a-45fc-a4b0-d2be8bfa9df2")
-		)
-		(pin "17"
-			(uuid "d4b9d25f-117d-4021-ae01-73614d8161a7")
-		)
-		(pin "14"
-			(uuid "0f208cf4-da99-495c-a0f8-afce08ab243e")
-		)
-		(pin "12"
-			(uuid "15d977f5-ba6f-4d94-8450-7ef230f3bf05")
-		)
-		(pin "4"
-			(uuid "e48ab7a8-b318-45e1-abb0-c7a7571949a3")
-		)
-		(pin "18"
-			(uuid "1358206d-2a63-41cf-a381-b4becbc77dd3")
-		)
-		(pin "5"
-			(uuid "2b54ea51-4395-412e-a8e7-c0c5b5937b16")
-		)
-		(pin "13"
-			(uuid "2cb740a2-e5e5-44a1-8304-1fc4896cbd42")
-		)
-		(pin "15"
-			(uuid "605e7fd1-21eb-4e8a-b2e9-00290fe67d43")
-		)
-		(pin "7"
-			(uuid "bb653d39-1793-42c1-ade5-b71566c1c611")
-		)
-		(pin "30"
-			(uuid "b58f61b4-8b43-4cc5-bdd5-56a48bad2a67")
-		)
-		(pin "31"
-			(uuid "d23ea9be-7ee0-403e-b5e0-3d4f47fcbf6a")
-		)
-		(pin "2"
-			(uuid "f6856af8-60c2-498f-b984-68a1caadbaa7")
-		)
-		(pin "9"
-			(uuid "2f565d76-d422-48d6-a944-431f8db45e6d")
-		)
-		(pin "8"
-			(uuid "e241f3c8-017e-4dd1-b732-5d8077dad655")
-		)
-		(pin "28"
-			(uuid "87e43118-675f-40c0-b57a-41de13f32b2a")
-		)
-		(pin "23"
-			(uuid "d1c44d8d-e7c8-458e-a775-888544c88e18")
-		)
-		(pin "24"
-			(uuid "a6accbb9-6d99-45c2-a308-b58e625a429c")
-		)
-		(pin "27"
-			(uuid "253ca15d-be28-4e3d-87ce-b11e674fb747")
-		)
-		(pin "25"
-			(uuid "bb2ed62b-a342-4861-b40a-81c2745102c8")
-		)
-		(pin "26"
-			(uuid "6455eb04-d4c4-4d2b-b880-c500d8ca0d58")
-		)
-		(pin "32"
-			(uuid "9a2f3c46-5c55-4968-bdda-70123b3284f3")
-		)
-		(pin "1"
-			(uuid "760a5c71-2986-4b40-94cd-5f07015c5983")
-		)
-		(pin "10"
-			(uuid "8db49bc0-1423-46a5-9bd2-f9fdf985e472")
-		)
-		(pin "29"
-			(uuid "f0f56ecf-c5b5-4c46-b249-734a926757f8")
-		)
-		(pin "11"
-			(uuid "201bb13b-03d1-41ee-8694-d1ec402e0cc3")
-		)
-		(instances
-			(project ""
-				(path "/fcdc4d99-6273-4901-9910-bd8fd00b962f/aa87b2dd-90b3-41b3-8e99-8dcc5f11db59"
-					(reference "U201")
 					(unit 1)
 				)
 			)
