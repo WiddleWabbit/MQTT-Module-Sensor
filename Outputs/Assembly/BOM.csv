@@ -10,7 +10,7 @@
 "9","3","F502,F503,F505","50mA 30V, PTC","BOURNS","MF-USMF005-2","C118758","1210","BOURNS Fuses:FUSC3226X110N"
 "10","1","IC401","16 Bit ADC","Texas Instruments","ADS1115IDGST","C468683","VSSOP-10-0.5mm","TEXAS INSTRUMENTS ICs:SOP50P490X110-10N"
 "11","2","J301,J302","A2541WV-10P","CJT(Changjiang Connectors)","A2541WV-10P","C225485","Plugin,P=2.54mm","CJT Connectors:PinHeader_1x10_P2.54mm_Vertical_Male"
-"12","1","J303","A2541WV-2x3P"," CJT(Changjiang Connectors)","A2541WV-2x3P","C225518","Plugin,P=2.54mm","CJT Connectors:PinHeader_2x03_P2.54mm_Vertical"
+"12","1","J303","A2541WV-2x3P"," CJT(Changjiang Connectors)","A2541WV-2x3P","C225518","Plugin,P=2.54mm","CJT Connectors:PinHeader_2x03_P2.54mm_Vertical_Male"
 "13","1","J304","1715747","Phoenix Contact","1715747","C5443561","P=5.08mm","PHOENIX CONTACT Terminals:1715747"
 "14","1","L301","15uH, 1.25A, 20%","Vishay Intertech","IFSC1515AHER150M01","C844950","SMD,4x4mm","VISHAY INTERTECH Inductors:INDM4040X190N"
 "15","1","PS301","TPS61170DRVR","Texas Instruments","TPS61170DRVR","C15163","WSON-6(2x2)","TEXAS INSTRUMENTS ICs:SON65P200X200X80-7N"

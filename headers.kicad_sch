@@ -3078,7 +3078,7 @@
 				)
 			)
 		)
-		(property "Footprint" "CJT Connectors:PinHeader_2x03_P2.54mm_Vertical"
+		(property "Footprint" "CJT Connectors:PinHeader_2x03_P2.54mm_Vertical_Male"
 			(at 211.328 82.042 0)
 			(effects
 				(font
