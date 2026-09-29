@@ -1,4 +1,12 @@
-# Prerequisites
+# Getting Started 
+
+```pio run -e fuses_bootloader -t fuses```
+Burn the fuses
+
+```pio run -e Upload_ISP -t upload```
+Upload
+
+# AVR Dude
 
 ### Burning Fuses
 
