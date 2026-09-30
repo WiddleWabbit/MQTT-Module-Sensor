@@ -1,0 +1,85 @@
+#pragma once
+
+#include <stdint.h>
+
+#include "IModuleSlavePort.h"
+#include "ModuleProtocol.h"
+
+/**
+ * Records slave-port calls for desktop tests.
+ */
+class FakeModuleSlavePort : public IModuleSlavePort
+{
+public:
+  uint8_t enableCount = 0;
+  uint8_t disableCount = 0;
+  uint8_t setAddressCount = 0;
+  uint8_t setReplyCount = 0;
+  uint8_t lastEnabledAddress = 0;
+  uint8_t lastSetAddress = 0;
+  bool enabled = false;
+  uint8_t reply[module_protocol::kMaxFrameBytes] = {};
+  uint8_t replyLength = 0;
+
+  /**
+   * Records enable and the address passed in.
+   *
+   * @param address7bit Address the link asked to listen on.
+   * @return Nothing.
+   */
+  void enable(uint8_t address7bit) override
+  {
+    enableCount++;
+    lastEnabledAddress = address7bit;
+    enabled = true;
+  }
+
+  /**
+   * Records disable.
+   *
+   * @return Nothing.
+   */
+  void disable() override
+  {
+    disableCount++;
+    enabled = false;
+  }
+
+  /**
+   * Records a committed address.
+   *
+   * @param address7bit Address written after SET_ADDRESS.
+   * @return Nothing.
+   */
+  void setAddress(uint8_t address7bit) override
+  {
+    setAddressCount++;
+    lastSetAddress = address7bit;
+  }
+
+  /**
+   * Copies the reply the link queued.
+   *
+   * @param frame Reply bytes.
+   * @param length Number of bytes in frame.
+   * @return Nothing.
+   */
+  void setReply(const uint8_t* frame, uint8_t length) override
+  {
+    if (frame == nullptr)
+    {
+      return;
+    }
+    replyLength = length;
+    uint8_t count = length;
+    if (count > module_protocol::kMaxFrameBytes)
+    {
+      count = module_protocol::kMaxFrameBytes;
+    }
+    for (uint8_t index = 0; index < count; ++index)
+    {
+      reply[index] = frame[index];
+    }
+    setReplyCount++;
+  }
+};
