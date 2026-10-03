@@ -6,16 +6,18 @@
 // ========== Construction ==========
 
 /**
- * Binds the slave port and registers this link as the master-write
- * handler. The slave stays disabled until update().
+ * Binds the slave port and the sensor cache, and registers this link
+ * as the master-write handler. The slave stays disabled until update().
  *
  * @param port Port that enables TWI and stores replies.
+ * @param sensors Cached ADS1115 samples the sensor commands read.
  * @param typeId Module type reported by GET_IDENTITY.
  * @param firmwareVersion Firmware version reported by GET_IDENTITY.
  */
-ModuleLink::ModuleLink(IModuleSlavePort& port, uint16_t typeId,
-                       uint16_t firmwareVersion)
+ModuleLink::ModuleLink(IModuleSlavePort& port, SensorInputs& sensors,
+                       uint16_t typeId, uint16_t firmwareVersion)
   : _port(port),
+    _sensors(sensors),
     _typeId(typeId),
     _firmwareVersion(firmwareVersion),
     _address(module_protocol::kUnconfiguredAddress),
@@ -187,14 +189,48 @@ void ModuleLink::_handleCommand(uint8_t command, const uint8_t* payload,
         return;
       }
       {
-        const uint8_t count = 0;
-        _replyPayload(module_protocol::kStatusOk, &count, 1);
+        const uint8_t count = _sensors.count();
+        _replyPayload(module_protocol::kStatusOk, &count,
+                      module_protocol::kSensorCountPayloadLen);
       }
       return;
 
     case module_protocol::kCmdGetSensorConnected:
     case module_protocol::kCmdGetSensorReading:
-      _replyStatus(module_protocol::kStatusBadLength);
+      if (payloadLen != 1)
+      {
+        _replyStatus(module_protocol::kStatusBadLength);
+        return;
+      }
+      {
+        const uint8_t index = payload[0];
+        if (index >= _sensors.count())
+        {
+          _replyStatus(module_protocol::kStatusBadLength);
+          return;
+        }
+        if (!_sensors.hasSample(index))
+        {
+          _replyStatus(module_protocol::kStatusBusy);
+          return;
+        }
+        const uint8_t connected =
+            static_cast<uint8_t>(_sensors.connected(index) ? 1 : 0);
+        if (command == module_protocol::kCmdGetSensorConnected)
+        {
+          const uint8_t body[module_protocol::kSensorConnectedPayloadLen] = {
+            index, connected};
+          _replyPayload(module_protocol::kStatusOk, body,
+                        module_protocol::kSensorConnectedPayloadLen);
+          return;
+        }
+        uint8_t body[module_protocol::kSensorReadingPayloadLen];
+        body[0] = index;
+        body[1] = connected;
+        module_protocol::writeInt32Be(body + 2, _sensors.counts(index));
+        _replyPayload(module_protocol::kStatusOk, body,
+                      module_protocol::kSensorReadingPayloadLen);
+      }
       return;
 
     default:

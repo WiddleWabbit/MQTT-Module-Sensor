@@ -4,26 +4,28 @@
 #include <stdint.h>
 
 #include "IModuleSlavePort.h"
+#include "SensorInputs.h"
 
 /**
  * Slave side of the motherboard module protocol for one sensor module.
  * Listens at 0x0A only while MOD is low, then keeps the assigned address.
- * Reports the supplied type and firmware version, protocol 1, and zero
- * sensors. No Arduino types.
+ * Reports the supplied type and firmware version, protocol 1, and the
+ * samples held by SensorInputs. No Arduino types.
  */
 class ModuleLink
 {
 public:
   /**
-   * Binds the slave port and registers this link as the master-write
-   * handler. The slave stays disabled until update().
+   * Binds the slave port and the sensor cache, and registers this link
+   * as the master-write handler. The slave stays disabled until update().
    *
    * @param port Port that enables TWI and stores replies.
+   * @param sensors Cached ADS1115 samples the sensor commands read.
    * @param typeId Module type reported by GET_IDENTITY.
    * @param firmwareVersion Firmware version reported by GET_IDENTITY.
    */
-  explicit ModuleLink(IModuleSlavePort& port, uint16_t typeId,
-                      uint16_t firmwareVersion);
+  explicit ModuleLink(IModuleSlavePort& port, SensorInputs& sensors,
+                      uint16_t typeId, uint16_t firmwareVersion);
 
   /**
    * Copying would leave the port's write context pointing at the
@@ -106,6 +108,7 @@ private:
                      uint8_t payloadLen);
 
   IModuleSlavePort& _port;
+  SensorInputs& _sensors;
   uint16_t _typeId;
   uint16_t _firmwareVersion;
   uint8_t _address;

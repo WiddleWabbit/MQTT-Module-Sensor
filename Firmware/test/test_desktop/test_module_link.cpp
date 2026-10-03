@@ -2,6 +2,7 @@
 
 #include "ModuleLink.h"
 #include "ModuleProtocol.h"
+#include "fakes/FakeAds1115.h"
 #include "fakes/FakeModuleSlavePort.h"
 
 namespace
@@ -9,6 +10,34 @@ namespace
 
 constexpr uint16_t kTestType = module_protocol::kTypeSensorModule;
 constexpr uint16_t kTestFirmwareVersion = 1;
+constexpr int16_t kConnectedMinCounts = 2400;
+
+/**
+ * One link, its slave fake, and a sensor cache. The default count is
+ * 0 so a protocol test does not depend on a conversion.
+ */
+struct Board
+{
+  FakeAds1115 adc;
+  SensorInputs sensors;
+  FakeModuleSlavePort port;
+  ModuleLink link;
+
+  /**
+   * Builds a link around a sensor cache of the given size.
+   *
+   * @param sensorCount Inputs the cache reports.
+   * @param typeId Type id supplied to the link.
+   * @param firmwareVersion Firmware version supplied to the link.
+   */
+  explicit Board(uint8_t sensorCount = 0,
+                 uint16_t typeId = kTestType,
+                 uint16_t firmwareVersion = kTestFirmwareVersion)
+    : sensors(adc, sensorCount, kConnectedMinCounts),
+      link(port, sensors, typeId, firmwareVersion)
+  {
+  }
+};
 
 /**
  * Builds one request frame, including its CRC.
@@ -97,6 +126,42 @@ void fillIdentity(uint16_t typeId, uint16_t firmwareVersion, uint8_t* out)
   out[4] = static_cast<uint8_t>(firmwareVersion & 0xFF);
 }
 
+/**
+ * Fills a GET_SENSOR_READING payload.
+ *
+ * @param index Sensor index echoed in the payload.
+ * @param connected Connected flag, 0 or 1.
+ * @param value Raw counts.
+ * @param out Destination. Must hold kSensorReadingPayloadLen bytes.
+ * @return Nothing.
+ */
+void fillReading(uint8_t index, uint8_t connected, int32_t value, uint8_t* out)
+{
+  out[0] = index;
+  out[1] = connected;
+  module_protocol::writeInt32Be(out + 2, value);
+}
+
+/**
+ * Runs the scan until index has a sample. Fails if that does not
+ * happen within a full three-channel cycle.
+ *
+ * @param board Link fixture whose ADC fake is scripted.
+ * @param index Input to wait for.
+ * @param counts Value the fake returns for that input.
+ * @return Nothing.
+ */
+void capture(Board& board, uint8_t index, int16_t counts)
+{
+  board.adc.counts[index] = counts;
+  board.adc.ready = true;
+  for (uint8_t step = 0; step < 16 && !board.sensors.hasSample(index); ++step)
+  {
+    board.sensors.update();
+  }
+  TEST_ASSERT_TRUE(board.sensors.hasSample(index));
+}
+
 }
 
 /**
@@ -124,15 +189,14 @@ void tearDown()
  */
 void testBootWithModHighLeavesSlaveDisabled()
 {
-  FakeModuleSlavePort port;
-  ModuleLink link(port, kTestType, kTestFirmwareVersion);
+  Board board;
 
-  link.update(false);
+  board.link.update(false);
 
-  TEST_ASSERT_FALSE(port.enabled);
-  TEST_ASSERT_EQUAL(0, port.enableCount);
-  TEST_ASSERT_EQUAL(0, port.disableCount);
-  TEST_ASSERT_EQUAL(0, port.setAddressCount);
+  TEST_ASSERT_FALSE(board.port.enabled);
+  TEST_ASSERT_EQUAL(0, board.port.enableCount);
+  TEST_ASSERT_EQUAL(0, board.port.disableCount);
+  TEST_ASSERT_EQUAL(0, board.port.setAddressCount);
 }
 
 /**
@@ -142,24 +206,23 @@ void testBootWithModHighLeavesSlaveDisabled()
  */
 void testModLowEnablesUnconfiguredAddressAndModHighDisables()
 {
-  FakeModuleSlavePort port;
-  ModuleLink link(port, kTestType, kTestFirmwareVersion);
+  Board board;
 
-  link.update(true);
-  link.update(true);
+  board.link.update(true);
+  board.link.update(true);
 
-  TEST_ASSERT_TRUE(port.enabled);
-  TEST_ASSERT_EQUAL(1, port.enableCount);
+  TEST_ASSERT_TRUE(board.port.enabled);
+  TEST_ASSERT_EQUAL(1, board.port.enableCount);
   TEST_ASSERT_EQUAL(module_protocol::kUnconfiguredAddress,
-                    port.lastEnabledAddress);
-  TEST_ASSERT_EQUAL(0, port.setAddressCount);
+                    board.port.lastEnabledAddress);
+  TEST_ASSERT_EQUAL(0, board.port.setAddressCount);
 
-  link.update(false);
-  link.update(false);
+  board.link.update(false);
+  board.link.update(false);
 
-  TEST_ASSERT_FALSE(port.enabled);
-  TEST_ASSERT_EQUAL(1, port.disableCount);
-  TEST_ASSERT_EQUAL(0, port.setAddressCount);
+  TEST_ASSERT_FALSE(board.port.enabled);
+  TEST_ASSERT_EQUAL(1, board.port.disableCount);
+  TEST_ASSERT_EQUAL(0, board.port.setAddressCount);
 }
 
 /**
@@ -169,14 +232,13 @@ void testModLowEnablesUnconfiguredAddressAndModHighDisables()
  */
 void testPingReplyIsOkAndPadded()
 {
-  FakeModuleSlavePort port;
-  ModuleLink link(port, kTestType, kTestFirmwareVersion);
-  link.update(true);
+  Board board;
+  board.link.update(true);
 
-  writeCommand(port, module_protocol::kCmdPing, nullptr, 0);
+  writeCommand(board.port, module_protocol::kCmdPing, nullptr, 0);
 
-  expectReply(port, module_protocol::kStatusOk, nullptr, 0);
-  TEST_ASSERT_EQUAL(0, port.setAddressCount);
+  expectReply(board.port, module_protocol::kStatusOk, nullptr, 0);
+  TEST_ASSERT_EQUAL(0, board.port.setAddressCount);
 }
 
 /**
@@ -187,15 +249,14 @@ void testPingReplyIsOkAndPadded()
  */
 void testIdentityReportsSensorModule()
 {
-  FakeModuleSlavePort port;
-  ModuleLink link(port, kTestType, kTestFirmwareVersion);
-  link.update(true);
+  Board board;
+  board.link.update(true);
 
-  writeCommand(port, module_protocol::kCmdGetIdentity, nullptr, 0);
+  writeCommand(board.port, module_protocol::kCmdGetIdentity, nullptr, 0);
 
   uint8_t identity[module_protocol::kIdentityPayloadLen];
   fillIdentity(kTestType, kTestFirmwareVersion, identity);
-  expectReply(port, module_protocol::kStatusOk, identity,
+  expectReply(board.port, module_protocol::kStatusOk, identity,
               module_protocol::kIdentityPayloadLen);
 }
 
@@ -207,17 +268,16 @@ void testIdentityReportsSensorModule()
  */
 void testSuppliedFirmwareVersion()
 {
-  FakeModuleSlavePort port;
   const uint16_t typeId = 0x1234;
   const uint16_t firmwareVersion = 2;
-  ModuleLink link(port, typeId, firmwareVersion);
-  link.update(true);
+  Board board(0, typeId, firmwareVersion);
+  board.link.update(true);
 
-  writeCommand(port, module_protocol::kCmdGetIdentity, nullptr, 0);
+  writeCommand(board.port, module_protocol::kCmdGetIdentity, nullptr, 0);
 
   uint8_t identity[module_protocol::kIdentityPayloadLen];
   fillIdentity(typeId, firmwareVersion, identity);
-  expectReply(port, module_protocol::kStatusOk, identity,
+  expectReply(board.port, module_protocol::kStatusOk, identity,
               module_protocol::kIdentityPayloadLen);
 }
 
@@ -229,34 +289,33 @@ void testSuppliedFirmwareVersion()
  */
 void testSetAddressCommitsAndSurvivesModHigh()
 {
-  FakeModuleSlavePort port;
-  ModuleLink link(port, kTestType, kTestFirmwareVersion);
+  Board board;
   const uint8_t assigned = 0x10;
   const uint8_t later = 0x11;
 
-  writeCommand(port, module_protocol::kCmdSetAddress, &assigned, 1);
-  TEST_ASSERT_EQUAL(0, port.setAddressCount);
+  writeCommand(board.port, module_protocol::kCmdSetAddress, &assigned, 1);
+  TEST_ASSERT_EQUAL(0, board.port.setAddressCount);
 
-  link.update(true);
-  writeCommand(port, module_protocol::kCmdSetAddress, &assigned, 1);
+  board.link.update(true);
+  writeCommand(board.port, module_protocol::kCmdSetAddress, &assigned, 1);
 
-  TEST_ASSERT_EQUAL(1, port.setAddressCount);
-  TEST_ASSERT_EQUAL(assigned, port.lastSetAddress);
-  TEST_ASSERT_EQUAL(0, port.setReplyCount);
-  TEST_ASSERT_TRUE(port.enabled);
+  TEST_ASSERT_EQUAL(1, board.port.setAddressCount);
+  TEST_ASSERT_EQUAL(assigned, board.port.lastSetAddress);
+  TEST_ASSERT_EQUAL(0, board.port.setReplyCount);
+  TEST_ASSERT_TRUE(board.port.enabled);
 
-  link.update(false);
+  board.link.update(false);
 
-  TEST_ASSERT_TRUE(port.enabled);
-  TEST_ASSERT_EQUAL(0, port.disableCount);
-  TEST_ASSERT_EQUAL(assigned, port.lastSetAddress);
+  TEST_ASSERT_TRUE(board.port.enabled);
+  TEST_ASSERT_EQUAL(0, board.port.disableCount);
+  TEST_ASSERT_EQUAL(assigned, board.port.lastSetAddress);
 
-  writeCommand(port, module_protocol::kCmdSetAddress, &later, 1);
-  TEST_ASSERT_EQUAL(assigned, port.lastSetAddress);
-  TEST_ASSERT_EQUAL(1, port.setAddressCount);
+  writeCommand(board.port, module_protocol::kCmdSetAddress, &later, 1);
+  TEST_ASSERT_EQUAL(assigned, board.port.lastSetAddress);
+  TEST_ASSERT_EQUAL(1, board.port.setAddressCount);
 
-  writeCommand(port, module_protocol::kCmdPing, nullptr, 0);
-  expectReply(port, module_protocol::kStatusOk, nullptr, 0);
+  writeCommand(board.port, module_protocol::kCmdPing, nullptr, 0);
+  expectReply(board.port, module_protocol::kStatusOk, nullptr, 0);
 }
 
 /**
@@ -266,59 +325,131 @@ void testSetAddressCommitsAndSurvivesModHigh()
  */
 void testSetAddressRejectsBadCrcAndIllegalAddresses()
 {
-  FakeModuleSlavePort port;
-  ModuleLink link(port, kTestType, kTestFirmwareVersion);
-  link.update(true);
+  Board board;
+  board.link.update(true);
 
   uint8_t frame[8] = {};
   const uint8_t assigned = 0x10;
   const size_t size = buildFrame(module_protocol::kCmdSetAddress, &assigned, 1,
                                  frame);
   frame[size - 1] ^= 0xFF;
-  port.deliver(frame, size);
+  board.port.deliver(frame, size);
 
-  TEST_ASSERT_EQUAL(0, port.setAddressCount);
+  TEST_ASSERT_EQUAL(0, board.port.setAddressCount);
   TEST_ASSERT_EQUAL(module_protocol::kUnconfiguredAddress,
-                    port.lastEnabledAddress);
-  expectReply(port, module_protocol::kStatusBadCrc, nullptr, 0);
+                    board.port.lastEnabledAddress);
+  expectReply(board.port, module_protocol::kStatusBadCrc, nullptr, 0);
 
-  const uint8_t repliesBeforeIllegal = port.setReplyCount;
+  const uint8_t repliesBeforeIllegal = board.port.setReplyCount;
   const uint8_t illegal[] = {0x00, 0x0A, 0x70};
   for (uint8_t index = 0; index < 3; ++index)
   {
-    writeCommand(port, module_protocol::kCmdSetAddress, &illegal[index], 1);
+    writeCommand(board.port, module_protocol::kCmdSetAddress, &illegal[index],
+                 1);
   }
-  TEST_ASSERT_EQUAL(0, port.setAddressCount);
-  TEST_ASSERT_EQUAL(repliesBeforeIllegal, port.setReplyCount);
-  TEST_ASSERT_TRUE(port.enabled);
+  TEST_ASSERT_EQUAL(0, board.port.setAddressCount);
+  TEST_ASSERT_EQUAL(repliesBeforeIllegal, board.port.setReplyCount);
+  TEST_ASSERT_TRUE(board.port.enabled);
   TEST_ASSERT_EQUAL(module_protocol::kUnconfiguredAddress,
-                    port.lastEnabledAddress);
+                    board.port.lastEnabledAddress);
 
-  writeCommand(port, module_protocol::kCmdPing, nullptr, 0);
-  expectReply(port, module_protocol::kStatusOk, nullptr, 0);
+  writeCommand(board.port, module_protocol::kCmdPing, nullptr, 0);
+  expectReply(board.port, module_protocol::kStatusOk, nullptr, 0);
 }
 
 /**
- * The module reports no sensors. A reading or presence query is BadLength.
+ * Count is the cache size. A missing sample is Busy. A stored sample
+ * is returned with its connected flag, including a value below the
+ * threshold and a negative code.
  *
  * @return Nothing.
  */
-void testSensorCountIsZeroAndReadingIsBadLength()
+void testSensorCommandsReportCachedReadings()
 {
-  FakeModuleSlavePort port;
-  ModuleLink link(port, kTestType, kTestFirmwareVersion);
-  link.update(true);
+  Board board(3);
+  board.link.update(true);
 
-  writeCommand(port, module_protocol::kCmdGetSensorCount, nullptr, 0);
+  writeCommand(board.port, module_protocol::kCmdGetSensorCount, nullptr, 0);
+  const uint8_t count[] = {3};
+  expectReply(board.port, module_protocol::kStatusOk, count, 1);
+
+  const uint8_t index0 = 0;
+  writeCommand(board.port, module_protocol::kCmdGetSensorReading, &index0, 1);
+  expectReply(board.port, module_protocol::kStatusBusy, nullptr, 0);
+  writeCommand(board.port, module_protocol::kCmdGetSensorConnected, &index0, 1);
+  expectReply(board.port, module_protocol::kStatusBusy, nullptr, 0);
+
+  capture(board, 0, 2399);
+  writeCommand(board.port, module_protocol::kCmdGetSensorReading, &index0, 1);
+  uint8_t reading[module_protocol::kSensorReadingPayloadLen];
+  fillReading(0, 0, 2399, reading);
+  expectReply(board.port, module_protocol::kStatusOk, reading,
+              module_protocol::kSensorReadingPayloadLen);
+  writeCommand(board.port, module_protocol::kCmdGetSensorConnected, &index0, 1);
+  const uint8_t absent[] = {0, 0};
+  expectReply(board.port, module_protocol::kStatusOk, absent, 2);
+
+  capture(board, 1, 2400);
+  const uint8_t index1 = 1;
+  writeCommand(board.port, module_protocol::kCmdGetSensorReading, &index1, 1);
+  fillReading(1, 1, 2400, reading);
+  expectReply(board.port, module_protocol::kStatusOk, reading,
+              module_protocol::kSensorReadingPayloadLen);
+  writeCommand(board.port, module_protocol::kCmdGetSensorConnected, &index1, 1);
+  const uint8_t present[] = {1, 1};
+  expectReply(board.port, module_protocol::kStatusOk, present, 2);
+
+  capture(board, 2, -4);
+  const uint8_t index2 = 2;
+  writeCommand(board.port, module_protocol::kCmdGetSensorReading, &index2, 1);
+  fillReading(2, 0, -4, reading);
+  expectReply(board.port, module_protocol::kStatusOk, reading,
+              module_protocol::kSensorReadingPayloadLen);
+
+  writeCommand(board.port, module_protocol::kCmdGetSensorReading, &index0, 1);
+  fillReading(0, 0, 2399, reading);
+  expectReply(board.port, module_protocol::kStatusOk, reading,
+              module_protocol::kSensorReadingPayloadLen);
+}
+
+/**
+ * An index outside the count, a payload that is not one byte, and a
+ * count command with a payload are BadLength. A count of 0 rejects
+ * index 0 the same way.
+ *
+ * @return Nothing.
+ */
+void testSensorCommandsRejectBadIndexAndLength()
+{
+  Board board(3);
+  board.link.update(true);
+
+  const uint8_t index = 3;
+  writeCommand(board.port, module_protocol::kCmdGetSensorReading, &index, 1);
+  expectReply(board.port, module_protocol::kStatusBadLength, nullptr, 0);
+  writeCommand(board.port, module_protocol::kCmdGetSensorConnected, &index, 1);
+  expectReply(board.port, module_protocol::kStatusBadLength, nullptr, 0);
+
+  writeCommand(board.port, module_protocol::kCmdGetSensorReading, nullptr, 0);
+  expectReply(board.port, module_protocol::kStatusBadLength, nullptr, 0);
+  const uint8_t extra[] = {0, 1};
+  writeCommand(board.port, module_protocol::kCmdGetSensorReading, extra, 2);
+  expectReply(board.port, module_protocol::kStatusBadLength, nullptr, 0);
+  writeCommand(board.port, module_protocol::kCmdGetSensorConnected, extra, 2);
+  expectReply(board.port, module_protocol::kStatusBadLength, nullptr, 0);
+  writeCommand(board.port, module_protocol::kCmdGetSensorCount, &index, 1);
+  expectReply(board.port, module_protocol::kStatusBadLength, nullptr, 0);
+
+  Board empty;
+  empty.link.update(true);
+  writeCommand(empty.port, module_protocol::kCmdGetSensorCount, nullptr, 0);
   const uint8_t count[] = {0};
-  expectReply(port, module_protocol::kStatusOk, count, 1);
-
-  const uint8_t index = 0;
-  writeCommand(port, module_protocol::kCmdGetSensorReading, &index, 1);
-  expectReply(port, module_protocol::kStatusBadLength, nullptr, 0);
-
-  writeCommand(port, module_protocol::kCmdGetSensorConnected, &index, 1);
-  expectReply(port, module_protocol::kStatusBadLength, nullptr, 0);
+  expectReply(empty.port, module_protocol::kStatusOk, count, 1);
+  const uint8_t zero = 0;
+  writeCommand(empty.port, module_protocol::kCmdGetSensorReading, &zero, 1);
+  expectReply(empty.port, module_protocol::kStatusBadLength, nullptr, 0);
+  writeCommand(empty.port, module_protocol::kCmdGetSensorConnected, &zero, 1);
+  expectReply(empty.port, module_protocol::kStatusBadLength, nullptr, 0);
 }
 
 /**
@@ -329,73 +460,78 @@ void testSensorCountIsZeroAndReadingIsBadLength()
  */
 void testUnknownCommandAndMalformedFrames()
 {
-  FakeModuleSlavePort port;
-  ModuleLink link(port, kTestType, kTestFirmwareVersion);
-  link.update(true);
+  Board board;
+  board.link.update(true);
 
   const uint8_t echoByte = 0x5A;
-  writeCommand(port, module_protocol::kCmdEcho, &echoByte, 1);
-  expectReply(port, module_protocol::kStatusUnknownCmd, nullptr, 0);
+  writeCommand(board.port, module_protocol::kCmdEcho, &echoByte, 1);
+  expectReply(board.port, module_protocol::kStatusUnknownCmd, nullptr, 0);
 
   const uint8_t truncated[] = {0x02, 0x01};
-  port.deliver(truncated, sizeof(truncated));
-  expectReply(port, module_protocol::kStatusBadLength, nullptr, 0);
+  board.port.deliver(truncated, sizeof(truncated));
+  expectReply(board.port, module_protocol::kStatusBadLength, nullptr, 0);
 
   uint8_t ping[8] = {};
   const size_t pingSize = buildFrame(module_protocol::kCmdPing, nullptr, 0,
                                      ping);
   ping[pingSize] = 0x00;
-  port.deliver(ping, pingSize + 1U);
-  expectReply(port, module_protocol::kStatusBadLength, nullptr, 0);
+  board.port.deliver(ping, pingSize + 1U);
+  expectReply(board.port, module_protocol::kStatusBadLength, nullptr, 0);
 
   ping[2] ^= 0xFF;
-  port.deliver(ping, pingSize);
-  expectReply(port, module_protocol::kStatusBadCrc, nullptr, 0);
+  board.port.deliver(ping, pingSize);
+  expectReply(board.port, module_protocol::kStatusBadCrc, nullptr, 0);
 
   const uint8_t extra = 0x01;
-  writeCommand(port, module_protocol::kCmdPing, &extra, 1);
-  expectReply(port, module_protocol::kStatusBadLength, nullptr, 0);
+  writeCommand(board.port, module_protocol::kCmdPing, &extra, 1);
+  expectReply(board.port, module_protocol::kStatusBadLength, nullptr, 0);
 
-  writeCommand(port, module_protocol::kCmdSetAddress, nullptr, 0);
-  expectReply(port, module_protocol::kStatusBadLength, nullptr, 0);
-  TEST_ASSERT_EQUAL(0, port.setAddressCount);
+  writeCommand(board.port, module_protocol::kCmdSetAddress, nullptr, 0);
+  expectReply(board.port, module_protocol::kStatusBadLength, nullptr, 0);
+  TEST_ASSERT_EQUAL(0, board.port.setAddressCount);
   TEST_ASSERT_EQUAL(module_protocol::kUnconfiguredAddress,
-                    port.lastEnabledAddress);
+                    board.port.lastEnabledAddress);
 }
 
 /**
- * MOD low, PING, SET_ADDRESS, MOD high, identity, then a zero count.
+ * MOD low, PING, SET_ADDRESS, MOD high, identity, then a count of 3.
  *
  * @return Nothing.
  */
 void testEnumerationSequence()
 {
-  FakeModuleSlavePort port;
-  ModuleLink link(port, kTestType, kTestFirmwareVersion);
+  Board board(3);
   const uint8_t assigned = 0x12;
 
-  link.update(true);
-  writeCommand(port, module_protocol::kCmdPing, nullptr, 0);
-  expectReply(port, module_protocol::kStatusOk, nullptr, 0);
+  board.link.update(true);
+  writeCommand(board.port, module_protocol::kCmdPing, nullptr, 0);
+  expectReply(board.port, module_protocol::kStatusOk, nullptr, 0);
 
-  writeCommand(port, module_protocol::kCmdSetAddress, &assigned, 1);
-  link.update(false);
+  writeCommand(board.port, module_protocol::kCmdSetAddress, &assigned, 1);
+  board.link.update(false);
 
-  TEST_ASSERT_EQUAL(assigned, port.lastSetAddress);
-  TEST_ASSERT_TRUE(port.enabled);
-  TEST_ASSERT_EQUAL(0, port.disableCount);
-  TEST_ASSERT_EQUAL(1, port.enableCount);
+  TEST_ASSERT_EQUAL(assigned, board.port.lastSetAddress);
+  TEST_ASSERT_TRUE(board.port.enabled);
+  TEST_ASSERT_EQUAL(0, board.port.disableCount);
+  TEST_ASSERT_EQUAL(1, board.port.enableCount);
 
-  writeCommand(port, module_protocol::kCmdGetIdentity, nullptr, 0);
+  writeCommand(board.port, module_protocol::kCmdGetIdentity, nullptr, 0);
   uint8_t identity[module_protocol::kIdentityPayloadLen];
   fillIdentity(kTestType, kTestFirmwareVersion, identity);
-  expectReply(port, module_protocol::kStatusOk, identity,
+  expectReply(board.port, module_protocol::kStatusOk, identity,
               module_protocol::kIdentityPayloadLen);
 
-  writeCommand(port, module_protocol::kCmdGetSensorCount, nullptr, 0);
-  const uint8_t count[] = {0};
-  expectReply(port, module_protocol::kStatusOk, count, 1);
+  writeCommand(board.port, module_protocol::kCmdGetSensorCount, nullptr, 0);
+  const uint8_t count[] = {3};
+  expectReply(board.port, module_protocol::kStatusOk, count, 1);
 }
+
+/**
+ * Runs the sensor-input tests defined in the other translation unit.
+ *
+ * @return Nothing.
+ */
+void runSensorInputTests();
 
 /**
  * Runs the module-link desktop tests.
@@ -412,8 +548,10 @@ int main()
   RUN_TEST(testSuppliedFirmwareVersion);
   RUN_TEST(testSetAddressCommitsAndSurvivesModHigh);
   RUN_TEST(testSetAddressRejectsBadCrcAndIllegalAddresses);
-  RUN_TEST(testSensorCountIsZeroAndReadingIsBadLength);
+  RUN_TEST(testSensorCommandsReportCachedReadings);
+  RUN_TEST(testSensorCommandsRejectBadIndexAndLength);
   RUN_TEST(testUnknownCommandAndMalformedFrames);
   RUN_TEST(testEnumerationSequence);
+  runSensorInputTests();
   return UNITY_END();
 }

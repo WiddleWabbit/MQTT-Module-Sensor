@@ -7,17 +7,17 @@
 `ModuleLink` is the slave side of the motherboard module protocol for
 this sensor board. It listens at `0x0A` only while MOD is low, then
 keeps the assigned address. It reports the type and firmware version
-supplied at construction, protocol version 1, and a sensor count of 0.
-Presence and reading commands return `BadLength`.
+supplied at construction, protocol version 1, and the sensor count and
+samples held by `SensorInputs`.
 
 The module includes no Arduino headers.
 
 ## Where it sits
 
-`main.cpp` constructs it with `AvrTwi1Slave`, `MODULE_TYPE`
-(`kTypeSensorModule`), and `FIRMWARE_VERSION`. `loop()` calls
-`update(modIsLow)`. A master write arrives through the handler the
-constructor registered, from the TWI receive callback or from
+`main.cpp` constructs it with `AvrTwi1Slave`, `SensorInputs`,
+`MODULE_TYPE` (`kTypeSensorModule`), and `FIRMWARE_VERSION`. `loop()`
+calls `update(modIsLow)`. A master write arrives through the handler
+the constructor registered, from the TWI receive callback or from
 `FakeModuleSlavePort::deliver`.
 
 ## What it creates
@@ -25,10 +25,12 @@ constructor registered, from the TWI receive callback or from
 ```text
 ModuleLink
   IModuleSlavePort    enable, disable, setAddress, setReply
+  SensorInputs        count, connected flag, raw counts
 ```
 
 The link has no submodules. It cannot be copied: the port stores the
-link as the write context.
+link as the write context. The link reads the sensor cache. It does
+not advance the scan.
 
 ## One update
 
@@ -48,7 +50,8 @@ and the padded reply are in the [reference](reference/module-link.md).
 ## What is stored, and who reads it
 
 `_typeId` and `_firmwareVersion` come from the constructor.
-`GET_IDENTITY` reads them.
+`GET_IDENTITY` reads them. `GET_SENSOR_COUNT`, `GET_SENSOR_CONNECTED`,
+and `GET_SENSOR_READING` read the `SensorInputs` cache.
 
 `_address` starts at `kUnconfiguredAddress`. `update` enables that
 address while MOD is low. An accepted `SET_ADDRESS` replaces it and
@@ -61,5 +64,6 @@ port before the handler returns. The host reads that copy.
 ## See also
 
 - [Module link reference](reference/module-link.md) — states, commands, errors, tests.
+- [Sensor inputs](sensor-inputs.md)
 - [Slave port](slave-port.md)
 - [Architecture](architecture.md)

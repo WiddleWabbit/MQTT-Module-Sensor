@@ -8,7 +8,9 @@ what and what one pass does.
 
 - [Architecture](architecture.md) — pins, the pass, and the image build.
 - [Module link](module-link.md) — MOD gate, commands, and the desktop tests.
+- [Sensor inputs](sensor-inputs.md) — the scan, the cache, and the threshold.
 - [Slave port](slave-port.md) — TWI1, `TWAR1`, and the fake.
+- [ADC port](adc-port.md) — TWI0, GAIN_ONE, and the fake.
 
 The wire constants are `lib/Interfaces/ModuleProtocol.h`. Master
 sequences are not in this tree.
