@@ -1,66 +1,76 @@
-You are an expert ESP32-S3 firmware engineer using PlatformIO + Arduino framework.
+You are an expert AVR firmware engineer using PlatformIO and the Arduino framework on an ATmega328PB.
+
+Module shape, seams, DRY, comments, and the documentation layout are in `~/.grok/AGENTS.md`. This file is this daughterboard only.
 
 # Process
-This process is mandatory for new features, bug fixes, refactors, and any modification that touches logic, interfaces, drivers, or tests. Trivial one-line fixes or pure documentation edits may skip the formal design gate, but you must still explain the change.
+This process is mandatory for new features, bug fixes, refactors, and any change that touches logic, drivers, or tests. A trivial one-line fix or a pure documentation edit may skip the design gate. Still explain that change.
 
 ## Before writing or modifying any code
 1. Restate the goal and constraints in your own words.
 2. Propose the design:
-   - Key design decisions (interfaces, data structures, state machines, error handling, module boundaries, etc.) and why you chose them.
-   - High-level flow (use a short Mermaid or ASCII diagram of the main classes/functions and how they interact).
-   - Impact on existing architecture (which layers/modules are touched, any new interfaces or dependencies).
-3. List the concrete test cases you will cover (happy path, errors, edge cases, sequences, interactions) and which existing tests already cover parts of it.
-4. Stop and wait for explicit approval of the design + test plan.
+   - Module boundaries, each module's interface, data structures, state machines, and error handling, and why.
+   - A short Mermaid or ASCII diagram of the main functions and how they interact.
+   - Which modules are touched, and any new seam or dependency. A new abstract interface needs a second adapter.
+3. List the test cases (happy path, errors, edges, sequences, interactions) and which existing tests already cover parts of it.
+4. Stop and wait for explicit approval of the design and the test plan.
 
 ## After approval
-- Write failing tests first (or extend existing ones).
-- Implement the minimum code to make the tests pass.
-- Update documentation in the same change.
+- Write failing tests first, or extend existing ones.
+- Implement the minimum code that makes them pass.
+- Update the documentation in the same change.
 
 ## After the changes
-Complete a short summary including:
-- What was added/changed and why.
-- Mapping of each new/updated test to the code paths it exercises.
-- Any remaining design debt or follow-up items.
+Summarize what changed and why, which test covers which path, and any design debt left behind.
 
-# Architecture
-   - lib/Interfaces/  → pure abstract interfaces
-   - lib/Drivers/     → real ESP32 implementations
-   - lib/Logic/       → business logic & state machines that depend only on interfaces
-   - src/             → application composition and product-specific code
-   - Every significant module has a simple, narrow interface and a deep implementation. Apply this recursively.
-   - Modules are orthogonal: each does one job, has minimal explicit dependencies, and can be understood or replaced independently.
-   - Follow DRY: do not duplicate knowledge or behaviour; factor shared logic into single, well-named places.
-   - main.cpp (and its loop) is the central driver of the system: it calls update methods, reads values, and triggers actions that flow downward (e.g. tell MQTT to publish). It owns the top-level control flow.
-   - As features grow, split files or group related classes under a parent as needed to keep the architecture clear and navigable.
+# Firmware
+This board is an I2C slave. The motherboard is the master.
 
-# Coding Rules
-Follow these rules for every change. All new code must be fully testable on the desktop by design.
+`src/main.cpp` is the composition root. It constructs the adapters, owns the pin constants and the other product settings, and calls each module through its public interface. It does not sequence the steps inside a module. A module does not invent those settings.
 
-1. Desktop-only testing
-   - All tests run on the desktop (PlatformIO native environment). No hardware required.
-   - Use Unity. Tests live under test/test_desktop/.
-   - Run tests with: C:\Users\Nathan\.platformio\penv\Scripts\platformio.exe test -e native
+One pass reads the pins the sketch owns and calls each module. `loop()` does not block. The host holds MOD low for only a few milliseconds.
 
-2. Full mockability
-   - Every level must be mockable (drivers, managers, network objects, subsystems, or a virtual board).
-   - Dependencies are injected (prefer constructor injection). Provide controllable, observable fakes.
+Folders, by role:
 
-3. Test-Driven Development
-   - Write thorough failing tests first, then the minimum code to make them pass.
-   - Cover happy paths, errors, edge cases, sequences, and interactions.
-   - Feature order: interface(s) → tests with fakes → real implementation.
+- `lib/Interfaces/` — hardware ports, and the shared wire contract `ModuleProtocol.h`.
+- `lib/Drivers/` — AVR adapters for those ports. Arduino headers belong here.
+- `lib/Logic/` — the modules. No Arduino headers. A module that grows contains submodules in its own folder. That folder is not a new surface for the composition root.
+- `src/` — composition.
 
-4. Naming & code style
-   - Variables & functions: camelCase. Private members: leading underscore (_privateVar).
-   - Classes/Types: PascalCase.
-   - Every function/method has a clear docstring (purpose, params, return value).
-   - Separate major sections with exactly: // ========== Section Name ==========
-   - 1 blank line between functions, 2 blank lines between major sections.
-   - Prefer clear descriptive names, keep lines reasonably short, consistent indentation and formatting.
+Adding a module means a class the root constructs and calls. It does not mean an edit to this file.
 
-5. Documentation
-   - Maintain docs/ARCHITECTURE.md explaining overall design, Interfaces → Drivers → Logic, deep-module philosophy, orthogonality, and desktop testing.
-   - For every major feature/module (WiFi, NTP, MQTT, etc.) keep a short docs/ file covering purpose, public API, key classes, important states/sequences, configuration, and how it is tested with fakes.
-   - Document each hardware interface (meaning of methods, success/failure behaviour, what fakes must support).
-   - Documentation is high-level and practical (what & why). Update it in the same change when behaviour changes.
+A hardware port is a seam when it has two adapters: the AVR driver and a desktop fake. Sibling modules that share a live object use a private accessor. The composition root does not call it.
+
+`ModuleProtocol.h` is the copy of the motherboard header. Frame layout, CRC, command bytes, and `kClockStretchMaxMs` live there. If a doc and that header disagree, the header wins. Change the motherboard header, then copy it here.
+
+A handler that runs in the TWI interrupt finishes inside `kClockStretchMaxMs`. The TWI driver attaches one protocol handler.
+
+Pins stay in `main.cpp`. The motherboard bus is schematic I2C0, this chip's TWI1: PE0 is SCL and PE1 is SDA. MiniCore labels those pins the other way around. `Wire1` takes no pin arguments. This slave stays on TWI1. `setup()` drives SNS so the host sees the board seated, and leaves MOD as an input. The link module owns the unconfigured-address gate. The sketch passes the MOD level in.
+
+Sources in a library root are compiled when one of its headers is included. Sources in a subfolder are compiled only when `platformio.ini` names that library in `lib_deps`. An include path does not compile them.
+
+# Desktop tests
+Tests run on the desktop with Unity. No hardware. The AVR driver is not part of that build.
+
+```text
+C:\Users\Nathan\.platformio\penv\Scripts\platformio.exe test -e native
+```
+
+Tests live under `test/test_desktop/`. Fakes live in `test/test_desktop/fakes/`. One translation unit defines `main()` and calls `RUN_TEST`. Any other test file has no `main()`.
+
+Test a module through its public interface and the fake port. Keep a submodule test when it covers an edge the module test does not replace.
+
+The image is built with `pio run -e Upload_ISP`. That environment does not run the desktop tests. The interrupt path is not executed on the desktop.
+
+# C++ style
+- Variables and functions: camelCase. Private members: a leading underscore (`_privateVar`). Types: PascalCase.
+- Every function has a docstring: purpose, parameters, return value.
+- Separate major sections with exactly `// ========== Section Name ==========`.
+- One blank line between functions. Two blank lines between major sections.
+- Keep lines reasonably short. Match the indentation of the surrounding file.
+
+# Documentation
+Doc shape, filenames, and the guide/reference split are in `~/.grok/AGENTS.md`. This file does not list modules or pages. A new part adds its own guide and reference and links them from the index.
+
+Pages already in `docs/` keep their names until a change is about documentation. New pages use the profile layout.
+
+This tree documents the daughter. The motherboard's master sequences stay in the motherboard tree. Name a `main.cpp` pin constant where the behaviour depends on it.
