@@ -1,3 +1,7 @@
+# Sensor module firmware
+
+How the firmware runs, and the lookup pages, are in [docs/home.md](docs/home.md).
+
 # Getting Started 
 
 ```pio run -e fuses_bootloader -t fuses```
