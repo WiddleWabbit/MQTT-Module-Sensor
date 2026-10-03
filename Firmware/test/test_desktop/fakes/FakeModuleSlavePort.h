@@ -1,12 +1,14 @@
 #pragma once
 
+#include <stddef.h>
 #include <stdint.h>
 
 #include "IModuleSlavePort.h"
 #include "ModuleProtocol.h"
 
 /**
- * Records slave-port calls for desktop tests.
+ * Records slave-port calls for desktop tests. deliver() invokes the
+ * handler the link registered, which is the path the TWI driver uses.
  */
 class FakeModuleSlavePort : public IModuleSlavePort
 {
@@ -82,4 +84,38 @@ public:
     }
     setReplyCount++;
   }
+
+  /**
+   * Stores the handler the link registers from its constructor.
+   *
+   * @param handler Function called with one master write.
+   * @param context Pointer passed back to handler on each write.
+   * @return Nothing.
+   */
+  void setMasterWriteHandler(MasterWriteFn handler, void* context) override
+  {
+    _writeHandler = handler;
+    _writeContext = context;
+  }
+
+  /**
+   * Delivers one master write to the registered handler. A missing
+   * handler does nothing.
+   *
+   * @param data Frame bytes.
+   * @param length Number of bytes in data.
+   * @return Nothing.
+   */
+  void deliver(const uint8_t* data, size_t length)
+  {
+    if (_writeHandler == nullptr)
+    {
+      return;
+    }
+    _writeHandler(data, length, _writeContext);
+  }
+
+private:
+  MasterWriteFn _writeHandler = nullptr;
+  void* _writeContext = nullptr;
 };

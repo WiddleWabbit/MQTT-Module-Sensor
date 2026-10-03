@@ -8,20 +8,39 @@
 /**
  * Slave side of the motherboard module protocol for one sensor module.
  * Listens at 0x0A only while MOD is low, then keeps the assigned address.
- * Reports type 0x0200, protocol 1, firmware kFirmwareVersion, and zero
+ * Reports the supplied type and firmware version, protocol 1, and zero
  * sensors. No Arduino types.
  */
 class ModuleLink
 {
 public:
-  static constexpr uint16_t kFirmwareVersion = 1;
-
   /**
-   * Binds the slave port. The slave stays disabled until update().
+   * Binds the slave port and registers this link as the master-write
+   * handler. The slave stays disabled until update().
    *
    * @param port Port that enables TWI and stores replies.
+   * @param typeId Module type reported by GET_IDENTITY.
+   * @param firmwareVersion Firmware version reported by GET_IDENTITY.
    */
-  explicit ModuleLink(IModuleSlavePort& port);
+  explicit ModuleLink(IModuleSlavePort& port, uint16_t typeId,
+                      uint16_t firmwareVersion);
+
+  /**
+   * Copying would leave the port's write context pointing at the
+   * source object.
+   *
+   * @param other Source link. Unused.
+   */
+  ModuleLink(const ModuleLink& other) = delete;
+
+  /**
+   * Assignment would leave the port's write context pointing at the
+   * source object.
+   *
+   * @param other Source link. Unused.
+   * @return Nothing.
+   */
+  ModuleLink& operator=(const ModuleLink& other) = delete;
 
   /**
    * Enables 0x0A while MOD is low and this module has no address yet.
@@ -33,6 +52,18 @@ public:
    */
   void update(bool modIsLow);
 
+private:
+  /**
+   * Forwards one master write to the link stored in context.
+   *
+   * @param data Frame bytes. Not retained.
+   * @param length Number of bytes in data.
+   * @param context The ModuleLink that registered this handler.
+   * @return Nothing.
+   */
+  static void _onMasterWriteThunk(const uint8_t* data, size_t length,
+                                  void* context);
+
   /**
    * Handles one master write, including the stop that ends SET_ADDRESS
    * and the repeated start before a read. Builds the padded reply, or
@@ -42,24 +73,8 @@ public:
    * @param length Number of bytes in data.
    * @return Nothing.
    */
-  void onMasterWrite(const uint8_t* data, size_t length);
+  void _onMasterWrite(const uint8_t* data, size_t length);
 
-  /**
-   * Returns the 7-bit address the module will answer, or 0x0A before
-   * assignment.
-   *
-   * @return Current 7-bit address.
-   */
-  uint8_t address() const;
-
-  /**
-   * Reports whether the slave port is enabled.
-   *
-   * @return True after enable and before a pre-assignment disable.
-   */
-  bool slaveEnabled() const;
-
-private:
   /**
    * Dispatches a CRC-valid command.
    *
@@ -91,6 +106,8 @@ private:
                      uint8_t payloadLen);
 
   IModuleSlavePort& _port;
+  uint16_t _typeId;
+  uint16_t _firmwareVersion;
   uint8_t _address;
   bool _assigned;
   bool _enabled;

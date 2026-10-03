@@ -6,7 +6,9 @@ as a sensor module. Readings are later work. The count is 0, so the
 motherboard stores that count and does not poll inputs.
 
 The on-wire constants are in `lib/Interfaces/ModuleProtocol.h`, copied
-from the motherboard firmware. Framing and CRC are defined there.
+from the motherboard firmware. Framing and CRC are defined there. The
+type and firmware version are the `MODULE_TYPE` and `FIRMWARE_VERSION`
+constants in `src/main.cpp`.
 
 ## Pins
 
@@ -31,35 +33,29 @@ argument because TWI1's pins are fixed.
 
 ## Public API
 
-`ModuleLink(IModuleSlavePort& port)`
+`ModuleLink(IModuleSlavePort& port, uint16_t typeId, uint16_t firmwareVersion)`
 
-Binds the port. The slave is disabled. `address()` is `0x0A`.
+Binds the port and registers the master-write handler. The slave is
+disabled. `main.cpp` passes `MODULE_TYPE` (`0x0200`) and
+`FIRMWARE_VERSION` (`1`). The link is not copied: the port stores it as
+the write context.
 
 `update(bool modIsLow)`
 
 Before assignment, MOD low calls `enable(0x0A)` once. MOD high calls
 `disable()`. After assignment, `update` does not touch the port.
 
-`onMasterWrite(const uint8_t* data, size_t length)`
+A master write arrives through that handler, from the TWI receive
+callback or from `FakeModuleSlavePort::deliver`. A short frame or a
+length that does not match the length byte queues `BadLength`. A bad CRC
+queues `BadCrc` and does not change the address. A valid command queues
+a 19-byte reply: the real frame, then `0xFF`. `SET_ADDRESS` is write-only
+and queues no reply.
 
-Called from the driver when a write ends (stop, or the repeated start
-before a read). A short frame or a length that does not match the length
-byte queues `BadLength`. A bad CRC queues `BadCrc` and does not change
-the address. A valid command queues a 19-byte reply: the real frame, then
-`0xFF`. `SET_ADDRESS` is write-only and queues no reply.
-
-`address()` and `slaveEnabled()`
-
-Observed by tests and available to the sketch.
-
-`kFirmwareVersion`
-
-Firmware version reported in `GET_IDENTITY`. It is 1.
-
-`IModuleSlavePort` is `enable`, `disable`, `setAddress`, and `setReply`.
-`setReply` copies the bytes before it returns. `AvrTwi1Slave` is the
-hardware port. One instance is attached, because Wire's callbacks are
-plain function pointers.
+`IModuleSlavePort` is `enable`, `disable`, `setAddress`, `setReply`, and
+`setMasterWriteHandler`. `setReply` copies the bytes before it returns.
+`AvrTwi1Slave` is the hardware port. One driver instance owns the Wire
+callbacks, because those callbacks are plain function pointers.
 
 ## States
 
@@ -82,7 +78,7 @@ motherboard can release MOD. General call `0x00` is not acknowledged.
 | Command | Result |
 | --- | --- |
 | PING | status Ok, empty payload |
-| GET_IDENTITY | type `0x0200`, protocol 1, firmware 1 |
+| GET_IDENTITY | supplied type and firmware version, protocol 1 |
 | SET_ADDRESS | commit after stop, or ignore a bad address |
 | GET_SENSOR_COUNT | count `0` |
 | GET_SENSOR_CONNECTED, GET_SENSOR_READING | `BadLength` |
@@ -103,7 +99,8 @@ runs inside the TWI interrupt and only walks a short frame, inside the
 | `testModLowEnablesUnconfiguredAddressAndModHighDisables` | `0x0A` follows MOD until assignment |
 | `testPingReplyIsOkAndPadded` | Ok PING, CRC, 19-byte `0xFF` pad |
 | `testIdentityReportsSensorModule` | Type `0x0200`, protocol 1, firmware 1 |
-| `testSetAddressCommitsAndSurvivesModHigh` | Commit `0x10`, ignore a later address, keep answering after MOD rises |
+| `testSuppliedFirmwareVersion` | A supplied type and firmware version 2 are the identity payload |
+| `testSetAddressCommitsAndSurvivesModHigh` | A write while disabled does not commit. Then commit `0x10`, ignore a later address, and keep answering after MOD rises |
 | `testSetAddressRejectsBadCrcAndIllegalAddresses` | Bad CRC, `0x00`, `0x0A`, and `0x70` stay at `0x0A` |
 | `testSensorCountIsZeroAndReadingIsBadLength` | Count 0; reading and presence are `BadLength` |
 | `testUnknownCommandAndMalformedFrames` | ECHO, truncated frame, extra byte, bad CRC, PING with a payload, empty SET_ADDRESS |

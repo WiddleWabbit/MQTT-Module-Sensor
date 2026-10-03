@@ -6,18 +6,18 @@
 #include <Wire1.h>
 #include <avr/io.h>
 
-#include "ModuleLink.h"
-
 AvrTwi1Slave* AvrTwi1Slave::_instance = nullptr;
 
 
 // ========== Construction ==========
 
 /**
- * Creates a disabled slave. Call attach before MOD can go low.
+ * Creates a disabled slave. The link registers the write handler
+ * before MOD can go low.
  */
 AvrTwi1Slave::AvrTwi1Slave()
-  : _link(nullptr),
+  : _writeHandler(nullptr),
+    _writeContext(nullptr),
     _replyLength(0),
     _enabled(false)
 {
@@ -29,18 +29,6 @@ AvrTwi1Slave::AvrTwi1Slave()
 
 
 // ========== Public API ==========
-
-/**
- * Routes Wire1 callbacks to the link. One slave is active.
- *
- * @param link Protocol handler for received writes.
- * @return Nothing.
- */
-void AvrTwi1Slave::attach(ModuleLink& link)
-{
-  _link = &link;
-  _instance = this;
-}
 
 /**
  * Starts Wire1 at address7bit and registers the receive and request
@@ -113,18 +101,35 @@ void AvrTwi1Slave::setReply(const uint8_t* frame, uint8_t length)
   _replyLength = count;
 }
 
+/**
+ * Stores the single protocol handler. Wire's callbacks are plain
+ * function pointers, so one driver instance is active.
+ *
+ * @param handler Function called with one master write.
+ * @param context Pointer passed back to handler on each write.
+ * @return Nothing.
+ */
+void AvrTwi1Slave::setMasterWriteHandler(MasterWriteFn handler,
+                                         void* context)
+{
+  _writeHandler = handler;
+  _writeContext = context;
+  _instance = this;
+}
+
 
 // ========== Wire callbacks ==========
 
 /**
- * Reads the write into the link. Runs from the TWI interrupt.
+ * Reads the write and calls the registered handler. Runs from the
+ * TWI interrupt.
  *
  * @param count Bytes Wire1 reported.
  * @return Nothing.
  */
 void AvrTwi1Slave::_onReceive(int count)
 {
-  if (_instance == nullptr || _instance->_link == nullptr)
+  if (_instance == nullptr || _instance->_writeHandler == nullptr)
   {
     return;
   }
@@ -149,7 +154,7 @@ void AvrTwi1Slave::_onReceive(int count)
   {
     length = static_cast<size_t>(count);
   }
-  _instance->_link->onMasterWrite(buffer, length);
+  _instance->_writeHandler(buffer, length, _instance->_writeContext);
 }
 
 /**

@@ -1,14 +1,23 @@
 #pragma once
 
+#include <stddef.h>
 #include <stdint.h>
 
 /**
  * I2C slave port used by the module link. The desktop fake records calls.
- * The AVR driver talks to TWI1.
+ * The AVR driver talks to TWI1. One handler receives master writes.
  */
 class IModuleSlavePort
 {
 public:
+  /**
+   * Receives one master write. On the AVR this runs from the TWI
+   * interrupt and finishes inside kClockStretchMaxMs. The desktop fake
+   * calls it from deliver.
+   */
+  using MasterWriteFn = void (*)(const uint8_t* data, size_t length,
+                                 void* context);
+
   virtual ~IModuleSlavePort() = default;
 
   /**
@@ -44,4 +53,14 @@ public:
    * @return Nothing.
    */
   virtual void setReply(const uint8_t* frame, uint8_t length) = 0;
+
+  /**
+   * Registers the single protocol handler. A later call replaces it.
+   *
+   * @param handler Function called with one master write.
+   * @param context Pointer passed back to handler on each write.
+   * @return Nothing.
+   */
+  virtual void setMasterWriteHandler(MasterWriteFn handler,
+                                     void* context) = 0;
 };

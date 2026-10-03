@@ -2,22 +2,27 @@
 
 #include "ModuleProtocol.h"
 
-constexpr uint16_t ModuleLink::kFirmwareVersion;
-
 
 // ========== Construction ==========
 
 /**
- * Binds the slave port. The slave stays disabled until update().
+ * Binds the slave port and registers this link as the master-write
+ * handler. The slave stays disabled until update().
  *
  * @param port Port that enables TWI and stores replies.
+ * @param typeId Module type reported by GET_IDENTITY.
+ * @param firmwareVersion Firmware version reported by GET_IDENTITY.
  */
-ModuleLink::ModuleLink(IModuleSlavePort& port)
+ModuleLink::ModuleLink(IModuleSlavePort& port, uint16_t typeId,
+                       uint16_t firmwareVersion)
   : _port(port),
+    _typeId(typeId),
+    _firmwareVersion(firmwareVersion),
     _address(module_protocol::kUnconfiguredAddress),
     _assigned(false),
     _enabled(false)
 {
+  _port.setMasterWriteHandler(&_onMasterWriteThunk, this);
 }
 
 
@@ -56,6 +61,27 @@ void ModuleLink::update(bool modIsLow)
   }
 }
 
+
+// ========== Master write ==========
+
+/**
+ * Forwards one master write to the link stored in context.
+ *
+ * @param data Frame bytes. Not retained.
+ * @param length Number of bytes in data.
+ * @param context The ModuleLink that registered this handler.
+ * @return Nothing.
+ */
+void ModuleLink::_onMasterWriteThunk(const uint8_t* data, size_t length,
+                                     void* context)
+{
+  if (context == nullptr)
+  {
+    return;
+  }
+  static_cast<ModuleLink*>(context)->_onMasterWrite(data, length);
+}
+
 /**
  * Handles one master write, including the stop that ends SET_ADDRESS
  * and the repeated start before a read. Builds the padded reply, or
@@ -65,7 +91,7 @@ void ModuleLink::update(bool modIsLow)
  * @param length Number of bytes in data.
  * @return Nothing.
  */
-void ModuleLink::onMasterWrite(const uint8_t* data, size_t length)
+void ModuleLink::_onMasterWrite(const uint8_t* data, size_t length)
 {
   if (data == nullptr || length < module_protocol::kMinFrameBytes)
   {
@@ -92,27 +118,6 @@ void ModuleLink::onMasterWrite(const uint8_t* data, size_t length)
 
   const uint8_t payloadLen = static_cast<uint8_t>(lengthField - 2);
   _handleCommand(data[1], data + 2, payloadLen);
-}
-
-/**
- * Returns the 7-bit address the module will answer, or 0x0A before
- * assignment.
- *
- * @return Current 7-bit address.
- */
-uint8_t ModuleLink::address() const
-{
-  return _address;
-}
-
-/**
- * Reports whether the slave port is enabled.
- *
- * @return True after enable and before a pre-assignment disable.
- */
-bool ModuleLink::slaveEnabled() const
-{
-  return _enabled;
 }
 
 
@@ -148,11 +153,11 @@ void ModuleLink::_handleCommand(uint8_t command, const uint8_t* payload,
       }
       {
         const uint8_t identity[module_protocol::kIdentityPayloadLen] = {
-          static_cast<uint8_t>(module_protocol::kTypeSensorModule >> 8),
-          static_cast<uint8_t>(module_protocol::kTypeSensorModule & 0xFF),
+          static_cast<uint8_t>(_typeId >> 8),
+          static_cast<uint8_t>(_typeId & 0xFF),
           module_protocol::kProtocolVersion,
-          static_cast<uint8_t>(kFirmwareVersion >> 8),
-          static_cast<uint8_t>(kFirmwareVersion & 0xFF)
+          static_cast<uint8_t>(_firmwareVersion >> 8),
+          static_cast<uint8_t>(_firmwareVersion & 0xFF)
         };
         _replyPayload(module_protocol::kStatusOk, identity,
                       module_protocol::kIdentityPayloadLen);

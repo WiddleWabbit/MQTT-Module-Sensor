@@ -5,8 +5,6 @@
 #include "IModuleSlavePort.h"
 #include "ModuleProtocol.h"
 
-class ModuleLink;
-
 /**
  * TWI1 slave on PE0 (SCL) and PE1 (SDA).
  *
@@ -21,17 +19,10 @@ class AvrTwi1Slave : public IModuleSlavePort
 {
 public:
   /**
-   * Creates a disabled slave. Call attach before MOD can go low.
+   * Creates a disabled slave. The link registers the write handler
+   * before MOD can go low.
    */
   AvrTwi1Slave();
-
-  /**
-   * Routes Wire1 callbacks to the link. One slave is active.
-   *
-   * @param link Protocol handler for received writes.
-   * @return Nothing.
-   */
-  void attach(ModuleLink& link);
 
   /**
    * Starts Wire1 at address7bit and registers the receive and request
@@ -67,9 +58,20 @@ public:
    */
   void setReply(const uint8_t* frame, uint8_t length) override;
 
+  /**
+   * Stores the single protocol handler. Wire's callbacks are plain
+   * function pointers, so one driver instance is active.
+   *
+   * @param handler Function called with one master write.
+   * @param context Pointer passed back to handler on each write.
+   * @return Nothing.
+   */
+  void setMasterWriteHandler(MasterWriteFn handler, void* context) override;
+
 private:
   /**
-   * Reads the write into the link. Runs from the TWI interrupt.
+   * Reads the write and calls the registered handler. Runs from the
+   * TWI interrupt.
    *
    * @param count Bytes Wire1 reported.
    * @return Nothing.
@@ -85,7 +87,8 @@ private:
   static void _onRequest();
 
   static AvrTwi1Slave* _instance;
-  ModuleLink* _link;
+  MasterWriteFn _writeHandler;
+  void* _writeContext;
   uint8_t _reply[module_protocol::kMaxFrameBytes];
   uint8_t _replyLength;
   bool _enabled;

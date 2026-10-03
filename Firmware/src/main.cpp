@@ -2,6 +2,7 @@
 
 #include "AvrTwi1Slave.h"
 #include "ModuleLink.h"
+#include "ModuleProtocol.h"
 
 
 // ========== Board pins ==========
@@ -19,18 +20,23 @@ static_assert(MOD_PIN == 3, "PD3 is MOD.");
 static_assert(SNS_PIN == 4, "PD4 is SNS.");
 
 
+// ========== Product settings ==========
+
+const uint16_t MODULE_TYPE = module_protocol::kTypeSensorModule;
+const uint16_t FIRMWARE_VERSION = 1;
+
+
 // ========== Modules ==========
 
 AvrTwi1Slave moduleSlave;
-ModuleLink moduleLink(moduleSlave);
+ModuleLink moduleLink(moduleSlave, MODULE_TYPE, FIRMWARE_VERSION);
 
 
 // ========== Application ==========
 
 /**
- * Drives SNS low so the motherboard sees this module seated, holds MOD
- * as an input with pull-up, and attaches the TWI1 slave to the link.
- * The slave stays off until MOD is low.
+ * Drives SNS low so the motherboard sees this module seated, and holds
+ * MOD as an input with pull-up. The slave stays off until MOD is low.
  *
  * @return Nothing.
  */
@@ -39,7 +45,6 @@ void setup()
   pinMode(SNS_PIN, OUTPUT);
   digitalWrite(SNS_PIN, LOW);
   pinMode(MOD_PIN, INPUT_PULLUP);
-  moduleSlave.attach(moduleLink);
 }
 
 /**
