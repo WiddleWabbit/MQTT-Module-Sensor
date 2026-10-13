@@ -6,8 +6,8 @@
 	(paper "A4")
 	(title_block
 		(title "MQTT - Current Sensor - Module")
-		(date "2026-07-07")
-		(rev "1.0")
+		(date "2026-10-09")
+		(rev "1.1")
 	)
 	(lib_symbols)
 	(bus_alias "I2C0"
@@ -210,6 +210,16 @@
 	)
 	(bus
 		(pts
+			(xy 224.79 48.26) (xy 224.79 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4ca0a608-9bd3-43ea-aa22-aa7be99b2694")
+	)
+	(bus
+		(pts
 			(xy 175.26 60.96) (xy 175.26 76.2)
 		)
 		(stroke
@@ -227,6 +237,16 @@
 			(type default)
 		)
 		(uuid "54b2483b-e229-4477-9c5d-36199e78d272")
+	)
+	(bus
+		(pts
+			(xy 224.79 72.39) (xy 220.98 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "730c3859-3a65-4c08-abdf-36a0a22e9942")
 	)
 	(bus
 		(pts
@@ -300,13 +320,23 @@
 	)
 	(bus
 		(pts
-			(xy 220.98 43.18) (xy 226.06 43.18)
+			(xy 220.98 43.18) (xy 228.6 43.18)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "ca872376-d2d2-442e-b98c-0fd830ebddd4")
+	)
+	(bus
+		(pts
+			(xy 228.6 48.26) (xy 224.79 48.26)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "eed38983-af2c-4281-9c88-a13a5e4915f7")
 	)
 	(bus
 		(pts
@@ -319,7 +349,7 @@
 		(uuid "f24348b7-bbf0-4183-83f9-853bd6c95724")
 	)
 	(sheet
-		(at 226.06 34.29)
+		(at 228.6 34.29)
 		(size 38.1 17.78)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -334,7 +364,7 @@
 		)
 		(uuid "04cb4c22-9f48-453c-9321-ed5f92a048ae")
 		(property "Sheetname" "SensorRecievers"
-			(at 233.68 33.02 0)
+			(at 236.22 33.02 0)
 			(effects
 				(font
 					(size 1.9 1.9)
@@ -345,7 +375,7 @@
 			)
 		)
 		(property "Sheetfile" "sensorrecievers.kicad_sch"
-			(at 230.378 53.34 0)
+			(at 232.918 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -354,8 +384,18 @@
 			)
 		)
 		(pin "Sens[1..3]" output
-			(at 226.06 43.18 180)
+			(at 228.6 43.18 180)
 			(uuid "23b4e126-5b06-48c2-9ac0-f7310cc2a4b6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SensorSw_[1..3]" input
+			(at 228.6 48.26 180)
+			(uuid "02b5e8e3-b3a7-4909-8390-e097b1c9f844")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -372,7 +412,7 @@
 		)
 	)
 	(sheet
-		(at 140.97 34.29)
+		(at 138.43 34.29)
 		(size 36.83 17.78)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -387,7 +427,7 @@
 		)
 		(uuid "2008a321-bc7f-4ad7-b1cf-7c70f09fefdd")
 		(property "Sheetname" "SensorPowerConversion"
-			(at 142.24 33.02 0)
+			(at 139.7 33.02 0)
 			(effects
 				(font
 					(size 1.9 1.9)
@@ -398,7 +438,7 @@
 			)
 		)
 		(property "Sheetfile" "sensorpowerconversion.kicad_sch"
-			(at 140.97 52.6546 0)
+			(at 138.43 52.6546 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -449,29 +489,29 @@
 				(justify left top)
 			)
 		)
-		(pin "{ISP}" input
-			(at 224.79 104.14 90)
-			(uuid "390fa131-9630-4d12-a414-5653ac7cc182")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "{I2C0}" bidirectional
-			(at 175.26 104.14 90)
-			(uuid "fb558953-e930-4e50-b419-1726dad9b10f")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
 		(pin "{GEN}" bidirectional
 			(at 229.87 104.14 90)
-			(uuid "794aede1-18c4-4cc9-8b51-90418d910a52")
+			(uuid "00dffe0e-5e82-47f9-92db-6780605a7176")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "{I2C1}" bidirectional
+			(at 175.26 104.14 90)
+			(uuid "d9a5435e-f35d-4eaf-b7a3-7cfa39630067")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "{ISP}" input
+			(at 224.79 104.14 90)
+			(uuid "dbab2eea-4205-4d6f-9b53-11eaffc5621a")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -532,9 +572,9 @@
 				(justify right)
 			)
 		)
-		(pin "{I2C1}" bidirectional
+		(pin "{I2C0}" bidirectional
 			(at 187.96 52.07 270)
-			(uuid "20b69bf9-adaa-4c55-ac13-d07036030c9c")
+			(uuid "3696a205-96e0-48bd-aabb-b08d6c05fc6d")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -585,9 +625,19 @@
 				(justify left top)
 			)
 		)
-		(pin "{ISP}" output
-			(at 220.98 80.01 0)
-			(uuid "ca3f5f16-90e8-419e-979c-82905299706c")
+		(pin "SensorSw_[1..3]" output
+			(at 220.98 72.39 0)
+			(uuid "290f4240-10e2-49b4-8d50-301f0667bb5d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "{GEN}" bidirectional
+			(at 220.98 76.2 0)
+			(uuid "ad5d7bd5-d1a0-410b-b4ed-5d905b22ed01")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -596,8 +646,8 @@
 			)
 		)
 		(pin "{I2C0}" bidirectional
-			(at 182.88 80.01 180)
-			(uuid "d1af3543-1fed-4a51-a067-3181e529cc26")
+			(at 182.88 76.2 180)
+			(uuid "168b748b-db67-4461-92eb-660ff094c0a5")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -606,8 +656,8 @@
 			)
 		)
 		(pin "{I2C1}" bidirectional
-			(at 182.88 76.2 180)
-			(uuid "de9f0827-b42e-481f-a1b0-265082458c30")
+			(at 182.88 80.01 180)
+			(uuid "193b4ab2-7cd0-470e-a60f-dc68c103ec51")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -615,9 +665,9 @@
 				(justify left)
 			)
 		)
-		(pin "{GEN}" bidirectional
-			(at 220.98 76.2 0)
-			(uuid "adc7c284-97e7-46bd-8d42-545573c1da95")
+		(pin "{ISP}" output
+			(at 220.98 80.01 0)
+			(uuid "07464b7c-2ec3-4d36-a0e8-c226c6538c68")
 			(effects
 				(font
 					(size 1.27 1.27)

@@ -6,8 +6,8 @@
 	(paper "A4")
 	(title_block
 		(title "Sensor Power Conversion")
-		(date "2026-07-07")
-		(rev "1.0")
+		(date "2026-10-06")
+		(rev "1.1")
 	)
 	(lib_symbols
 		(symbol "Connector:TestPoint"
@@ -2790,7 +2790,7 @@
 		)
 		(uuid "63cb8ea0-83fe-4e9f-bfd0-1473e7090af1")
 	)
-	(text_box "- Texas Instruments generated Boost Converter, 12V to ~25V\n- Used a shielded inductor for minimal interference."
+	(text_box "- Texas Instruments generated Boost Converter, 12V to ~25.7V\n- Used a shielded inductor for minimal interference."
 		(exclude_from_sim no)
 		(at 177.8 168.91 0)
 		(size 104.14 11.43)

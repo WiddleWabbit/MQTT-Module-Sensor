@@ -6,8 +6,8 @@
 	(paper "A4")
 	(title_block
 		(title "Analog Digital Converter")
-		(date "2026-07-07")
-		(rev "1.0")
+		(date "2026-10-09")
+		(rev "1.1")
 	)
 	(lib_symbols
 		(symbol "0805W8F4701T5E_1"
@@ -1709,7 +1709,7 @@
 		)
 		(uuid "ffd4df99-c76f-40d2-bd08-f13d11f25990")
 	)
-	(label "SCL1"
+	(label "SCL0"
 		(at 195.58 86.36 0)
 		(effects
 			(font
@@ -1719,7 +1719,7 @@
 		)
 		(uuid "01066204-763e-47c5-98ef-6e190ee9da30")
 	)
-	(label "SDA1"
+	(label "SDA0"
 		(at 195.58 88.9 0)
 		(effects
 			(font
@@ -1770,7 +1770,7 @@
 		)
 		(uuid "2a221797-d0e8-405c-a4a5-58bb13fe46e5")
 	)
-	(hierarchical_label "{I2C1}"
+	(hierarchical_label "{I2C0}"
 		(shape bidirectional)
 		(at 217.17 83.82 0)
 		(effects
