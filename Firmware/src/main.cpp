@@ -9,22 +9,31 @@
 
 // ========== Board pins ==========
 
-// Motherboard bus is schematic I2C0. It is the chip's TWI1 peripheral:
-// PE0 is SCL and PE1 is SDA. Wire1 owns these pins in hardware.
-const uint8_t SCL_PIN = 23;
-const uint8_t SDA_PIN = 24;
+// Motherboard bus is schematic I2C1. It is the chip's TWI1 peripheral:
+// PE0 is SDA and PE1 is SCL. Wire1 owns these pins in hardware.
+const uint8_t SDA_PIN = 23;
+const uint8_t SCL_PIN = 24;
 const uint8_t MOD_PIN = 3;
 const uint8_t SNS_PIN = 4;
 
-// ADC bus is schematic I2C1. It is the chip's TWI0 peripheral.
+// SensorSw drives the NPN that turns on that channel's high-side PMOS.
+// High enables the loop. The base pulldown holds it off until setup.
+const uint8_t SENSOR_SW1_PIN = 5;
+const uint8_t SENSOR_SW2_PIN = 6;
+const uint8_t SENSOR_SW3_PIN = 7;
+
+// ADC bus is schematic I2C0. It is the chip's TWI0 peripheral.
 // PC4 is SDA and PC5 is SCL. Wire owns these pins in hardware.
 const uint8_t ADC_SDA_PIN = 18;
 const uint8_t ADC_SCL_PIN = 19;
 
-static_assert(SCL_PIN == 23, "PE0 is motherboard SCL.");
-static_assert(SDA_PIN == 24, "PE1 is motherboard SDA.");
+static_assert(SDA_PIN == 23, "PE0 is motherboard SDA.");
+static_assert(SCL_PIN == 24, "PE1 is motherboard SCL.");
 static_assert(MOD_PIN == 3, "PD3 is MOD.");
 static_assert(SNS_PIN == 4, "PD4 is SNS.");
+static_assert(SENSOR_SW1_PIN == 5, "PD5 is SensorSw_1.");
+static_assert(SENSOR_SW2_PIN == 6, "PD6 is SensorSw_2.");
+static_assert(SENSOR_SW3_PIN == 7, "PD7 is SensorSw_3.");
 static_assert(ADC_SDA_PIN == 18, "PC4 is ADC SDA.");
 static_assert(ADC_SCL_PIN == 19, "PC5 is ADC SCL.");
 
@@ -55,8 +64,9 @@ ModuleLink moduleLink(moduleSlave, sensorInputs, MODULE_TYPE, FIRMWARE_VERSION);
 // ========== Application ==========
 
 /**
- * Drives SNS low so the motherboard sees this module seated, and holds
- * MOD as an input with pull-up. The slave stays off until MOD is low.
+ * Drives SNS low so the motherboard sees this module seated, drives
+ * each SensorSw pin high so that loop is powered, and holds MOD as an
+ * input with pull-up. The slave stays off until MOD is low.
  *
  * @return Nothing.
  */
@@ -65,6 +75,12 @@ void setup()
   pinMode(SNS_PIN, OUTPUT);
   digitalWrite(SNS_PIN, LOW);
   pinMode(MOD_PIN, INPUT_PULLUP);
+  pinMode(SENSOR_SW1_PIN, OUTPUT);
+  pinMode(SENSOR_SW2_PIN, OUTPUT);
+  pinMode(SENSOR_SW3_PIN, OUTPUT);
+  digitalWrite(SENSOR_SW1_PIN, HIGH);
+  digitalWrite(SENSOR_SW2_PIN, HIGH);
+  digitalWrite(SENSOR_SW3_PIN, HIGH);
 }
 
 /**

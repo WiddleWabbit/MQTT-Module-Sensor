@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "reference/module-link.md",
+                "file": "reference/slave-port.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "module-link"
+              "title": "slave-port"
             }
           }
         ]
@@ -188,6 +188,7 @@
   "active": "692eafeef8c92e9f",
   "lastOpenFiles": [
     "reference/architecture.md",
+    "reference/module-link.md",
     "adc-port.md",
     "module-link.md",
     "reference/slave-port.md",

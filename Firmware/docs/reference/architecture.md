@@ -10,7 +10,8 @@ calls the scan and the link once per pass.
 
 ## Classes
 
-`setup` drives `SNS_PIN` and configures `MOD_PIN`. `loop` calls
+`setup` drives `SNS_PIN`, drives the three `SENSOR_SW` pins, and
+configures `MOD_PIN`. `loop` calls
 `SensorInputs::update`, reads `MOD_PIN`, and calls `ModuleLink::update`.
 The objects are `moduleSlave` (`AvrTwi1Slave`), `ads` (`AvrAds1115`),
 `sensorInputs` (`SensorInputs`), and `moduleLink` (`ModuleLink`).
@@ -25,7 +26,7 @@ The scan's phases are on the
 ## Sequences
 
 1. Construction registers the master-write handler. The slave stays off.
-2. `setup` sets `SNS_PIN` as an output driven low, and `MOD_PIN` as an input with pull-up.
+2. `setup` sets `SNS_PIN` as an output driven low, each `SENSOR_SW` pin as an output driven high, and `MOD_PIN` as an input with pull-up.
 3. Each `loop` advances the scan one driver call, reads `MOD_PIN`, and calls the link. Both calls return without waiting.
 
 The host holds MOD low for `kModGateMaxMs` (5 ms). Because `loop` does
@@ -44,12 +45,15 @@ Declared in `src/main.cpp`.
 
 | Constant | Value | Port | Role |
 | --- | --- | --- | --- |
-| `SCL_PIN` | 23 | PE0 | Motherboard SCL, TWI1 |
-| `SDA_PIN` | 24 | PE1 | Motherboard SDA, TWI1 |
+| `SDA_PIN` | 23 | PE0 | Motherboard SDA, schematic I2C1, TWI1 |
+| `SCL_PIN` | 24 | PE1 | Motherboard SCL, schematic I2C1, TWI1 |
 | `MOD_PIN` | 3 | PD3 | Enumeration select, input pull-up |
 | `SNS_PIN` | 4 | PD4 | Seated detect, driven low |
-| `ADC_SDA_PIN` | 18 | PC4 | ADS1115 SDA, TWI0. `Wire` takes no pin argument |
-| `ADC_SCL_PIN` | 19 | PC5 | ADS1115 SCL, TWI0. `Wire` takes no pin argument |
+| `SENSOR_SW1_PIN` | 5 | PD5 | Sens1 loop enable, driven high |
+| `SENSOR_SW2_PIN` | 6 | PD6 | Sens2 loop enable, driven high |
+| `SENSOR_SW3_PIN` | 7 | PD7 | Sens3 loop enable, driven high |
+| `ADC_SDA_PIN` | 18 | PC4 | ADS1115 SDA, schematic I2C0, TWI0. `Wire` takes no pin argument |
+| `ADC_SCL_PIN` | 19 | PC5 | ADS1115 SCL, schematic I2C0, TWI0. `Wire` takes no pin argument |
 | `MODULE_TYPE` | `kTypeSensorModule` | | Reported by `GET_IDENTITY` |
 | `FIRMWARE_VERSION` | 1 | | Reported by `GET_IDENTITY` |
 | `ADS1115_ADDRESS` | `0x48` | | ADDR strapped to GND |
@@ -59,9 +63,9 @@ Declared in `src/main.cpp`.
 `ads` is constructed with `AvrAds1115::kGainOne` (`0x0200`, ±4.096 V)
 and `AvrAds1115::kRate860Sps` (`0x00E0`).
 
-`kTypeSensorModule` is `0x0200` in `ModuleProtocol.h`. MiniCore's names
-for the TWI1 pins are reversed. That constraint is on the
-[slave port reference](slave-port.md).
+`kTypeSensorModule` is `0x0200` in `ModuleProtocol.h`. MiniCore names
+PE0 `SDA1` and PE1 `SCL1`, which is how TWI1 and this board are wired.
+That note is on the [slave port reference](slave-port.md).
 
 The image is an ATmega328PB at 8 MHz from the internal oscillator.
 `Upload_ISP` programs it with stk500v1 at 19200 on COM3.

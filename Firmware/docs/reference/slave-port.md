@@ -47,10 +47,10 @@ with those resistors.
 missing instance or a missing handler returns. `_onRequest` clocks out
 the stored reply. A reply length of 0 sends nothing.
 
-MiniCore's pin header labels PE0 as `SDA1` and PE1 as `SCL1`. The TWI1
-peripheral and this PCB use PE0 as SCL and PE1 as SDA. `Wire1.begin()`
-still connects that peripheral. `SCL_PIN` and `SDA_PIN` in `main.cpp`
-name those pins. `Wire1` takes no pin arguments.
+PE0 is SDA1 and PE1 is SCL1. That is the TWI1 peripheral, MiniCore's
+`SDA1` and `SCL1`, and the motherboard header. `Wire1.begin()` connects
+that peripheral. `SDA_PIN` and `SCL_PIN` in `main.cpp` name those pins.
+`Wire1` takes no pin arguments.
 
 ## Errors
 

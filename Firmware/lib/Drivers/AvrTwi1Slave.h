@@ -6,11 +6,11 @@
 #include "ModuleProtocol.h"
 
 /**
- * TWI1 slave on PE0 (SCL) and PE1 (SDA).
+ * TWI1 slave on PE0 (SDA) and PE1 (SCL).
  *
- * MiniCore names those pins SDA1 and SCL1 in the opposite order. The
- * peripheral itself is PE0 = SCL and PE1 = SDA, which is how this PCB
- * wires the motherboard header. Wire1 enables that peripheral.
+ * Those are the silicon TWI1 pins and MiniCore's SDA1 and SCL1. This
+ * PCB wires them to the motherboard header nets SDA1 and SCL1. Wire1
+ * enables that peripheral.
  * setAddress writes TWAR1 directly so the new address is committed
  * from the stop callback without resetting the bus. General call stays
  * off because bit 0 of TWAR1 stays clear.

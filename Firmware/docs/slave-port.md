@@ -49,7 +49,7 @@ enabled. The host clocks the reply out on the next read. `TWAR1` is
 the address the peripheral acknowledges. The fake keeps the same calls
 so a test can read them.
 
-`SCL_PIN` and `SDA_PIN` name the motherboard-bus pins. `Wire1` takes
+`SDA_PIN` is PE0 and `SCL_PIN` is PE1, schematic I2C1. `Wire1` takes
 no pin argument, because TWI1's pins are fixed.
 
 ## See also

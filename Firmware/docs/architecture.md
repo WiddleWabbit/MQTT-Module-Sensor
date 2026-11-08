@@ -20,9 +20,10 @@ Global construction runs before `setup()`. `ModuleLink` registers its
 master-write handler there. The slave stays off until `loop()` sees
 MOD low.
 
-The motherboard bus is schematic I2C0. On this chip that is TWI1,
-Arduino `Wire1`. The ADC bus is schematic I2C1, TWI0 on PC4 and PC5,
-Arduino `Wire`. The ADS1115 is the only device on that bus.
+The motherboard bus is schematic I2C1. On this chip that is TWI1,
+Arduino `Wire1`: PE0 is SDA and PE1 is SCL. The ADC bus is schematic
+I2C0, TWI0 on PC4 (SDA) and PC5 (SCL), Arduino `Wire`. The ADS1115 is
+the only device on that bus.
 
 ## What it creates
 
@@ -45,7 +46,9 @@ holds the link. Desktop fakes live in `test/test_desktop/fakes/`.
 ## One update
 
 `setup()` drives `SNS_PIN` low so the motherboard sense line says the
-module is seated, and holds `MOD_PIN` as an input with pull-up.
+module is seated, drives `SENSOR_SW1_PIN`, `SENSOR_SW2_PIN`, and
+`SENSOR_SW3_PIN` high so each loop is powered, and holds `MOD_PIN` as
+an input with pull-up.
 
 ```mermaid
 flowchart TD

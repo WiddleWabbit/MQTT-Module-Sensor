@@ -44,8 +44,8 @@ The driver stores the address, the gain, the data rate, and whether
 `begin()` succeeded. The conversion result lives in the ADS1115 until
 `readCounts()`. `SensorInputs` copies it into the cache.
 
-`ADC_SDA_PIN` and `ADC_SCL_PIN` name PC4 and PC5. `Wire` takes no pin
-argument, because TWI0's pins are fixed.
+`ADC_SDA_PIN` and `ADC_SCL_PIN` name PC4 and PC5, schematic I2C0.
+`Wire` takes no pin argument, because TWI0's pins are fixed.
 
 ## See also
 

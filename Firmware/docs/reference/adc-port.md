@@ -44,7 +44,7 @@ register OS bit.
 
 `Wire.begin()` turns on the internal pull-ups on PC4 and PC5, in
 parallel with the board's pull-ups. `ADC_SDA_PIN` is 18 and
-`ADC_SCL_PIN` is 19. `Wire` takes no pin arguments.
+`ADC_SCL_PIN` is 19, schematic I2C0. `Wire` takes no pin arguments.
 
 The ADS1115 address is `ADS1115_ADDRESS` (`0x48`). ADDR is strapped
 to GND.
