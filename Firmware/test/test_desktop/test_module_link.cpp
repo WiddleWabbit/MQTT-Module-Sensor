@@ -3,7 +3,9 @@
 #include "ModuleLink.h"
 #include "ModuleProtocol.h"
 #include "fakes/FakeAds1115.h"
+#include "fakes/FakeInterruptMask.h"
 #include "fakes/FakeModuleSlavePort.h"
+#include "fakes/FakeSensorSwitchPort.h"
 
 namespace
 {
@@ -11,6 +13,8 @@ namespace
 constexpr uint16_t kTestType = module_protocol::kTypeSensorModule;
 constexpr uint16_t kTestFirmwareVersion = 1;
 constexpr int16_t kConnectedMinCounts = 2400;
+constexpr int32_t kTripCounts = 21956;
+constexpr uint8_t kTripSamples = 2;
 
 /**
  * One link, its slave fake, and a sensor cache. The default count is
@@ -19,6 +23,8 @@ constexpr int16_t kConnectedMinCounts = 2400;
 struct Board
 {
   FakeAds1115 adc;
+  FakeSensorSwitchPort switches;
+  FakeInterruptMask mask;
   SensorInputs sensors;
   FakeModuleSlavePort port;
   ModuleLink link;
@@ -33,7 +39,8 @@ struct Board
   explicit Board(uint8_t sensorCount = 0,
                  uint16_t typeId = kTestType,
                  uint16_t firmwareVersion = kTestFirmwareVersion)
-    : sensors(adc, sensorCount, kConnectedMinCounts),
+    : sensors(adc, switches, mask, sensorCount, kConnectedMinCounts,
+              kTripCounts, kTripSamples),
       link(port, sensors, typeId, firmwareVersion)
   {
   }
@@ -160,6 +167,58 @@ void capture(Board& board, uint8_t index, int16_t counts)
     board.sensors.update();
   }
   TEST_ASSERT_TRUE(board.sensors.hasSample(index));
+}
+
+/**
+ * Runs the scan until one more conversion is stored. The board's
+ * count should be 1 so the sample lands on index 0.
+ *
+ * @param board Link fixture whose ADC fake is scripted.
+ * @param counts Value the fake returns for input 0.
+ * @return Nothing.
+ */
+void publish(Board& board, int16_t counts)
+{
+  board.adc.counts[0] = counts;
+  board.adc.ready = true;
+  const uint8_t reads = board.adc.readCount;
+  for (uint8_t step = 0; step < 8 && board.adc.readCount == reads; ++step)
+  {
+    board.sensors.update();
+  }
+  TEST_ASSERT_TRUE(board.adc.readCount > reads);
+}
+
+/**
+ * Stores the next conversion in channel order. The caller sets the
+ * fake counts first.
+ *
+ * @param board Link fixture whose ADC fake is scripted.
+ * @return Nothing.
+ */
+void storeNext(Board& board)
+{
+  board.adc.ready = true;
+  const uint8_t reads = board.adc.readCount;
+  for (uint8_t step = 0; step < 8 && board.adc.readCount == reads; ++step)
+  {
+    board.sensors.update();
+  }
+  TEST_ASSERT_TRUE(board.adc.readCount > reads);
+}
+
+/**
+ * Checks a GET_FAULT list.
+ *
+ * @param board Link fixture that receives the command.
+ * @param body Expected records, or nullptr when length is 0.
+ * @param length Expected payload length.
+ * @return Nothing.
+ */
+void expectFault(Board& board, const uint8_t* body, uint8_t length)
+{
+  writeCommand(board.port, module_protocol::kCmdGetFault, nullptr, 0);
+  expectReply(board.port, module_protocol::kStatusOk, body, length);
 }
 
 }
@@ -358,9 +417,10 @@ void testSetAddressRejectsBadCrcAndIllegalAddresses()
 }
 
 /**
- * Count is the cache size. A missing sample is Busy. A stored sample
- * is returned with its connected flag, including a value below the
- * threshold and a negative code.
+ * Count is the cache size. A missing sample is Busy. The loops are
+ * closed before the samples, so a stored sample below the threshold
+ * is disconnected and a sample at the threshold is on. A negative
+ * code stays disconnected.
  *
  * @return Nothing.
  */
@@ -378,6 +438,10 @@ void testSensorCommandsReportCachedReadings()
   expectReply(board.port, module_protocol::kStatusBusy, nullptr, 0);
   writeCommand(board.port, module_protocol::kCmdGetSensorConnected, &index0, 1);
   expectReply(board.port, module_protocol::kStatusBusy, nullptr, 0);
+
+  board.sensors.turnOn(0);
+  board.sensors.turnOn(1);
+  board.sensors.turnOn(2);
 
   capture(board, 0, 2399);
   writeCommand(board.port, module_protocol::kCmdGetSensorReading, &index0, 1);
@@ -410,6 +474,303 @@ void testSensorCommandsReportCachedReadings()
   fillReading(0, 0, 2399, reading);
   expectReply(board.port, module_protocol::kStatusOk, reading,
               module_protocol::kSensorReadingPayloadLen);
+}
+
+/**
+ * State starts off. Set on waits for a sample, then reports
+ * disconnected or on. Two samples at the trip latch fault and stay
+ * there through set on and set off. Reset leaves the sensor off, and
+ * a later set on is accepted. A bad index, a fault or disconnected
+ * set value, and a wrong length are BadLength and leave the switches
+ * open.
+ *
+ * @return Nothing.
+ */
+void testSensorStateCommands()
+{
+  Board board(1);
+  board.link.update(true);
+
+  const uint8_t index0 = 0;
+  writeCommand(board.port, module_protocol::kCmdGetSensorState, &index0, 1);
+  const uint8_t off[] = {0, module_protocol::kSensorStateOff};
+  expectReply(board.port, module_protocol::kStatusOk, off,
+              module_protocol::kSensorStatePayloadLen);
+  TEST_ASSERT_FALSE(board.switches.on[0]);
+
+  const uint8_t setOn[] = {0, module_protocol::kSensorStateOn};
+  writeCommand(board.port, module_protocol::kCmdSetSensor, setOn, 2);
+  expectReply(board.port, module_protocol::kStatusBusy, nullptr, 0);
+  TEST_ASSERT_TRUE(board.switches.on[0]);
+
+  writeCommand(board.port, module_protocol::kCmdGetSensorState, &index0, 1);
+  expectReply(board.port, module_protocol::kStatusBusy, nullptr, 0);
+
+  publish(board, 2399);
+  writeCommand(board.port, module_protocol::kCmdGetSensorState, &index0, 1);
+  const uint8_t disconnected[] = {
+    0, module_protocol::kSensorStateDisconnected};
+  expectReply(board.port, module_protocol::kStatusOk, disconnected,
+              module_protocol::kSensorStatePayloadLen);
+  uint8_t reading[module_protocol::kSensorReadingPayloadLen];
+  fillReading(0, 0, 2399, reading);
+  writeCommand(board.port, module_protocol::kCmdGetSensorReading, &index0, 1);
+  expectReply(board.port, module_protocol::kStatusOk, reading,
+              module_protocol::kSensorReadingPayloadLen);
+
+  writeCommand(board.port, module_protocol::kCmdSetSensor, setOn, 2);
+  expectReply(board.port, module_protocol::kStatusOk, disconnected,
+              module_protocol::kSensorStatePayloadLen);
+  TEST_ASSERT_TRUE(board.switches.on[0]);
+
+  publish(board, 2400);
+  writeCommand(board.port, module_protocol::kCmdGetSensorState, &index0, 1);
+  const uint8_t on[] = {0, module_protocol::kSensorStateOn};
+  expectReply(board.port, module_protocol::kStatusOk, on,
+              module_protocol::kSensorStatePayloadLen);
+  fillReading(0, 1, 2400, reading);
+  writeCommand(board.port, module_protocol::kCmdGetSensorReading, &index0, 1);
+  expectReply(board.port, module_protocol::kStatusOk, reading,
+              module_protocol::kSensorReadingPayloadLen);
+
+  const uint8_t setOff[] = {0, module_protocol::kSensorStateOff};
+  writeCommand(board.port, module_protocol::kCmdSetSensor, setOff, 2);
+  expectReply(board.port, module_protocol::kStatusOk, off,
+              module_protocol::kSensorStatePayloadLen);
+  TEST_ASSERT_FALSE(board.switches.on[0]);
+  fillReading(0, 0, 2400, reading);
+  writeCommand(board.port, module_protocol::kCmdGetSensorReading, &index0, 1);
+  expectReply(board.port, module_protocol::kStatusOk, reading,
+              module_protocol::kSensorReadingPayloadLen);
+
+  writeCommand(board.port, module_protocol::kCmdSetSensor, setOn, 2);
+  expectReply(board.port, module_protocol::kStatusBusy, nullptr, 0);
+  publish(board, static_cast<int16_t>(kTripCounts));
+  writeCommand(board.port, module_protocol::kCmdGetSensorState, &index0, 1);
+  expectReply(board.port, module_protocol::kStatusOk, on,
+              module_protocol::kSensorStatePayloadLen);
+  TEST_ASSERT_TRUE(board.switches.on[0]);
+
+  publish(board, static_cast<int16_t>(kTripCounts));
+  writeCommand(board.port, module_protocol::kCmdGetSensorState, &index0, 1);
+  const uint8_t fault[] = {0, module_protocol::kSensorStateFault};
+  expectReply(board.port, module_protocol::kStatusOk, fault,
+              module_protocol::kSensorStatePayloadLen);
+  TEST_ASSERT_FALSE(board.switches.on[0]);
+  fillReading(0, 0, kTripCounts, reading);
+  writeCommand(board.port, module_protocol::kCmdGetSensorReading, &index0, 1);
+  expectReply(board.port, module_protocol::kStatusOk, reading,
+              module_protocol::kSensorReadingPayloadLen);
+
+  writeCommand(board.port, module_protocol::kCmdSetSensor, setOn, 2);
+  expectReply(board.port, module_protocol::kStatusOk, fault,
+              module_protocol::kSensorStatePayloadLen);
+  writeCommand(board.port, module_protocol::kCmdSetSensor, setOff, 2);
+  expectReply(board.port, module_protocol::kStatusOk, fault,
+              module_protocol::kSensorStatePayloadLen);
+  TEST_ASSERT_FALSE(board.switches.on[0]);
+
+  writeCommand(board.port, module_protocol::kCmdResetSensor, &index0, 1);
+  expectReply(board.port, module_protocol::kStatusOk, off,
+              module_protocol::kSensorStatePayloadLen);
+  TEST_ASSERT_FALSE(board.switches.on[0]);
+
+  writeCommand(board.port, module_protocol::kCmdSetSensor, setOn, 2);
+  expectReply(board.port, module_protocol::kStatusBusy, nullptr, 0);
+  TEST_ASSERT_TRUE(board.switches.on[0]);
+  publish(board, 4800);
+  writeCommand(board.port, module_protocol::kCmdGetSensorState, &index0, 1);
+  expectReply(board.port, module_protocol::kStatusOk, on,
+              module_protocol::kSensorStatePayloadLen);
+
+  Board wide(3);
+  wide.link.update(true);
+  const uint8_t badIndex[] = {3, module_protocol::kSensorStateOn};
+  writeCommand(wide.port, module_protocol::kCmdSetSensor, badIndex, 2);
+  expectReply(wide.port, module_protocol::kStatusBadLength, nullptr, 0);
+  const uint8_t faultValue[] = {0, module_protocol::kSensorStateFault};
+  writeCommand(wide.port, module_protocol::kCmdSetSensor, faultValue, 2);
+  expectReply(wide.port, module_protocol::kStatusBadLength, nullptr, 0);
+  const uint8_t disconnectedValue[] = {
+    0, module_protocol::kSensorStateDisconnected};
+  writeCommand(wide.port, module_protocol::kCmdSetSensor, disconnectedValue, 2);
+  expectReply(wide.port, module_protocol::kStatusBadLength, nullptr, 0);
+  writeCommand(wide.port, module_protocol::kCmdSetSensor, nullptr, 0);
+  expectReply(wide.port, module_protocol::kStatusBadLength, nullptr, 0);
+  const uint8_t extra[] = {0, module_protocol::kSensorStateOn, 0};
+  writeCommand(wide.port, module_protocol::kCmdSetSensor, extra, 3);
+  expectReply(wide.port, module_protocol::kStatusBadLength, nullptr, 0);
+  writeCommand(wide.port, module_protocol::kCmdResetSensor, nullptr, 0);
+  expectReply(wide.port, module_protocol::kStatusBadLength, nullptr, 0);
+  writeCommand(wide.port, module_protocol::kCmdResetSensor, extra, 2);
+  expectReply(wide.port, module_protocol::kStatusBadLength, nullptr, 0);
+  writeCommand(wide.port, module_protocol::kCmdGetSensorState, nullptr, 0);
+  expectReply(wide.port, module_protocol::kStatusBadLength, nullptr, 0);
+  const uint8_t index3 = 3;
+  writeCommand(wide.port, module_protocol::kCmdGetSensorState, &index3, 1);
+  expectReply(wide.port, module_protocol::kStatusBadLength, nullptr, 0);
+  writeCommand(wide.port, module_protocol::kCmdResetSensor, &index3, 1);
+  expectReply(wide.port, module_protocol::kStatusBadLength, nullptr, 0);
+  TEST_ASSERT_FALSE(wide.switches.on[0]);
+  TEST_ASSERT_EQUAL(0, wide.switches.setCount);
+
+  writeCommand(wide.port, module_protocol::kCmdSetSensor, setOn, 2);
+  expectReply(wide.port, module_protocol::kStatusBusy, nullptr, 0);
+  TEST_ASSERT_TRUE(wide.switches.on[0]);
+  TEST_ASSERT_FALSE(wide.switches.on[1]);
+  const uint8_t index1 = 1;
+  writeCommand(wide.port, module_protocol::kCmdGetSensorState, &index1, 1);
+  const uint8_t channel1Off[] = {1, module_protocol::kSensorStateOff};
+  expectReply(wide.port, module_protocol::kStatusOk, channel1Off,
+              module_protocol::kSensorStatePayloadLen);
+}
+
+/**
+ * GET_FAULT before a fault lists every input as reason 0. A count
+ * of 0 is an empty Ok payload.
+ *
+ * @return Nothing.
+ */
+void testGetFaultWhenIdle()
+{
+  Board board(3);
+  board.link.update(true);
+
+  const uint8_t none = module_protocol::kFaultNone;
+  const uint8_t clear[] = {none, 0, none, 1, none, 2};
+  expectFault(board, clear, sizeof(clear));
+
+  Board empty;
+  empty.link.update(true);
+  expectFault(empty, nullptr, 0);
+}
+
+/**
+ * One trip sample stays clear. The second sample on input 2 sets
+ * that record to overcurrent. A disconnected input stays reason 0.
+ * Faulting input 0 sets its record too. Reset clears one record
+ * at a time.
+ *
+ * @return Nothing.
+ */
+void testGetFaultReportsEveryInput()
+{
+  Board board(3);
+  board.link.update(true);
+  board.sensors.turnOn(2);
+  board.adc.counts[0] = static_cast<int16_t>(kTripCounts);
+  board.adc.counts[1] = 2399;
+  board.adc.counts[2] = static_cast<int16_t>(kTripCounts);
+
+  const uint8_t none = module_protocol::kFaultNone;
+  const uint8_t trip = module_protocol::kSensorFaultOvercurrent;
+  const uint8_t clear[] = {none, 0, none, 1, none, 2};
+  const uint8_t input2[] = {none, 0, none, 1, trip, 2};
+  const uint8_t both[] = {trip, 0, none, 1, trip, 2};
+
+  storeNext(board);
+  storeNext(board);
+  storeNext(board);
+  expectFault(board, clear, sizeof(clear));
+  TEST_ASSERT_TRUE(board.switches.on[2]);
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateOn,
+                          board.sensors.state(2));
+
+  storeNext(board);
+  storeNext(board);
+  storeNext(board);
+  expectFault(board, input2, sizeof(input2));
+  TEST_ASSERT_FALSE(board.switches.on[2]);
+
+  board.sensors.turnOn(1);
+  storeNext(board);
+  storeNext(board);
+  expectFault(board, input2, sizeof(input2));
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateDisconnected,
+                          board.sensors.state(1));
+  TEST_ASSERT_TRUE(board.switches.on[1]);
+
+  board.sensors.turnOn(0);
+  storeNext(board);
+  storeNext(board);
+  storeNext(board);
+  storeNext(board);
+  storeNext(board);
+  expectFault(board, both, sizeof(both));
+  TEST_ASSERT_FALSE(board.switches.on[0]);
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateFault,
+                          board.sensors.state(2));
+
+  const uint8_t index0 = 0;
+  writeCommand(board.port, module_protocol::kCmdResetSensor, &index0, 1);
+  const uint8_t off[] = {0, module_protocol::kSensorStateOff};
+  expectReply(board.port, module_protocol::kStatusOk, off,
+              module_protocol::kSensorStatePayloadLen);
+  expectFault(board, input2, sizeof(input2));
+
+  const uint8_t index2 = 2;
+  writeCommand(board.port, module_protocol::kCmdResetSensor, &index2, 1);
+  const uint8_t cleared[] = {2, module_protocol::kSensorStateOff};
+  expectReply(board.port, module_protocol::kStatusOk, cleared,
+              module_protocol::kSensorStatePayloadLen);
+  expectFault(board, clear, sizeof(clear));
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateDisconnected,
+                          board.sensors.state(1));
+}
+
+/**
+ * A payload on GET_FAULT is BadLength. The latched fault and the
+ * open switch stay as they are.
+ *
+ * @return Nothing.
+ */
+void testGetFaultRejectsPayload()
+{
+  Board board(1);
+  board.link.update(true);
+  board.sensors.turnOn(0);
+  publish(board, static_cast<int16_t>(kTripCounts));
+  publish(board, static_cast<int16_t>(kTripCounts));
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateFault,
+                          board.sensors.state(0));
+  TEST_ASSERT_FALSE(board.switches.on[0]);
+  const uint8_t sets = board.switches.setCount;
+
+  const uint8_t extra = 0;
+  writeCommand(board.port, module_protocol::kCmdGetFault, &extra, 1);
+  expectReply(board.port, module_protocol::kStatusBadLength, nullptr, 0);
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateFault,
+                          board.sensors.state(0));
+  TEST_ASSERT_FALSE(board.switches.on[0]);
+  TEST_ASSERT_EQUAL(sets, board.switches.setCount);
+  const uint8_t latched[] = {module_protocol::kSensorFaultOvercurrent, 0};
+  expectFault(board, latched, sizeof(latched));
+}
+
+/**
+ * Eight inputs fill the payload. Nine do not fit, so the reply is
+ * Unsupported and carries no partial list.
+ *
+ * @return Nothing.
+ */
+void testGetFaultRejectsTooManyInputs()
+{
+  const uint8_t fit = static_cast<uint8_t>(
+      module_protocol::kMaxPayload / module_protocol::kFaultRecordLen);
+  Board full(fit);
+  full.link.update(true);
+  uint8_t body[module_protocol::kMaxPayload];
+  for (uint8_t index = 0; index < fit; ++index)
+  {
+    body[static_cast<uint8_t>(index * 2U)] = module_protocol::kFaultNone;
+    body[static_cast<uint8_t>(index * 2U + 1U)] = index;
+  }
+  expectFault(full, body, module_protocol::kMaxPayload);
+
+  Board over(static_cast<uint8_t>(fit + 1U));
+  over.link.update(true);
+  writeCommand(over.port, module_protocol::kCmdGetFault, nullptr, 0);
+  expectReply(over.port, module_protocol::kStatusUnsupported, nullptr, 0);
 }
 
 /**
@@ -549,6 +910,11 @@ int main()
   RUN_TEST(testSetAddressCommitsAndSurvivesModHigh);
   RUN_TEST(testSetAddressRejectsBadCrcAndIllegalAddresses);
   RUN_TEST(testSensorCommandsReportCachedReadings);
+  RUN_TEST(testSensorStateCommands);
+  RUN_TEST(testGetFaultWhenIdle);
+  RUN_TEST(testGetFaultReportsEveryInput);
+  RUN_TEST(testGetFaultRejectsPayload);
+  RUN_TEST(testGetFaultRejectsTooManyInputs);
   RUN_TEST(testSensorCommandsRejectBadIndexAndLength);
   RUN_TEST(testUnknownCommandAndMalformedFrames);
   RUN_TEST(testEnumerationSequence);

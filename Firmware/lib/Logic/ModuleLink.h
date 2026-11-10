@@ -9,8 +9,10 @@
 /**
  * Slave side of the motherboard module protocol for one sensor module.
  * Listens at 0x0A only while MOD is low, then keeps the assigned address.
- * Reports the supplied type and firmware version, protocol 1, and the
- * samples held by SensorInputs. No Arduino types.
+ * Reports the supplied type and firmware version, protocol 1, the
+ * samples and on/off/fault/disconnected state held by SensorInputs,
+ * and one GET_FAULT record for each input.
+ * No Arduino types.
  */
 class ModuleLink
 {
@@ -20,7 +22,7 @@ public:
    * as the master-write handler. The slave stays disabled until update().
    *
    * @param port Port that enables TWI and stores replies.
-   * @param sensors Cached ADS1115 samples the sensor commands read.
+   * @param sensors Sensor cache and loop state the sensor commands use.
    * @param typeId Module type reported by GET_IDENTITY.
    * @param firmwareVersion Firmware version reported by GET_IDENTITY.
    */
@@ -106,6 +108,15 @@ private:
    */
   void _replyPayload(uint8_t status, const uint8_t* payload,
                      uint8_t payloadLen);
+
+  /**
+   * Queues the sensor state, or Busy when the loop just closed and
+   * no sample has been stored since.
+   *
+   * @param index Zero-based sensor inside the count.
+   * @return Nothing.
+   */
+  void _replySensorState(uint8_t index);
 
   IModuleSlavePort& _port;
   SensorInputs& _sensors;

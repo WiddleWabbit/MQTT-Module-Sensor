@@ -67,18 +67,42 @@ inline uint8_t crc8Smbus(const uint8_t* data, size_t length)
 constexpr uint8_t kCmdPing = 0x01;
 constexpr uint8_t kCmdGetIdentity = 0x02;
 constexpr uint8_t kCmdSetAddress = 0x03;
+// Empty request. Reply is one record per input, in index order.
+// Each record is the reason byte, then the 0-based index.
+// kFaultRecordLen is one record. kFaultPayloadLen is the one-record
+// reply the pump sends. Reason 0 is no fault on every module type.
+// A module defines its own non-zero reasons. A list longer than
+// kMaxPayload does not fit.
+constexpr uint8_t kCmdGetFault = 0x04;
+constexpr uint8_t kFaultRecordLen = 2;
+constexpr uint8_t kFaultPayloadLen = 2;
+constexpr uint8_t kFaultNone = 0;
 constexpr uint8_t kCmdEcho = 0x40;
 
 // Sensor module (type 0x0200) commands. Other types are not required
-// to implement these. Requests for connected/reading carry a 0-based
-// sensor index. Responses are big-endian.
+// to implement these. Requests for one sensor carry a 0-based index.
+// Responses are big-endian. State bytes are kSensorStateOff,
+// kSensorStateOn, kSensorStateFault, and kSensorStateDisconnected.
+// SET_SENSOR accepts only off or on. RESET_SENSOR is a separate
+// command and leaves that sensor off.
 constexpr uint8_t kCmdGetSensorCount = 0x41;
 constexpr uint8_t kCmdGetSensorConnected = 0x42;
 constexpr uint8_t kCmdGetSensorReading = 0x43;
+constexpr uint8_t kCmdGetSensorState = 0x44;
+constexpr uint8_t kCmdSetSensor = 0x45;
+constexpr uint8_t kCmdResetSensor = 0x46;
 constexpr uint8_t kMaxSensorsPerModule = 16;
 constexpr uint8_t kSensorCountPayloadLen = 1;
 constexpr uint8_t kSensorConnectedPayloadLen = 2;
 constexpr uint8_t kSensorReadingPayloadLen = 6;
+constexpr uint8_t kSensorStatePayloadLen = 2;
+constexpr uint8_t kSensorSetPayloadLen = 2;
+constexpr uint8_t kSensorStateOff = 0;
+constexpr uint8_t kSensorStateOn = 1;
+constexpr uint8_t kSensorStateFault = 2;
+constexpr uint8_t kSensorStateDisconnected = 3;
+// GET_FAULT reason for type 0x0200. Two trip samples latch this.
+constexpr uint8_t kSensorFaultOvercurrent = 1;
 
 // Solenoid module (type 0x0100) commands. Other types are not required
 // to implement these. Indexes are 0-based. State bytes are
@@ -99,14 +123,35 @@ constexpr uint8_t kSolenoidStateDisconnected = 2;
 // implement these. One pump per module. State bytes are
 // kPumpStateOff, kPumpStateOn, and kPumpStateFault.
 // SET_PUMP accepts only off or on. RESET_PUMP is a separate command.
+// GET_PUMP_NOW, GET_PUMP_CYCLE, and GET_PUMP_TOTALS are empty
+// requests. Payloads are big-endian. Phase bytes are the kPumpPhase
+// values. NOW flags are kPumpFlagNpgdLow, kPumpFlagEnableHigh, and
+// kPumpFlagCycled.
 constexpr uint8_t kCmdGetPumpState = 0x60;
 constexpr uint8_t kCmdSetPump = 0x61;
 constexpr uint8_t kCmdResetPump = 0x62;
+constexpr uint8_t kCmdGetPumpNow = 0x63;
+constexpr uint8_t kCmdGetPumpCycle = 0x64;
+constexpr uint8_t kCmdGetPumpTotals = 0x65;
 constexpr uint8_t kPumpStatePayloadLen = 1;
 constexpr uint8_t kPumpSetPayloadLen = 1;
+constexpr uint8_t kPumpNowPayloadLen = 8;
+constexpr uint8_t kPumpCyclePayloadLen = 16;
+constexpr uint8_t kPumpTotalsPayloadLen = 16;
 constexpr uint8_t kPumpStateOff = 0;
 constexpr uint8_t kPumpStateOn = 1;
 constexpr uint8_t kPumpStateFault = 2;
+constexpr uint8_t kPumpPhaseOff = 0;
+constexpr uint8_t kPumpPhaseHeld = 1;
+constexpr uint8_t kPumpPhaseRunning = 2;
+constexpr uint8_t kPumpPhaseFault = 3;
+constexpr uint8_t kPumpFlagNpgdLow = 0x01;
+constexpr uint8_t kPumpFlagEnableHigh = 0x02;
+constexpr uint8_t kPumpFlagCycled = 0x04;
+constexpr uint8_t kPumpFaultSlowStart = 1;
+constexpr uint8_t kPumpFaultOvercurrent = 2;
+constexpr uint8_t kPumpFaultUndercurrent = 3;
+constexpr uint8_t kPumpFaultStuckOn = 4;
 
 // SET_ADDRESS on-wire size. length field = 3 (2 + 1-byte payload);
 // total frame = 4. Do not count the I2C 7-bit address as a frame byte.

@@ -10,7 +10,7 @@
  * as the master-write handler. The slave stays disabled until update().
  *
  * @param port Port that enables TWI and stores replies.
- * @param sensors Cached ADS1115 samples the sensor commands read.
+ * @param sensors Sensor cache and loop state the sensor commands use.
  * @param typeId Module type reported by GET_IDENTITY.
  * @param firmwareVersion Firmware version reported by GET_IDENTITY.
  */
@@ -147,6 +147,26 @@ void ModuleLink::_handleCommand(uint8_t command, const uint8_t* payload,
       _replyStatus(module_protocol::kStatusOk);
       return;
 
+    case module_protocol::kCmdGetFault:
+      if (payloadLen != 0)
+      {
+        _replyStatus(module_protocol::kStatusBadLength);
+        return;
+      }
+      {
+        const uint8_t records = _sensors.count();
+        if (records > module_protocol::kMaxPayload /
+                          module_protocol::kFaultRecordLen)
+        {
+          _replyStatus(module_protocol::kStatusUnsupported);
+          return;
+        }
+        uint8_t fault[module_protocol::kMaxPayload];
+        const uint8_t length = _sensors.readFault(fault);
+        _replyPayload(module_protocol::kStatusOk, fault, length);
+      }
+      return;
+
     case module_protocol::kCmdGetIdentity:
       if (payloadLen != 0)
       {
@@ -233,6 +253,71 @@ void ModuleLink::_handleCommand(uint8_t command, const uint8_t* payload,
       }
       return;
 
+    case module_protocol::kCmdGetSensorState:
+      if (payloadLen != 1)
+      {
+        _replyStatus(module_protocol::kStatusBadLength);
+        return;
+      }
+      {
+        const uint8_t index = payload[0];
+        if (index >= _sensors.count())
+        {
+          _replyStatus(module_protocol::kStatusBadLength);
+          return;
+        }
+        _replySensorState(index);
+      }
+      return;
+
+    case module_protocol::kCmdSetSensor:
+      if (payloadLen != module_protocol::kSensorSetPayloadLen)
+      {
+        _replyStatus(module_protocol::kStatusBadLength);
+        return;
+      }
+      {
+        const uint8_t index = payload[0];
+        if (index >= _sensors.count())
+        {
+          _replyStatus(module_protocol::kStatusBadLength);
+          return;
+        }
+        if (payload[1] == module_protocol::kSensorStateOff)
+        {
+          _sensors.turnOff(index);
+        }
+        else if (payload[1] == module_protocol::kSensorStateOn)
+        {
+          _sensors.turnOn(index);
+        }
+        else
+        {
+          _replyStatus(module_protocol::kStatusBadLength);
+          return;
+        }
+        _replySensorState(index);
+      }
+      return;
+
+    case module_protocol::kCmdResetSensor:
+      if (payloadLen != 1)
+      {
+        _replyStatus(module_protocol::kStatusBadLength);
+        return;
+      }
+      {
+        const uint8_t index = payload[0];
+        if (index >= _sensors.count())
+        {
+          _replyStatus(module_protocol::kStatusBadLength);
+          return;
+        }
+        _sensors.reset(index);
+        _replySensorState(index);
+      }
+      return;
+
     default:
       _replyStatus(module_protocol::kStatusUnknownCmd);
       return;
@@ -248,6 +333,26 @@ void ModuleLink::_handleCommand(uint8_t command, const uint8_t* payload,
 void ModuleLink::_replyStatus(uint8_t status)
 {
   _replyPayload(status, nullptr, 0);
+}
+
+/**
+ * Queues the sensor state, or Busy when the loop just closed and
+ * no sample has been stored since.
+ *
+ * @param index Zero-based sensor inside the count.
+ * @return Nothing.
+ */
+void ModuleLink::_replySensorState(uint8_t index)
+{
+  if (!_sensors.stateReady(index))
+  {
+    _replyStatus(module_protocol::kStatusBusy);
+    return;
+  }
+  const uint8_t body[module_protocol::kSensorStatePayloadLen] = {
+    index, _sensors.state(index)};
+  _replyPayload(module_protocol::kStatusOk, body,
+                module_protocol::kSensorStatePayloadLen);
 }
 
 /**

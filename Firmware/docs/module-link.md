@@ -7,8 +7,9 @@
 `ModuleLink` is the slave side of the motherboard module protocol for
 this sensor board. It listens at `0x0A` only while MOD is low, then
 keeps the assigned address. It reports the type and firmware version
-supplied at construction, protocol version 1, and the sensor count and
-samples held by `SensorInputs`.
+supplied at construction, protocol version 1, the sensor count and
+samples and off/on/fault/disconnected state held by `SensorInputs`,
+and one `GET_FAULT` record for each input.
 
 The module includes no Arduino headers.
 
@@ -25,7 +26,7 @@ the constructor registered, from the TWI receive callback or from
 ```text
 ModuleLink
   IModuleSlavePort    enable, disable, setAddress, setReply
-  SensorInputs        count, connected flag, raw counts
+  SensorInputs        count, state, connected flag, raw counts
 ```
 
 The link has no submodules. It cannot be copied: the port stores the
@@ -50,8 +51,11 @@ and the padded reply are in the [reference](reference/module-link.md).
 ## What is stored, and who reads it
 
 `_typeId` and `_firmwareVersion` come from the constructor.
-`GET_IDENTITY` reads them. `GET_SENSOR_COUNT`, `GET_SENSOR_CONNECTED`,
-and `GET_SENSOR_READING` read the `SensorInputs` cache.
+`GET_IDENTITY` reads them. The high byte of `_firmwareVersion` is the
+board revision and the low byte is the firmware revision.
+`GET_SENSOR_COUNT`, `GET_SENSOR_CONNECTED`, `GET_SENSOR_READING`,
+`GET_SENSOR_STATE`, `SET_SENSOR`, `RESET_SENSOR`, and `GET_FAULT` use
+`SensorInputs`.
 
 `_address` starts at `kUnconfiguredAddress`. `update` enables that
 address while MOD is low. An accepted `SET_ADDRESS` replaces it and

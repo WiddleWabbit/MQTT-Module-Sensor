@@ -29,15 +29,18 @@ the only device on that bus.
 
 ```text
 main.cpp
-  AvrTwi1Slave     TWI1 adapter for IModuleSlavePort
-  AvrAds1115       TWI0 adapter for IAds1115
-  SensorInputs     round-robin scan and the sample cache
-  ModuleLink       MOD gate, frames, and replies
+  AvrTwi1Slave        TWI1 adapter for IModuleSlavePort
+  AvrAds1115          TWI0 adapter for IAds1115
+  AvrSensorSwitchPort SensorSw pins for ISensorSwitchPort
+  AvrInterruptMask    interrupt mask for the phase and the pin
+  SensorInputs        scan, cache, and off/on/fault/disconnected
+  ModuleLink          MOD gate, frames, and replies
 ```
 
 `main.cpp` passes `MODULE_TYPE` and `FIRMWARE_VERSION` into the link,
-and passes the ADS1115 address, gain, rate, input count, and connected
-threshold into the scan. Pin numbers stay in `main.cpp`.
+and passes the ADS1115 address, gain, rate, input count, connected
+threshold, trip counts, and trip samples into the scan. Pin numbers
+stay in `main.cpp`.
 
 `lib/Interfaces/` holds `IModuleSlavePort` and the copied
 `ModuleProtocol.h`. `lib/Drivers/` holds the AVR adapter. `lib/Logic/`
@@ -47,8 +50,8 @@ holds the link. Desktop fakes live in `test/test_desktop/fakes/`.
 
 `setup()` drives `SNS_PIN` low so the motherboard sense line says the
 module is seated, drives `SENSOR_SW1_PIN`, `SENSOR_SW2_PIN`, and
-`SENSOR_SW3_PIN` high so each loop is powered, and holds `MOD_PIN` as
-an input with pull-up.
+`SENSOR_SW3_PIN` low so each loop stays open, and holds `MOD_PIN` as
+an input with pull-up. A loop closes only after `SET_SENSOR` on.
 
 ```mermaid
 flowchart TD

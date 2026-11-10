@@ -1,6 +1,8 @@
 #include <Arduino.h>
 
 #include "AvrAds1115.h"
+#include "AvrInterruptMask.h"
+#include "AvrSensorSwitchPort.h"
 #include "AvrTwi1Slave.h"
 #include "ModuleLink.h"
 #include "ModuleProtocol.h"
@@ -17,7 +19,7 @@ const uint8_t MOD_PIN = 3;
 const uint8_t SNS_PIN = 4;
 
 // SensorSw drives the NPN that turns on that channel's high-side PMOS.
-// High enables the loop. The base pulldown holds it off until setup.
+// High closes the loop. The base pulldown holds it open until a set-on.
 const uint8_t SENSOR_SW1_PIN = 5;
 const uint8_t SENSOR_SW2_PIN = 6;
 const uint8_t SENSOR_SW3_PIN = 7;
@@ -41,15 +43,27 @@ static_assert(ADC_SCL_PIN == 19, "PC5 is ADC SCL.");
 // ========== Product settings ==========
 
 const uint16_t MODULE_TYPE = module_protocol::kTypeSensorModule;
-const uint16_t FIRMWARE_VERSION = 1;
+
+// Identity firmware bytes are board revision, then firmware revision.
+const uint8_t BOARD_REVISION = 2;
+const uint8_t FIRMWARE_REVISION = 1;
+const uint16_t FIRMWARE_VERSION =
+    static_cast<uint16_t>((static_cast<uint16_t>(BOARD_REVISION) << 8) |
+                          FIRMWARE_REVISION);
 
 // ADDR is strapped to GND on this board.
 const uint8_t ADS1115_ADDRESS = 0x48;
 const uint8_t SENSOR_COUNT = 3;
 
-// 2400 counts is 0.300 V at GAIN_ONE (125 uV per count): 2 mA through
-// the 150 ohm shunt. A live 4 mA loop sits above this. An open input does not.
+// 2400 counts is 0.300 V at GAIN_ONE (125 uV per count). On the
+// 4.99 ohm shunt and INA186A1 (25 V/V) that is about 2.4 mA. A live
+// 4 mA loop is 3992 counts. An open input sits below this.
 const int16_t SENSOR_CONNECTED_MIN_COUNTS = 2400;
+
+// 21956 counts is 2.745 V, 22 mA on that same front end. Two stored
+// samples at or above this open the loop and latch a fault.
+const int32_t SENSOR_TRIP_COUNTS = 21956;
+const uint8_t SENSOR_TRIP_SAMPLES = 2;
 
 
 // ========== Modules ==========
@@ -57,7 +71,12 @@ const int16_t SENSOR_CONNECTED_MIN_COUNTS = 2400;
 AvrTwi1Slave moduleSlave;
 AvrAds1115 ads(ADS1115_ADDRESS, AvrAds1115::kGainOne,
                AvrAds1115::kRate860Sps);
-SensorInputs sensorInputs(ads, SENSOR_COUNT, SENSOR_CONNECTED_MIN_COUNTS);
+AvrSensorSwitchPort sensorSwitches(SENSOR_SW1_PIN, SENSOR_SW2_PIN,
+                                   SENSOR_SW3_PIN);
+AvrInterruptMask interruptMask;
+SensorInputs sensorInputs(ads, sensorSwitches, interruptMask, SENSOR_COUNT,
+                          SENSOR_CONNECTED_MIN_COUNTS, SENSOR_TRIP_COUNTS,
+                          SENSOR_TRIP_SAMPLES);
 ModuleLink moduleLink(moduleSlave, sensorInputs, MODULE_TYPE, FIRMWARE_VERSION);
 
 
@@ -65,8 +84,9 @@ ModuleLink moduleLink(moduleSlave, sensorInputs, MODULE_TYPE, FIRMWARE_VERSION);
 
 /**
  * Drives SNS low so the motherboard sees this module seated, drives
- * each SensorSw pin high so that loop is powered, and holds MOD as an
- * input with pull-up. The slave stays off until MOD is low.
+ * each SensorSw pin low so every loop stays open, and holds MOD as an
+ * input with pull-up. The slave stays off until MOD is low. A loop
+ * closes only after SET_SENSOR on.
  *
  * @return Nothing.
  */
@@ -75,12 +95,7 @@ void setup()
   pinMode(SNS_PIN, OUTPUT);
   digitalWrite(SNS_PIN, LOW);
   pinMode(MOD_PIN, INPUT_PULLUP);
-  pinMode(SENSOR_SW1_PIN, OUTPUT);
-  pinMode(SENSOR_SW2_PIN, OUTPUT);
-  pinMode(SENSOR_SW3_PIN, OUTPUT);
-  digitalWrite(SENSOR_SW1_PIN, HIGH);
-  digitalWrite(SENSOR_SW2_PIN, HIGH);
-  digitalWrite(SENSOR_SW3_PIN, HIGH);
+  sensorSwitches.begin();
 }
 
 /**

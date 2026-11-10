@@ -44,7 +44,7 @@ A hardware port is a seam when it has two adapters: the AVR driver and a desktop
 
 A handler that runs in the TWI interrupt finishes inside `kClockStretchMaxMs`. The TWI driver attaches one protocol handler.
 
-Pins stay in `main.cpp`. The motherboard bus is schematic I2C1, this chip's TWI1: PE0 is SDA and PE1 is SCL. MiniCore names those `SDA1` and `SCL1`. `Wire1` takes no pin arguments. This slave stays on TWI1. The ADC bus is schematic I2C0, this chip's TWI0: PC4 is SDA and PC5 is SCL. `setup()` drives SNS so the host sees the board seated, drives each SensorSw pin high so that loop is powered, and leaves MOD as an input. The link module owns the unconfigured-address gate. The sketch passes the MOD level in.
+Pins stay in `main.cpp`. The motherboard bus is schematic I2C1, this chip's TWI1: PE0 is SDA and PE1 is SCL. MiniCore names those `SDA1` and `SCL1`. `Wire1` takes no pin arguments. This slave stays on TWI1. The ADC bus is schematic I2C0, this chip's TWI0: PC4 is SDA and PC5 is SCL. `setup()` drives SNS so the host sees the board seated, drives each SensorSw pin low so that loop stays open until `SET_SENSOR` on, and leaves MOD as an input. The link module owns the unconfigured-address gate. The sketch passes the MOD level in.
 
 Sources in a library root are compiled when one of its headers is included. Sources in a subfolder are compiled only when `platformio.ini` names that library in `lib_deps`. An include path does not compile them.
 
