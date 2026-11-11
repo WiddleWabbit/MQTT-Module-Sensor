@@ -11,11 +11,12 @@ MOD within `kModGateMaxMs`.
 
 ## Classes
 
-`SensorInputs(IAds1115& adc, ISensorSwitchPort& switches, IInterruptMask& mask, uint8_t count, int16_t connectedMinCounts, int32_t tripCounts, uint8_t tripSamples)`
-binds the ports. Copy and assignment are deleted. The constructor does
-not write the switch pins.
+`SensorInputs(IAds1115& adc, ISensorSwitchPort& switches, IInterruptMask& mask, IEeprom& eeprom, uint8_t count, int16_t connectedMinCounts, int32_t tripCounts, uint8_t tripSamples)`
+binds the ports. Copy and assignment are deleted. The constructor
+reads the fault image and does not write the switch pins.
 
-`update()` advances one step. `count()`, `hasSample(index)`,
+`update()` polls the fault image, then advances one scan step.
+`count()`, `hasSample(index)`,
 `connected(index)`, `counts(index)`, `stateReady(index)`,
 `state(index)`, and `readFault(dest)` are what the link reads.
 `turnOn(index)`, `turnOff(index)`, and `reset(index)` are what set,
@@ -31,7 +32,9 @@ A count above `kMaxSensorsPerModule` (16) is stored as 16.
 `SENSOR_SW3_PIN`. `begin()` drives them low, then makes them outputs.
 `FakeSensorSwitchPort` records the same calls. `AvrInterruptMask`
 saves the global interrupt flag around a phase change.
-`FakeInterruptMask` does nothing.
+`FakeInterruptMask` does nothing. `AvrEeprom` arms one ATmega328PB
+EEPROM byte and returns. `FakeEeprom` keeps that byte pending until
+`poll`.
 
 ## States
 
@@ -51,11 +54,11 @@ poll that is false stays in `Waiting`.
 After a stored sample the channel advances by one and wraps to 0.
 
 ```text
-off                     switch open. Boot, set off, and reset end here
+off                     switch open. Blank image at boot, set off, and reset end here
 on, waiting             switch closed, no sample stored since the close
 on                      switch closed, latest sample at or above the connected threshold and below a latched fault
 disconnected            switch closed, latest sample since the close is below the connected threshold
-fault                   switch open. Two consecutive samples at or above the trip. Stays until reset
+fault                   switch open. Two consecutive samples at or above the trip, or a stored pair that is not blank. Stays until reset
 ```
 
 Fault wins over a later low sample. Off wins over a sample that was
@@ -83,6 +86,24 @@ that do not store a conversion do not strike.
 Index 0 is AIN0 (Sens1), index 1 is AIN1 (Sens2), and index 2 is AIN2
 (Sens3). The same index is that sensor's switch.
 
+The fault image starts at EEPROM address 0. Input `n` uses bytes
+`2n` and `2n + 1`. This board's count is 3, so the image is 6 bytes.
+
+```text
+0xFF, 0xFF    no fault. A blank chip matches this
+0x01, 0xFE    overcurrent. 0xFE is the complement of 0x01
+any other     fault
+```
+
+The constructor applies that before `setup()`. `reset()` clears the
+live latch before it returns. `update()` then programs the stored
+pair, one byte per pass, and does not wait for the 3.4 ms program.
+A new latch arms `0xFE` first, then `0x01`. A clear arms `0xFF` at
+the reason byte first, then `0xFF` at the complement. A restored
+pair that is not already `01 FE` is rewritten the same way as a
+new latch. A pair left half-written boots as fault. The TWI handler
+does not arm a byte.
+
 ## Errors
 
 A missing chip keeps `begin()` false. No input has a sample, and the
@@ -109,7 +130,8 @@ The INA186 linear window ends near 3.2 V. The PTC on each loop is the
 short-circuit fuse. 22 mA does not open it.
 
 The gain and the sample rate are arguments to `AvrAds1115`, listed on
-the [architecture reference](architecture.md).
+the [architecture reference](architecture.md). The fault image uses
+the EEPROM kept by the `fuses_bootloader` EEPROM-save fuse.
 
 ## Tests
 
@@ -130,6 +152,16 @@ builds from the same cache.
 | `testLowSampleClearsTheStrike` | A sample below 21956 clears the strike, so the next single high sample stays on |
 | `testHighSampleWhileOffDoesNotTrip` | Two high samples while open stay off. An index of 4 does not write the switch |
 | `testFaultIgnoresOnAndOffUntilReset` | On and off while faulted leave the latch. A low sample stays fault. Reset returns to off, and a later on accepts 4800 |
+| `testBlankEepromBootsOff` | A blank image boots off. Reset programs nothing |
+| `testLatchedFaultRestoresAndStaysOpen` | Overcurrent on input 1 boots as fault, refuses set on, and leaves input 0 able to close. `readFault` is `00 00 01 01 00 02` |
+| `testCorruptPairRestoresAsFault` | `01 00` boots as fault and the blank sibling stays off. `00 FF` boots as fault |
+| `testTornPairBootsFault` | `FF FE` boots as fault and set on leaves the switch open |
+| `testLatchWritesInverseBeforeReason` | RAM faults before a byte is armed. The next byte is `FE` at address 1. A held program blocks the reason byte. The committed pair boots as fault |
+| `testResetClearsRamImmediatelyThenBlanksThePair` | Reset reports off while `01 FE` is still stored, and set on is accepted. The next bytes are `FF` at address 0, then `FF` at address 1. That image boots off |
+| `testResetOfAClearInputDoesNotProgram` | Reset of a blank input, and a second reset after a committed clear, arm no byte |
+| `testSecondLatchLeavesTheFirstImage` | Latching input 2 programs addresses 5 then 4. Input 0 keeps `01 FE` |
+| `testResetThenLatchKeepsTheLatestReason` | A clear reversed by a new latch finishes as `01 FE` and boots as fault |
+| `testBusyEepromDoesNotStallTheScan` | A held program still lets `begin` and `startSingleEnded` run |
 | `testSensorCommandsReportCachedReadings` | Count 3. `Busy` before a sample. Loops closed, then 2399 disconnected, 2400 connected, and -4 disconnected, each on the wire |
 | `testSensorStateCommands` | Get off, set on then `Busy`, disconnected, on, off, fault, ignored set, reset, and a later on. Bad index, fault or disconnected as a set value, and a wrong length are `BadLength` |
 | `testGetFaultWhenIdle` | Three clear inputs are `00 00 00 01 00 02`. A count of 0 is an empty `Ok` |
@@ -148,11 +180,15 @@ C:\Users\Nathan\.platformio\penv\Scripts\platformio.exe test -e native
 - `lib/Logic/SensorInputs.cpp`
 - `lib/Interfaces/ISensorSwitchPort.h`
 - `lib/Interfaces/IInterruptMask.h`
+- `lib/Interfaces/IEeprom.h`
 - `lib/Drivers/AvrSensorSwitchPort.h`
 - `lib/Drivers/AvrSensorSwitchPort.cpp`
 - `lib/Drivers/AvrInterruptMask.h`
 - `lib/Drivers/AvrInterruptMask.cpp`
+- `lib/Drivers/AvrEeprom.h`
+- `lib/Drivers/AvrEeprom.cpp`
 - `test/test_desktop/test_sensor_inputs.cpp`
 - `test/test_desktop/fakes/FakeAds1115.h`
 - `test/test_desktop/fakes/FakeSensorSwitchPort.h`
 - `test/test_desktop/fakes/FakeInterruptMask.h`
+- `test/test_desktop/fakes/FakeEeprom.h`

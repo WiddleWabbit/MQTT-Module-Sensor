@@ -134,8 +134,9 @@ while the state is on.
 
 State bytes are `kSensorStateOff` (0), `kSensorStateOn` (1),
 `kSensorStateFault` (2), and `kSensorStateDisconnected` (3). A fault
-ignores set on and set off. Reset clears it and leaves that sensor
-off. Set accepts only off or on.
+ignores set on and set off. Reset clears the live latch before the
+reply is queued and leaves that sensor off. The stored pair catches
+up from the scan. Set accepts only off or on.
 
 ## Tests
 
@@ -156,6 +157,7 @@ off. Set accepts only off or on.
 | `testGetFaultReportsEveryInput` | One trip sample stays clear. The second sample on input 2 makes `00 00 00 01 01 02`. A disconnected input stays reason 0. Faulting input 0 makes `01 00 00 01 01 02`. Reset of 0, then of 2, clears those records |
 | `testGetFaultRejectsPayload` | A payload on `GET_FAULT` is `BadLength`. The latched record stays `01 00` and the switch stays open |
 | `testGetFaultRejectsTooManyInputs` | Eight inputs fill the payload. Nine are `Unsupported` |
+| `testRestoredFaultIsReportedAndIgnoresSetOn` | A stored overcurrent on input 1 is fault on `GET_SENSOR_STATE` and `GET_FAULT`. Set on leaves that switch open |
 | `testSensorCommandsRejectBadIndexAndLength` | Index 3, a short or long reading payload, a count payload, and index 0 on a count of 0 are `BadLength` |
 | `testUnknownCommandAndMalformedFrames` | `ECHO`, truncated frame, extra byte, bad CRC, PING with a payload, empty `SET_ADDRESS` |
 | `testEnumerationSequence` | PING, assign `0x12`, MOD high, identity, count 3 |

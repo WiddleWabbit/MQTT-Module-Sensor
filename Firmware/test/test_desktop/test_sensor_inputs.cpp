@@ -3,6 +3,7 @@
 #include "ModuleProtocol.h"
 #include "SensorInputs.h"
 #include "fakes/FakeAds1115.h"
+#include "fakes/FakeEeprom.h"
 #include "fakes/FakeInterruptMask.h"
 #include "fakes/FakeSensorSwitchPort.h"
 
@@ -22,19 +23,45 @@ struct SensorRig
   FakeAds1115 adc;
   FakeSensorSwitchPort switches;
   FakeInterruptMask mask;
+  FakeEeprom eeprom;
   SensorInputs sensors;
 
   /**
    * Builds a scan of the given size with the product thresholds.
+   * image preloads the fault bytes. A null image is blank.
    *
    * @param count Inputs to scan.
+   * @param image EEPROM prefix, or nullptr.
+   * @param imageLength Bytes to copy from image.
    */
-  explicit SensorRig(uint8_t count)
-    : sensors(adc, switches, mask, count, kConnectedMinCounts, kTripCounts,
-              kTripSamples)
+  explicit SensorRig(uint8_t count, const uint8_t* image = nullptr,
+                     uint16_t imageLength = 0)
+    : eeprom(image, imageLength),
+      sensors(adc, switches, mask, eeprom, count, kConnectedMinCounts,
+              kTripCounts, kTripSamples)
   {
   }
 };
+
+/**
+ * Runs update until the fault image is idle.
+ *
+ * @param rig Scan under test.
+ * @return Nothing.
+ */
+void flushImage(SensorRig& rig)
+{
+  for (uint8_t step = 0; step < 24; ++step)
+  {
+    const uint8_t starts = rig.eeprom.startCount;
+    rig.sensors.update();
+    if (!rig.eeprom.busy() && rig.eeprom.startCount == starts)
+    {
+      return;
+    }
+  }
+  TEST_FAIL_MESSAGE("fault image did not settle");
+}
 
 /**
  * Runs update until one conversion is stored.
@@ -457,6 +484,369 @@ void testFaultIgnoresOnAndOffUntilReset()
 }
 
 /**
+ * A blank image boots every input off and programs nothing.
+ *
+ * @return Nothing.
+ */
+void testBlankEepromBootsOff()
+{
+  SensorRig rig(kInputCount);
+
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateOff,
+                          rig.sensors.state(0));
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateOff,
+                          rig.sensors.state(1));
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateOff,
+                          rig.sensors.state(2));
+  rig.sensors.reset(0);
+  rig.sensors.reset(1);
+  rig.sensors.reset(2);
+  rig.sensors.update();
+  rig.sensors.update();
+  TEST_ASSERT_EQUAL_UINT8(0, rig.eeprom.startCount);
+}
+
+/**
+ * A stored overcurrent on input 1 boots as fault and stays open.
+ * The other inputs still turn on. readFault lists that one reason.
+ *
+ * @return Nothing.
+ */
+void testLatchedFaultRestoresAndStaysOpen()
+{
+  uint8_t image[6];
+  for (uint8_t index = 0; index < sizeof(image); ++index)
+  {
+    image[index] = 0xFF;
+  }
+  image[2] = module_protocol::kSensorFaultOvercurrent;
+  image[3] = static_cast<uint8_t>(
+      ~module_protocol::kSensorFaultOvercurrent);
+  SensorRig rig(kInputCount, image, sizeof(image));
+
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateOff,
+                          rig.sensors.state(0));
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateFault,
+                          rig.sensors.state(1));
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateOff,
+                          rig.sensors.state(2));
+  TEST_ASSERT_FALSE(rig.switches.on[1]);
+
+  rig.sensors.turnOn(1);
+  TEST_ASSERT_FALSE(rig.switches.on[1]);
+  rig.sensors.turnOn(0);
+  TEST_ASSERT_TRUE(rig.switches.on[0]);
+
+  uint8_t body[6] = {};
+  TEST_ASSERT_EQUAL_UINT8(6, rig.sensors.readFault(body));
+  const uint8_t expected[] = {
+    module_protocol::kFaultNone, 0,
+    module_protocol::kSensorFaultOvercurrent, 1,
+    module_protocol::kFaultNone, 2};
+  TEST_ASSERT_EQUAL_UINT8_ARRAY(expected, body, 6);
+}
+
+/**
+ * A pair that is neither blank nor overcurrent boots as fault.
+ * The blank sibling stays off. A matched 0x00 0xFF pair is fault.
+ *
+ * @return Nothing.
+ */
+void testCorruptPairRestoresAsFault()
+{
+  const uint8_t image[] = {0x01, 0x00, 0xFF, 0xFF};
+  SensorRig rig(2, image, sizeof(image));
+
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateFault,
+                          rig.sensors.state(0));
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateOff,
+                          rig.sensors.state(1));
+
+  const uint8_t matchedClear[] = {0x00, 0xFF};
+  SensorRig other(1, matchedClear, sizeof(matchedClear));
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateFault,
+                          other.sensors.state(0));
+}
+
+/**
+ * Reason 0xFF with complement 0xFE is the pair left by a program
+ * that lost power. A latch writes the complement first. A clear
+ * writes the reason back to 0xFF first. Either stop boots as fault.
+ *
+ * @return Nothing.
+ */
+void testTornPairBootsFault()
+{
+  const uint8_t torn[] = {0xFF, 0xFE};
+  SensorRig rig(1, torn, sizeof(torn));
+
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateFault,
+                          rig.sensors.state(0));
+  TEST_ASSERT_FALSE(rig.switches.on[0]);
+  rig.sensors.turnOn(0);
+  TEST_ASSERT_FALSE(rig.switches.on[0]);
+}
+
+/**
+ * The second trip sample faults in RAM before any byte is armed.
+ * The next update arms the complement. While that program is held,
+ * a later update does not arm the reason. After both bytes commit,
+ * a new scan on the same image boots faulted.
+ *
+ * @return Nothing.
+ */
+void testLatchWritesInverseBeforeReason()
+{
+  SensorRig rig(1);
+  rig.sensors.turnOn(0);
+  rig.adc.counts[0] = static_cast<int16_t>(kTripCounts);
+  publishOne(rig);
+  publishOne(rig);
+
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateFault,
+                          rig.sensors.state(0));
+  TEST_ASSERT_EQUAL_UINT8(0, rig.eeprom.startCount);
+  TEST_ASSERT_EQUAL_UINT8(0xFF, rig.eeprom.bytes[0]);
+  TEST_ASSERT_EQUAL_UINT8(0xFF, rig.eeprom.bytes[1]);
+
+  rig.adc.ready = false;
+  rig.sensors.update();
+  TEST_ASSERT_TRUE(rig.eeprom.busy());
+  TEST_ASSERT_EQUAL_UINT8(1, rig.eeprom.startCount);
+  TEST_ASSERT_EQUAL_UINT16(1, rig.eeprom.started[0]);
+  TEST_ASSERT_EQUAL_UINT8(
+      static_cast<uint8_t>(~module_protocol::kSensorFaultOvercurrent),
+      rig.eeprom.startedValue[0]);
+  TEST_ASSERT_EQUAL_UINT8(0xFF, rig.eeprom.bytes[0]);
+  TEST_ASSERT_EQUAL_UINT8(0xFF, rig.eeprom.bytes[1]);
+
+  rig.eeprom.hold = true;
+  const uint8_t starts = rig.eeprom.startCount;
+  const uint8_t polls = rig.adc.readyCount;
+  rig.sensors.update();
+  TEST_ASSERT_EQUAL_UINT8(starts, rig.eeprom.startCount);
+  TEST_ASSERT_TRUE(rig.adc.readyCount > polls);
+
+  rig.eeprom.hold = false;
+  rig.sensors.update();
+  TEST_ASSERT_EQUAL_UINT8(0xFE, rig.eeprom.bytes[1]);
+  TEST_ASSERT_EQUAL_UINT8(0xFF, rig.eeprom.bytes[0]);
+  TEST_ASSERT_EQUAL_UINT16(0, rig.eeprom.started[1]);
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorFaultOvercurrent,
+                          rig.eeprom.startedValue[1]);
+
+  rig.sensors.update();
+  TEST_ASSERT_FALSE(rig.eeprom.busy());
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorFaultOvercurrent,
+                          rig.eeprom.bytes[0]);
+  TEST_ASSERT_EQUAL_UINT8(0xFE, rig.eeprom.bytes[1]);
+
+  FakeAds1115 adc;
+  FakeSensorSwitchPort switches;
+  FakeInterruptMask mask;
+  SensorInputs restored(adc, switches, mask, rig.eeprom, 1,
+                        kConnectedMinCounts, kTripCounts, kTripSamples);
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateFault,
+                          restored.state(0));
+  restored.turnOn(0);
+  TEST_ASSERT_FALSE(switches.on[0]);
+}
+
+/**
+ * reset reports off while the old pair is still stored, and set on
+ * is accepted then. The following bytes are 0xFF at the reason
+ * address, then 0xFF at the complement. A later scan boots off.
+ *
+ * @return Nothing.
+ */
+void testResetClearsRamImmediatelyThenBlanksThePair()
+{
+  SensorRig rig(1);
+  rig.sensors.turnOn(0);
+  rig.adc.counts[0] = static_cast<int16_t>(kTripCounts);
+  publishOne(rig);
+  publishOne(rig);
+  flushImage(rig);
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorFaultOvercurrent,
+                          rig.eeprom.bytes[0]);
+  TEST_ASSERT_EQUAL_UINT8(0xFE, rig.eeprom.bytes[1]);
+
+  rig.sensors.reset(0);
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateOff,
+                          rig.sensors.state(0));
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorFaultOvercurrent,
+                          rig.eeprom.bytes[0]);
+  TEST_ASSERT_EQUAL_UINT8(0xFE, rig.eeprom.bytes[1]);
+
+  rig.adc.ready = false;
+  rig.sensors.turnOn(0);
+  TEST_ASSERT_TRUE(rig.switches.on[0]);
+  rig.sensors.turnOff(0);
+  TEST_ASSERT_FALSE(rig.switches.on[0]);
+
+  const uint8_t starts = rig.eeprom.startCount;
+  rig.sensors.update();
+  TEST_ASSERT_EQUAL_UINT8(static_cast<uint8_t>(starts + 1U),
+                          rig.eeprom.startCount);
+  TEST_ASSERT_EQUAL_UINT16(0, rig.eeprom.started[starts]);
+  TEST_ASSERT_EQUAL_UINT8(0xFF, rig.eeprom.startedValue[starts]);
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorFaultOvercurrent,
+                          rig.eeprom.bytes[0]);
+
+  flushImage(rig);
+  TEST_ASSERT_EQUAL_UINT8(0xFF, rig.eeprom.bytes[0]);
+  TEST_ASSERT_EQUAL_UINT8(0xFF, rig.eeprom.bytes[1]);
+  const uint8_t complement = static_cast<uint8_t>(starts + 1U);
+  TEST_ASSERT_EQUAL_UINT16(1, rig.eeprom.started[complement]);
+  TEST_ASSERT_EQUAL_UINT8(0xFF, rig.eeprom.startedValue[complement]);
+
+  FakeAds1115 adc;
+  FakeSensorSwitchPort switches;
+  FakeInterruptMask mask;
+  SensorInputs restored(adc, switches, mask, rig.eeprom, 1,
+                        kConnectedMinCounts, kTripCounts, kTripSamples);
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateOff,
+                          restored.state(0));
+}
+
+/**
+ * reset on a blank input, and reset again after a committed clear,
+ * arm no byte.
+ *
+ * @return Nothing.
+ */
+void testResetOfAClearInputDoesNotProgram()
+{
+  SensorRig rig(1);
+  rig.sensors.reset(0);
+  rig.sensors.update();
+  rig.sensors.update();
+  TEST_ASSERT_EQUAL_UINT8(0, rig.eeprom.startCount);
+
+  rig.sensors.turnOn(0);
+  rig.adc.counts[0] = static_cast<int16_t>(kTripCounts);
+  publishOne(rig);
+  publishOne(rig);
+  rig.sensors.reset(0);
+  flushImage(rig);
+  const uint8_t starts = rig.eeprom.startCount;
+  rig.sensors.reset(0);
+  rig.sensors.update();
+  rig.sensors.update();
+  TEST_ASSERT_EQUAL_UINT8(starts, rig.eeprom.startCount);
+}
+
+/**
+ * Latching input 2 programs only that pair. Input 0 keeps the
+ * overcurrent pair it already had.
+ *
+ * @return Nothing.
+ */
+void testSecondLatchLeavesTheFirstImage()
+{
+  uint8_t image[6];
+  for (uint8_t index = 0; index < sizeof(image); ++index)
+  {
+    image[index] = 0xFF;
+  }
+  image[0] = module_protocol::kSensorFaultOvercurrent;
+  image[1] = 0xFE;
+  SensorRig rig(kInputCount, image, sizeof(image));
+  rig.sensors.turnOn(2);
+  rig.adc.counts[0] = static_cast<int16_t>(kTripCounts);
+  rig.adc.counts[1] = static_cast<int16_t>(kTripCounts);
+  rig.adc.counts[2] = static_cast<int16_t>(kTripCounts);
+  publishOne(rig);
+  publishOne(rig);
+  publishOne(rig);
+  publishOne(rig);
+  publishOne(rig);
+  publishOne(rig);
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateFault,
+                          rig.sensors.state(2));
+  TEST_ASSERT_EQUAL_UINT8(0, rig.eeprom.startCount);
+
+  flushImage(rig);
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorFaultOvercurrent,
+                          rig.eeprom.bytes[0]);
+  TEST_ASSERT_EQUAL_UINT8(0xFE, rig.eeprom.bytes[1]);
+  TEST_ASSERT_EQUAL_UINT8(0xFF, rig.eeprom.bytes[2]);
+  TEST_ASSERT_EQUAL_UINT8(0xFF, rig.eeprom.bytes[3]);
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorFaultOvercurrent,
+                          rig.eeprom.bytes[4]);
+  TEST_ASSERT_EQUAL_UINT8(0xFE, rig.eeprom.bytes[5]);
+  TEST_ASSERT_EQUAL_UINT8(2, rig.eeprom.startCount);
+  TEST_ASSERT_EQUAL_UINT16(5, rig.eeprom.started[0]);
+  TEST_ASSERT_EQUAL_UINT8(0xFE, rig.eeprom.startedValue[0]);
+  TEST_ASSERT_EQUAL_UINT16(4, rig.eeprom.started[1]);
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorFaultOvercurrent,
+                          rig.eeprom.startedValue[1]);
+}
+
+/**
+ * A clear that is reversed by a new latch finishes as overcurrent.
+ *
+ * @return Nothing.
+ */
+void testResetThenLatchKeepsTheLatestReason()
+{
+  SensorRig rig(1);
+  rig.sensors.turnOn(0);
+  rig.adc.counts[0] = static_cast<int16_t>(kTripCounts);
+  publishOne(rig);
+  publishOne(rig);
+  flushImage(rig);
+
+  rig.sensors.reset(0);
+  rig.adc.ready = false;
+  rig.sensors.update();
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorFaultOvercurrent,
+                          rig.eeprom.bytes[0]);
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateOff,
+                          rig.sensors.state(0));
+
+  rig.sensors.turnOn(0);
+  rig.adc.ready = true;
+  publishOne(rig);
+  publishOne(rig);
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateFault,
+                          rig.sensors.state(0));
+  flushImage(rig);
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorFaultOvercurrent,
+                          rig.eeprom.bytes[0]);
+  TEST_ASSERT_EQUAL_UINT8(0xFE, rig.eeprom.bytes[1]);
+
+  FakeAds1115 adc;
+  FakeSensorSwitchPort switches;
+  FakeInterruptMask mask;
+  SensorInputs restored(adc, switches, mask, rig.eeprom, 1,
+                        kConnectedMinCounts, kTripCounts, kTripSamples);
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateFault,
+                          restored.state(0));
+}
+
+/**
+ * A held EEPROM program still lets the scan begin and start.
+ *
+ * @return Nothing.
+ */
+void testBusyEepromDoesNotStallTheScan()
+{
+  SensorRig rig(1);
+  rig.eeprom.hold = true;
+  TEST_ASSERT_TRUE(rig.eeprom.startWrite(0, 0x00));
+
+  rig.sensors.update();
+  TEST_ASSERT_EQUAL_UINT8(1, rig.adc.beginCount);
+  TEST_ASSERT_EQUAL_UINT8(1, rig.eeprom.startCount);
+
+  rig.sensors.update();
+  TEST_ASSERT_EQUAL_UINT8(1, rig.adc.startCount);
+  TEST_ASSERT_EQUAL_UINT8(1, rig.eeprom.startCount);
+  TEST_ASSERT_TRUE(rig.eeprom.busy());
+}
+
+/**
  * Registers the sensor-input tests with the one Unity main.
  *
  * @return Nothing.
@@ -474,4 +864,14 @@ void runSensorInputTests()
   RUN_TEST(testLowSampleClearsTheStrike);
   RUN_TEST(testHighSampleWhileOffDoesNotTrip);
   RUN_TEST(testFaultIgnoresOnAndOffUntilReset);
+  RUN_TEST(testBlankEepromBootsOff);
+  RUN_TEST(testLatchedFaultRestoresAndStaysOpen);
+  RUN_TEST(testCorruptPairRestoresAsFault);
+  RUN_TEST(testTornPairBootsFault);
+  RUN_TEST(testLatchWritesInverseBeforeReason);
+  RUN_TEST(testResetClearsRamImmediatelyThenBlanksThePair);
+  RUN_TEST(testResetOfAClearInputDoesNotProgram);
+  RUN_TEST(testSecondLatchLeavesTheFirstImage);
+  RUN_TEST(testResetThenLatchKeepsTheLatestReason);
+  RUN_TEST(testBusyEepromDoesNotStallTheScan);
 }

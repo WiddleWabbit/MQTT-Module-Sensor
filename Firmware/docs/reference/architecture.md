@@ -15,8 +15,8 @@ configures `MOD_PIN`. `loop` calls
 `SensorInputs::update`, reads `MOD_PIN`, and calls `ModuleLink::update`.
 The objects are `moduleSlave` (`AvrTwi1Slave`), `ads` (`AvrAds1115`),
 `sensorSwitches` (`AvrSensorSwitchPort`), `interruptMask`
-(`AvrInterruptMask`), `sensorInputs` (`SensorInputs`), and `moduleLink`
-(`ModuleLink`).
+(`AvrInterruptMask`), `eeprom` (`AvrEeprom`), `sensorInputs`
+(`SensorInputs`), and `moduleLink` (`ModuleLink`).
 
 ## States
 
@@ -27,9 +27,9 @@ The scan's phases are on the
 
 ## Sequences
 
-1. Construction registers the master-write handler. The slave stays off.
+1. Construction reads the fault image and registers the master-write handler. The slave stays off.
 2. `setup` sets `SNS_PIN` as an output driven low, calls `sensorSwitches.begin()` so each `SENSOR_SW` pin is an output driven low, and sets `MOD_PIN` as an input with pull-up.
-3. Each `loop` advances the scan one driver call, reads `MOD_PIN`, and calls the link. Both calls return without waiting.
+3. Each `loop` advances the scan one EEPROM step and one ADC-driver call, reads `MOD_PIN`, and calls the link. Both calls return without waiting.
 
 The host holds MOD low for `kModGateMaxMs` (5 ms). Because `loop` does
 not block, the unconfigured address is enabled on the pass that sees
@@ -76,7 +76,8 @@ That note is on the [slave port reference](slave-port.md).
 The image is an ATmega328PB at 8 MHz from the internal oscillator.
 `Upload_ISP` programs it with stk500v1 at 19200 on COM3.
 `fuses_bootloader` sets no bootloader, brown-out 2.7 V, and EEPROM
-save. The avrdude lines are in the firmware `README.md`.
+save. The fault image uses that EEPROM. The avrdude lines are in
+the firmware `README.md`.
 
 ## Tests
 

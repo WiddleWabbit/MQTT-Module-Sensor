@@ -33,6 +33,7 @@ main.cpp
   AvrAds1115          TWI0 adapter for IAds1115
   AvrSensorSwitchPort SensorSw pins for ISensorSwitchPort
   AvrInterruptMask    interrupt mask for the phase and the pin
+  AvrEeprom           raw EEPROM for the fault image
   SensorInputs        scan, cache, and off/on/fault/disconnected
   ModuleLink          MOD gate, frames, and replies
 ```
@@ -61,7 +62,8 @@ flowchart TD
 ```
 
 `loop()` does not block, so a low MOD is seen inside `kModGateMaxMs`.
-Each sensor pass makes one ADC-driver call and returns. While the
+Each sensor pass polls the fault image and makes one ADC-driver call,
+then returns. A byte program finishes in the background. While the
 module has no address, MOD low enables `0x0A` and MOD high disables
 it. After a valid `SET_ADDRESS`, the link keeps that address when MOD
 rises.
@@ -73,7 +75,7 @@ motherboard reads the sense line, which `SNS_PIN` holds low.
 
 The link stores the address and whether it has been assigned. The TWI1
 adapter stores the reply the host clocks out. The scan stores the
-latest ADS1115 counts. Those stores are on the
+latest ADS1115 counts and the latched fault image. Those stores are on the
 [module link](module-link.md), [sensor inputs](sensor-inputs.md),
 [slave port](slave-port.md), and [ADC port](adc-port.md) pages.
 

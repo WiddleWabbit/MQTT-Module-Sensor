@@ -3,6 +3,7 @@
 #include <stdint.h>
 
 #include "IAds1115.h"
+#include "IEeprom.h"
 #include "IInterruptMask.h"
 #include "ISensorSwitchPort.h"
 #include "ModuleProtocol.h"
@@ -13,30 +14,37 @@
  * loop is closed sets on, disconnected, or a latched fault. The link
  * reads the cache and the state. No Arduino types.
  *
+ * A latched overcurrent is stored in EEPROM, two bytes per input,
+ * starting at address 0. The constructor reads that image. A blank
+ * pair starts the input off. Any other pair starts it in fault.
+ *
  * turnOn, turnOff, reset, state, stateReady, and readFault may run
  * from the TWI interrupt. update runs from the main loop. The ADC
  * call stays preemptible. The phase and the pin are committed
- * together under the mask.
+ * together under the mask. One EEPROM byte is armed from update and
+ * programs after the mask opens.
  */
 class SensorInputs
 {
 public:
   /**
-   * Binds the ADC, the switches, and the mask. The scan stays idle
-   * until update(). Every loop starts open. The constructor does not
-   * touch the pins. A count above the protocol maximum is stored as
-   * that maximum.
+   * Binds the ADC, the switches, the mask, and the fault image. The
+   * scan stays idle until update(). A blank stored pair starts that
+   * loop open. Any other pair starts it in fault. The constructor
+   * reads the image and does not touch the pins. A count above the
+   * protocol maximum is stored as that maximum.
    *
    * @param adc Chip port. One call per update().
    * @param switches Loop switches, one per sensor index.
    * @param mask Closed around a phase change and the matching pin write.
+   * @param eeprom Fault image. Two bytes per input from address 0.
    * @param count Number of inputs to scan, in channel order.
    * @param connectedMinCounts A live sample at or above this is on.
    * @param tripCounts A sample at or above this counts toward a fault.
    * @param tripSamples Consecutive trip samples that latch a fault.
    */
   SensorInputs(IAds1115& adc, ISensorSwitchPort& switches,
-               IInterruptMask& mask, uint8_t count,
+               IInterruptMask& mask, IEeprom& eeprom, uint8_t count,
                int16_t connectedMinCounts, int32_t tripCounts,
                uint8_t tripSamples);
 
@@ -56,9 +64,10 @@ public:
   SensorInputs& operator=(const SensorInputs& other) = delete;
 
   /**
-   * Advances one step: begin, start, poll, or store. A stored sample
-   * updates that sensor's state. A count of 0 does nothing. One call
-   * performs one driver call.
+   * Arms or polls one EEPROM byte, then advances one scan step:
+   * begin, start, poll, or store. A stored sample updates that
+   * sensor's state. A count of 0 leaves the ADC alone. One call
+   * performs one ADC-driver call.
    *
    * @return Nothing.
    */
@@ -148,7 +157,9 @@ public:
 
   /**
    * Clears a fault and opens the loop. On and disconnected end off
-   * as well. An index outside the count does nothing.
+   * as well. The live latch clears before this returns. The stored
+   * pair catches up from update(). An index outside the count does
+   * nothing.
    *
    * @param index Zero-based input.
    * @return Nothing.
@@ -175,6 +186,16 @@ private:
   {
     Off,
     On,
+    Fault
+  };
+
+  /**
+   * Image the EEPROM pair should settle to. Clear is a blank pair.
+   * Fault is overcurrent.
+   */
+  enum class _Record : uint8_t
+  {
+    Clear,
     Fault
   };
 
@@ -215,9 +236,33 @@ private:
    */
   bool _stateReady(uint8_t index) const;
 
+  /**
+   * Polls the EEPROM port and arms at most one byte. The caller is
+   * update(). A program that is still running is left running.
+   *
+   * @return Nothing.
+   */
+  void _serviceStore();
+
+  /**
+   * Chooses the next image byte that differs from the latched record.
+   * The caller holds the mask. A fault writes the complement first.
+   * A clear writes the reason byte back to 0xFF first.
+   *
+   * @param address Set to the byte address when a write is required.
+   * @param value Set to the byte to program.
+   * @return True when a byte should be programmed.
+   */
+  bool _selectByte(uint16_t* address, uint8_t* value) const;
+
+  static constexpr uint8_t kImageBytesPerInput = 2;
+  static constexpr uint8_t kImageBytes =
+      module_protocol::kMaxSensorsPerModule * kImageBytesPerInput;
+
   IAds1115& _adc;
   ISensorSwitchPort& _switches;
   IInterruptMask& _mask;
+  IEeprom& _eeprom;
   uint8_t _count;
   int16_t _connectedMinCounts;
   int32_t _tripCounts;
@@ -230,4 +275,9 @@ private:
   volatile uint8_t _power[module_protocol::kMaxSensorsPerModule];
   volatile uint8_t _fresh[module_protocol::kMaxSensorsPerModule];
   volatile uint8_t _strikes[module_protocol::kMaxSensorsPerModule];
+  volatile uint8_t _record[module_protocol::kMaxSensorsPerModule];
+  uint8_t _image[kImageBytes];
+  bool _inFlight;
+  uint16_t _inFlightAddress;
+  uint8_t _inFlightValue;
 };

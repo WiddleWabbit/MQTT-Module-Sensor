@@ -6,18 +6,20 @@
 
 `SensorInputs` scans the ADS1115 and keeps the latest counts for each
 input. The same object owns that sensor's loop switch. A sensor is
-off, on, fault, or disconnected. `ModuleLink` reads the cache and the
-state. The scan runs from `loop()`. The TWI1 handler does not talk to
-the ADC. It may turn a loop on, off, reset a fault, or read the
-fault list.
+off, on, fault, or disconnected. A latched overcurrent is written
+to EEPROM and read again at startup, so that input is fault before
+the slave answers. `ModuleLink` reads the cache and the state. The
+scan runs from `loop()`. The TWI1 handler does not talk to the ADC
+or program EEPROM. It may turn a loop on, off, reset a fault, or
+read the fault list.
 
 ## Where it sits
 
 `main.cpp` constructs it with `AvrAds1115`, `AvrSensorSwitchPort`,
-`AvrInterruptMask`, `SENSOR_COUNT`, `SENSOR_CONNECTED_MIN_COUNTS`,
-`SENSOR_TRIP_COUNTS`, and `SENSOR_TRIP_SAMPLES`. `loop()` calls
-`update()` and then `moduleLink.update()`. The link does not call
-`update()`.
+`AvrInterruptMask`, `AvrEeprom`, `SENSOR_COUNT`,
+`SENSOR_CONNECTED_MIN_COUNTS`, `SENSOR_TRIP_COUNTS`, and
+`SENSOR_TRIP_SAMPLES`. `loop()` calls `update()` and then
+`moduleLink.update()`. The link does not call `update()`.
 
 ## What it creates
 
@@ -26,6 +28,7 @@ SensorInputs
   IAds1115           begin, start, poll, read
   ISensorSwitchPort  setOn
   IInterruptMask     lock, unlock
+  IEeprom            fault image, two bytes per input
 ```
 
 On this board the count is 3. Index 0 is Sens1 on AIN0, index 1 is
@@ -37,7 +40,8 @@ matching loop switches. High closes the loop.
 
 ```mermaid
 flowchart TD
-  upd["update()"] --> none{"count is 0?"}
+  upd["update()"] --> ee["poll EEPROM, arm one byte if idle"]
+  ee --> none{"count is 0?"}
   none -->|yes| stop["return"]
   none -->|no| begun{"begun?"}
   begun -->|no| begin["begin() and return"]
@@ -50,17 +54,20 @@ flowchart TD
   store --> next["next channel, then Starting"]
 ```
 
-One `update()` makes one driver call. The first sample is a begin, a
-start, a ready poll, and a read. Each later sample is a start, a poll,
-and a read.
+One `update()` polls the fault image and makes one ADC-driver call.
+A byte program keeps running into later passes. The first sample is
+a begin, a start, a ready poll, and a read. Each later sample is a
+start, a poll, and a read.
 
 ## What is stored, and who reads it
 
 The constructor stores the count, the connected threshold, the trip
-counts, and how many consecutive trip samples latch a fault. Every
-loop starts open. `update()` stores the latest counts. The state is
-off until `SET_SENSOR` on. After the loop closes, the next stored
-sample sets on, disconnected, or a fault strike.
+counts, and how many consecutive trip samples latch a fault. It
+reads the fault image before `setup()`. A blank pair starts that
+input off. Any other pair starts it in fault, and `setup()` leaves
+the switch open. `update()` stores the latest counts and arms the
+next image byte. After the loop closes, the next stored sample sets
+on, disconnected, or a fault strike.
 
 The valid flag for that input is cleared before the counts are
 written and set after them. `ModuleLink` reads an input from the TWI1

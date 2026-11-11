@@ -1,6 +1,7 @@
 #include <Arduino.h>
 
 #include "AvrAds1115.h"
+#include "AvrEeprom.h"
 #include "AvrInterruptMask.h"
 #include "AvrSensorSwitchPort.h"
 #include "AvrTwi1Slave.h"
@@ -74,9 +75,10 @@ AvrAds1115 ads(ADS1115_ADDRESS, AvrAds1115::kGainOne,
 AvrSensorSwitchPort sensorSwitches(SENSOR_SW1_PIN, SENSOR_SW2_PIN,
                                    SENSOR_SW3_PIN);
 AvrInterruptMask interruptMask;
-SensorInputs sensorInputs(ads, sensorSwitches, interruptMask, SENSOR_COUNT,
-                          SENSOR_CONNECTED_MIN_COUNTS, SENSOR_TRIP_COUNTS,
-                          SENSOR_TRIP_SAMPLES);
+AvrEeprom eeprom;
+SensorInputs sensorInputs(ads, sensorSwitches, interruptMask, eeprom,
+                          SENSOR_COUNT, SENSOR_CONNECTED_MIN_COUNTS,
+                          SENSOR_TRIP_COUNTS, SENSOR_TRIP_SAMPLES);
 ModuleLink moduleLink(moduleSlave, sensorInputs, MODULE_TYPE, FIRMWARE_VERSION);
 
 
@@ -99,10 +101,11 @@ void setup()
 }
 
 /**
- * Advances the ADS1115 scan one step, then gates the unconfigured
- * address on MOD. A low MOD enables 0x0A. After SET_ADDRESS the link
- * keeps that address. This loop does not block, so the host's 5 ms
- * MOD gate is met.
+ * Advances the ADS1115 scan one step, which also arms at most one
+ * fault-image byte, then gates the unconfigured address on MOD. A
+ * low MOD enables 0x0A. After SET_ADDRESS the link keeps that
+ * address. This loop does not block, so the host's 5 ms MOD gate
+ * is met.
  *
  * @return Nothing.
  */

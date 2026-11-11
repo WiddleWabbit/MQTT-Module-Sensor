@@ -4,6 +4,10 @@
 namespace
 {
 
+constexpr uint8_t kBlankByte = 0xFF;
+constexpr uint8_t kOvercurrentComplement = static_cast<uint8_t>(
+    ~module_protocol::kSensorFaultOvercurrent);
+
 /**
  * Holds the interrupt mask for one critical section. The destructor
  * releases it on every return.
@@ -55,26 +59,29 @@ private:
 // ========== Construction ==========
 
 /**
- * Binds the ADC, the switches, and the mask. The scan stays idle
- * until update(). Every loop starts open. The constructor does not
- * touch the pins. A count above the protocol maximum is stored as
- * that maximum.
+ * Binds the ADC, the switches, the mask, and the fault image. The
+ * scan stays idle until update(). A blank stored pair starts that
+ * loop open. Any other pair starts it in fault. The constructor
+ * reads the image and does not touch the pins. A count above the
+ * protocol maximum is stored as that maximum.
  *
  * @param adc Chip port. One call per update().
  * @param switches Loop switches, one per sensor index.
  * @param mask Closed around a phase change and the matching pin write.
+ * @param eeprom Fault image. Two bytes per input from address 0.
  * @param count Number of inputs to scan, in channel order.
  * @param connectedMinCounts A live sample at or above this is on.
  * @param tripCounts A sample at or above this counts toward a fault.
  * @param tripSamples Consecutive trip samples that latch a fault.
  */
 SensorInputs::SensorInputs(IAds1115& adc, ISensorSwitchPort& switches,
-                           IInterruptMask& mask, uint8_t count,
-                           int16_t connectedMinCounts, int32_t tripCounts,
-                           uint8_t tripSamples)
+                           IInterruptMask& mask, IEeprom& eeprom,
+                           uint8_t count, int16_t connectedMinCounts,
+                           int32_t tripCounts, uint8_t tripSamples)
   : _adc(adc),
     _switches(switches),
     _mask(mask),
+    _eeprom(eeprom),
     _count(count > module_protocol::kMaxSensorsPerModule
                ? module_protocol::kMaxSensorsPerModule
                : count),
@@ -83,7 +90,10 @@ SensorInputs::SensorInputs(IAds1115& adc, ISensorSwitchPort& switches,
     _tripSamples(tripSamples),
     _channel(0),
     _begun(false),
-    _phase(_Phase::Starting)
+    _phase(_Phase::Starting),
+    _inFlight(false),
+    _inFlightAddress(0),
+    _inFlightValue(kBlankByte)
 {
   for (uint8_t index = 0; index < module_protocol::kMaxSensorsPerModule;
        ++index)
@@ -93,6 +103,32 @@ SensorInputs::SensorInputs(IAds1115& adc, ISensorSwitchPort& switches,
     _power[index] = static_cast<uint8_t>(_Power::Off);
     _fresh[index] = 0;
     _strikes[index] = 0;
+    _record[index] = static_cast<uint8_t>(_Record::Clear);
+  }
+  for (uint8_t index = 0; index < kImageBytes; ++index)
+  {
+    _image[index] = kBlankByte;
+  }
+  for (uint8_t index = 0; index < _count; ++index)
+  {
+    const uint16_t reasonAddress =
+        static_cast<uint16_t>(index * kImageBytesPerInput);
+    const uint16_t inverseAddress =
+        static_cast<uint16_t>(reasonAddress + 1U);
+    if (inverseAddress >= _eeprom.length() ||
+        inverseAddress >= kImageBytes)
+    {
+      break;
+    }
+    const uint8_t reason = _eeprom.read(reasonAddress);
+    const uint8_t inverse = _eeprom.read(inverseAddress);
+    _image[reasonAddress] = reason;
+    _image[inverseAddress] = inverse;
+    if (reason != kBlankByte || inverse != kBlankByte)
+    {
+      _power[index] = static_cast<uint8_t>(_Power::Fault);
+      _record[index] = static_cast<uint8_t>(_Record::Fault);
+    }
   }
 }
 
@@ -100,14 +136,16 @@ SensorInputs::SensorInputs(IAds1115& adc, ISensorSwitchPort& switches,
 // ========== Public API ==========
 
 /**
- * Advances one step: begin, start, poll, or store. A stored sample
- * updates that sensor's state. A count of 0 does nothing. One call
- * performs one driver call.
+ * Arms or polls one EEPROM byte, then advances one scan step:
+ * begin, start, poll, or store. A stored sample updates that
+ * sensor's state. A count of 0 leaves the ADC alone. One call
+ * performs one ADC-driver call.
  *
  * @return Nothing.
  */
 void SensorInputs::update()
 {
+  _serviceStore();
   if (_count == 0)
   {
     return;
@@ -311,7 +349,9 @@ void SensorInputs::turnOff(uint8_t index)
 
 /**
  * Clears a fault and opens the loop. On and disconnected end off
- * as well. An index outside the count does nothing.
+ * as well. The live latch clears before this returns. The stored
+ * pair catches up from update(). An index outside the count does
+ * nothing.
  *
  * @param index Zero-based input.
  * @return Nothing.
@@ -326,6 +366,7 @@ void SensorInputs::reset(uint8_t index)
   _power[index] = static_cast<uint8_t>(_Power::Off);
   _fresh[index] = 0;
   _strikes[index] = 0;
+  _record[index] = static_cast<uint8_t>(_Record::Clear);
   _switches.setOn(index, false);
 }
 
@@ -379,6 +420,7 @@ void SensorInputs::_applySample(uint8_t index, int16_t counts)
   if (_tripSamples > 0 && _strikes[index] >= _tripSamples)
   {
     _power[index] = static_cast<uint8_t>(_Power::Fault);
+    _record[index] = static_cast<uint8_t>(_Record::Fault);
     _switches.setOn(index, false);
   }
 }
@@ -423,4 +465,104 @@ bool SensorInputs::_stateReady(uint8_t index) const
     return true;
   }
   return _fresh[index] != 0;
+}
+
+
+// ========== Fault image ==========
+
+/**
+ * Polls the EEPROM port and arms at most one byte. The caller is
+ * update(). A program that is still running is left running.
+ *
+ * @return Nothing.
+ */
+void SensorInputs::_serviceStore()
+{
+  _eeprom.poll();
+  const MaskLock hold(_mask);
+  if (_inFlight)
+  {
+    if (_eeprom.busy())
+    {
+      return;
+    }
+    if (_inFlightAddress < kImageBytes)
+    {
+      _image[_inFlightAddress] = _inFlightValue;
+    }
+    _inFlight = false;
+  }
+  if (_eeprom.busy())
+  {
+    return;
+  }
+  uint16_t address = 0;
+  uint8_t value = kBlankByte;
+  if (!_selectByte(&address, &value))
+  {
+    return;
+  }
+  if (_eeprom.startWrite(address, value))
+  {
+    _inFlight = true;
+    _inFlightAddress = address;
+    _inFlightValue = value;
+  }
+}
+
+/**
+ * Chooses the next image byte that differs from the latched record.
+ * The caller holds the mask. A fault writes the complement first.
+ * A clear writes the reason byte back to 0xFF first.
+ *
+ * @param address Set to the byte address when a write is required.
+ * @param value Set to the byte to program.
+ * @return True when a byte should be programmed.
+ */
+bool SensorInputs::_selectByte(uint16_t* address, uint8_t* value) const
+{
+  for (uint8_t index = 0; index < _count; ++index)
+  {
+    const uint16_t reasonAddress =
+        static_cast<uint16_t>(index * kImageBytesPerInput);
+    const uint16_t inverseAddress =
+        static_cast<uint16_t>(reasonAddress + 1U);
+    if (inverseAddress >= _eeprom.length() ||
+        inverseAddress >= kImageBytes)
+    {
+      return false;
+    }
+    const uint8_t reason = _image[reasonAddress];
+    const uint8_t inverse = _image[inverseAddress];
+    const bool fault =
+        _record[index] == static_cast<uint8_t>(_Record::Fault);
+    if (fault)
+    {
+      if (inverse != kOvercurrentComplement)
+      {
+        *address = inverseAddress;
+        *value = kOvercurrentComplement;
+        return true;
+      }
+      if (reason != module_protocol::kSensorFaultOvercurrent)
+      {
+        *address = reasonAddress;
+        *value = module_protocol::kSensorFaultOvercurrent;
+        return true;
+      }
+    }
+    else if (reason != kBlankByte)
+    {
+      *address = reasonAddress;
+      *value = kBlankByte;
+      return true;
+    }
+    else if (inverse != kBlankByte)
+    {
+      *address = inverseAddress;
+      *value = kBlankByte;
+      return true;
+    }
+  }
+  return false;
 }

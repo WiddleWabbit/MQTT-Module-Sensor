@@ -3,6 +3,7 @@
 #include "ModuleLink.h"
 #include "ModuleProtocol.h"
 #include "fakes/FakeAds1115.h"
+#include "fakes/FakeEeprom.h"
 #include "fakes/FakeInterruptMask.h"
 #include "fakes/FakeModuleSlavePort.h"
 #include "fakes/FakeSensorSwitchPort.h"
@@ -25,21 +26,28 @@ struct Board
   FakeAds1115 adc;
   FakeSensorSwitchPort switches;
   FakeInterruptMask mask;
+  FakeEeprom eeprom;
   SensorInputs sensors;
   FakeModuleSlavePort port;
   ModuleLink link;
 
   /**
    * Builds a link around a sensor cache of the given size.
+   * image preloads the fault bytes. A null image is blank.
    *
    * @param sensorCount Inputs the cache reports.
    * @param typeId Type id supplied to the link.
    * @param firmwareVersion Firmware version supplied to the link.
+   * @param image EEPROM prefix, or nullptr.
+   * @param imageLength Bytes to copy from image.
    */
   explicit Board(uint8_t sensorCount = 0,
                  uint16_t typeId = kTestType,
-                 uint16_t firmwareVersion = kTestFirmwareVersion)
-    : sensors(adc, switches, mask, sensorCount, kConnectedMinCounts,
+                 uint16_t firmwareVersion = kTestFirmwareVersion,
+                 const uint8_t* image = nullptr,
+                 uint16_t imageLength = 0)
+    : eeprom(image, imageLength),
+      sensors(adc, switches, mask, eeprom, sensorCount, kConnectedMinCounts,
               kTripCounts, kTripSamples),
       link(port, sensors, typeId, firmwareVersion)
   {
@@ -888,6 +896,45 @@ void testEnumerationSequence()
 }
 
 /**
+ * A stored overcurrent is fault on the first state read and the
+ * fault list. Set on leaves that switch open.
+ *
+ * @return Nothing.
+ */
+void testRestoredFaultIsReportedAndIgnoresSetOn()
+{
+  uint8_t image[6];
+  for (uint8_t index = 0; index < sizeof(image); ++index)
+  {
+    image[index] = 0xFF;
+  }
+  image[2] = module_protocol::kSensorFaultOvercurrent;
+  image[3] = static_cast<uint8_t>(
+      ~module_protocol::kSensorFaultOvercurrent);
+
+  Board board(3, kTestType, kTestFirmwareVersion, image, sizeof(image));
+  board.link.update(true);
+
+  const uint8_t index = 1;
+  writeCommand(board.port, module_protocol::kCmdGetSensorState, &index, 1);
+  const uint8_t fault[] = {1, module_protocol::kSensorStateFault};
+  expectReply(board.port, module_protocol::kStatusOk, fault,
+              module_protocol::kSensorStatePayloadLen);
+
+  const uint8_t list[] = {
+    module_protocol::kFaultNone, 0,
+    module_protocol::kSensorFaultOvercurrent, 1,
+    module_protocol::kFaultNone, 2};
+  expectFault(board, list, sizeof(list));
+
+  const uint8_t setOn[] = {1, module_protocol::kSensorStateOn};
+  writeCommand(board.port, module_protocol::kCmdSetSensor, setOn, 2);
+  expectReply(board.port, module_protocol::kStatusOk, fault,
+              module_protocol::kSensorStatePayloadLen);
+  TEST_ASSERT_FALSE(board.switches.on[1]);
+}
+
+/**
  * Runs the sensor-input tests defined in the other translation unit.
  *
  * @return Nothing.
@@ -918,6 +965,7 @@ int main()
   RUN_TEST(testSensorCommandsRejectBadIndexAndLength);
   RUN_TEST(testUnknownCommandAndMalformedFrames);
   RUN_TEST(testEnumerationSequence);
+  RUN_TEST(testRestoredFaultIsReportedAndIgnoresSetOn);
   runSensorInputTests();
   return UNITY_END();
 }
