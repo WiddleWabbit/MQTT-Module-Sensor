@@ -4,7 +4,7 @@ How the firmware runs, and the lookup pages, are in [docs/home.md](docs/home.md)
 
 # Getting Started 
 
-```pio run -e fuses_bootloader -t fuses```
+```pio run -e fuses_bootloader -t fuses --upload-port COM3```
 Burn the fuses
 
 ```pio run -e Upload_ISP -t upload```
