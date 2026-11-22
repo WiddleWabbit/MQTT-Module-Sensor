@@ -48,7 +48,7 @@ struct Board
                  uint16_t imageLength = 0)
     : eeprom(image, imageLength),
       sensors(adc, switches, mask, eeprom, sensorCount, kConnectedMinCounts,
-              kTripCounts, kTripSamples),
+              kTripCounts, kTripSamples, 1),
       link(port, sensors, typeId, firmwareVersion)
   {
   }

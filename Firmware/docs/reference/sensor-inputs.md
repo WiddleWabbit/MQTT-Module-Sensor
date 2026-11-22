@@ -4,16 +4,18 @@
 
 ## Purpose
 
-Scan the ADS1115 inputs, remember the latest counts, and own each
-sensor's loop switch. The link reports that cache and the state. The
-scan is a sequence of single driver calls so `loop()` can still see
-MOD within `kModGateMaxMs`.
+Scan the ADS1115 inputs, keep a per-input average of the live
+samples, and own each sensor's loop switch. The link reports that
+cache and the state. The scan is a sequence of single driver calls
+so `loop()` can still see MOD within `kModGateMaxMs`.
 
 ## Classes
 
-`SensorInputs(IAds1115& adc, ISensorSwitchPort& switches, IInterruptMask& mask, IEeprom& eeprom, uint8_t count, int16_t connectedMinCounts, int32_t tripCounts, uint8_t tripSamples)`
+`SensorInputs(IAds1115& adc, ISensorSwitchPort& switches, IInterruptMask& mask, IEeprom& eeprom, uint8_t count, int16_t connectedMinCounts, int32_t tripCounts, uint8_t tripSamples, uint8_t averageSamples)`
 binds the ports. Copy and assignment are deleted. The constructor
 reads the fault image and does not write the switch pins.
+`averageSamples` of 0 is stored as 1. A value above 25 is stored as
+25.
 
 `update()` polls the fault image, then advances one scan step.
 `count()`, `hasSample(index)`,
@@ -78,10 +80,24 @@ counts, then sets the valid flag. The mask is held across that store
 and any pin write. The ADC call itself stays outside the mask.
 
 While the loop is closed, that sample sets the fresh flag. A sample
-at or above `tripCounts` adds one strike. Any lower sample clears the
-strikes. `tripSamples` strikes in a row latch fault and open the
-switch. Samples taken while the loop is open do not strike. Polls
-that do not store a conversion do not strike.
+at or above `tripCounts` adds one strike and does not enter the
+window. Any lower sample clears the strikes. `tripSamples` strikes
+in a row latch fault, open the switch, and clear that window.
+Samples taken while the loop is open do not strike and do not enter
+the window. Polls that do not store a conversion do not strike.
+
+A sample at or above the connected threshold and below the trip is
+pushed into that input's window. Each input has its own window.
+`counts()` returns the average of the samples in it, rounded half
+up: add half the fill, then divide. One sample returns itself. A
+full window drops the oldest sample when the next one arrives. A
+sample below the connected threshold clears that window, and
+`counts()` then returns the last conversion. Turn on from off, turn
+off, and reset clear it too. Set on while the loop is already on
+leaves the window in place. An empty window reports the last
+conversion, so a reading taken before the first live sample is still
+that conversion. The host asks for a reading once the state is on,
+which is the first sample at or above the connected threshold.
 
 Index 0 is AIN0 (Sens1), index 1 is AIN1 (Sens2), and index 2 is AIN2
 (Sens3). The same index is that sensor's switch.
@@ -120,7 +136,7 @@ input. The scan retries the channel that failed.
 
 The sketch passes `SENSOR_COUNT` (3),
 `SENSOR_CONNECTED_MIN_COUNTS` (2400), `SENSOR_TRIP_COUNTS` (21956),
-and `SENSOR_TRIP_SAMPLES` (2).
+`SENSOR_TRIP_SAMPLES` (2), and `SENSOR_AVERAGE_SAMPLES` (25).
 
 2400 counts is 0.300 V at GAIN_ONE, 125 µV per count. On the fitted
 4.99 Ω shunt and INA186A1 (25 V/V) that is about 2.4 mA. A 4 mA loop
@@ -162,6 +178,13 @@ builds from the same cache.
 | `testSecondLatchLeavesTheFirstImage` | Latching input 2 programs addresses 5 then 4. Input 0 keeps `01 FE` |
 | `testResetThenLatchKeepsTheLatestReason` | A clear reversed by a new latch finishes as `01 FE` and boots as fault |
 | `testBusyEepromDoesNotStallTheScan` | A held program still lets `begin` and `startSingleEnded` run |
+| `testAverageBuildsThenRotates` | One sample reports itself. 4000 and 4001 average to 4001. The fifth sample in a window of 4 drops the oldest |
+| `testEachChannelKeepsItsOwnAverage` | Channel 0 averages 4000 then 6000 to 5000. Channel 1 stays 8000 |
+| `testDisconnectClearsTheAverage` | 2399 drops a 5000 average. The next 4800 starts a new window |
+| `testTripSpikeLeavesTheAverageUntilFault` | One sample at 21956 leaves 5000 in place. The second faults, opens the switch, and the following on starts at 4800 |
+| `testOpenLoopSamplesStayOutOfTheAverage` | Two samples while open stay out. The first sample after turn on is the whole average |
+| `testTurnOffOnAndResetClearTheAverage` | Turn off, then on, reports only the new sample. Reset does the same |
+| `testAverageLengthIsClamped` | Length 0 keeps the latest sample. Length 100 keeps 25, and the 26th sample moves 4000 to 4100 |
 | `testSensorCommandsReportCachedReadings` | Count 3. `Busy` before a sample. Loops closed, then 2399 disconnected, 2400 connected, and -4 disconnected, each on the wire |
 | `testSensorStateCommands` | Get off, set on then `Busy`, disconnected, on, off, fault, ignored set, reset, and a later on. Bad index, fault or disconnected as a set value, and a wrong length are `BadLength` |
 | `testGetFaultWhenIdle` | Three clear inputs are `00 00 00 01 00 02`. A count of 0 is an empty `Ok` |

@@ -33,12 +33,15 @@ struct SensorRig
    * @param count Inputs to scan.
    * @param image EEPROM prefix, or nullptr.
    * @param imageLength Bytes to copy from image.
+   * @param averageSamples Live samples kept per input. The default
+   *        is one, so a single sample reports itself.
    */
   explicit SensorRig(uint8_t count, const uint8_t* image = nullptr,
-                     uint16_t imageLength = 0)
+                     uint16_t imageLength = 0,
+                     uint8_t averageSamples = 1)
     : eeprom(image, imageLength),
       sensors(adc, switches, mask, eeprom, count, kConnectedMinCounts,
-              kTripCounts, kTripSamples)
+              kTripCounts, kTripSamples, averageSamples)
   {
   }
 };
@@ -645,7 +648,7 @@ void testLatchWritesInverseBeforeReason()
   FakeSensorSwitchPort switches;
   FakeInterruptMask mask;
   SensorInputs restored(adc, switches, mask, rig.eeprom, 1,
-                        kConnectedMinCounts, kTripCounts, kTripSamples);
+                        kConnectedMinCounts, kTripCounts, kTripSamples, 1);
   TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateFault,
                           restored.state(0));
   restored.turnOn(0);
@@ -704,7 +707,7 @@ void testResetClearsRamImmediatelyThenBlanksThePair()
   FakeSensorSwitchPort switches;
   FakeInterruptMask mask;
   SensorInputs restored(adc, switches, mask, rig.eeprom, 1,
-                        kConnectedMinCounts, kTripCounts, kTripSamples);
+                        kConnectedMinCounts, kTripCounts, kTripSamples, 1);
   TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateOff,
                           restored.state(0));
 }
@@ -820,7 +823,7 @@ void testResetThenLatchKeepsTheLatestReason()
   FakeSensorSwitchPort switches;
   FakeInterruptMask mask;
   SensorInputs restored(adc, switches, mask, rig.eeprom, 1,
-                        kConnectedMinCounts, kTripCounts, kTripSamples);
+                        kConnectedMinCounts, kTripCounts, kTripSamples, 1);
   TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateFault,
                           restored.state(0));
 }
@@ -844,6 +847,207 @@ void testBusyEepromDoesNotStallTheScan()
   TEST_ASSERT_EQUAL_UINT8(1, rig.adc.startCount);
   TEST_ASSERT_EQUAL_UINT8(1, rig.eeprom.startCount);
   TEST_ASSERT_TRUE(rig.eeprom.busy());
+}
+
+/**
+ * A short window reports the samples it has, then rotates. 4000 and
+ * 4001 round half up to 4001. The fifth sample drops the oldest.
+ *
+ * @return Nothing.
+ */
+void testAverageBuildsThenRotates()
+{
+  SensorRig rig(1, nullptr, 0, 4);
+  rig.sensors.turnOn(0);
+  rig.adc.counts[0] = 4000;
+  publishOne(rig);
+  TEST_ASSERT_EQUAL_INT32(4000, rig.sensors.counts(0));
+
+  rig.adc.counts[0] = 4001;
+  publishOne(rig);
+  TEST_ASSERT_EQUAL_INT32(4001, rig.sensors.counts(0));
+
+  rig.adc.counts[0] = 6000;
+  publishOne(rig);
+  rig.adc.counts[0] = 7000;
+  publishOne(rig);
+  TEST_ASSERT_EQUAL_INT32(5250, rig.sensors.counts(0));
+
+  rig.adc.counts[0] = 8000;
+  publishOne(rig);
+  TEST_ASSERT_EQUAL_INT32(6250, rig.sensors.counts(0));
+}
+
+/**
+ * Each input keeps the samples from its own channel.
+ *
+ * @return Nothing.
+ */
+void testEachChannelKeepsItsOwnAverage()
+{
+  SensorRig rig(2, nullptr, 0, 4);
+  rig.sensors.turnOn(0);
+  rig.sensors.turnOn(1);
+  rig.adc.counts[0] = 4000;
+  rig.adc.counts[1] = 8000;
+  publishOne(rig);
+  TEST_ASSERT_EQUAL_INT32(4000, rig.sensors.counts(0));
+
+  publishOne(rig);
+  TEST_ASSERT_EQUAL_INT32(8000, rig.sensors.counts(1));
+  TEST_ASSERT_EQUAL_INT32(4000, rig.sensors.counts(0));
+
+  rig.adc.counts[0] = 6000;
+  publishOne(rig);
+  TEST_ASSERT_EQUAL_INT32(5000, rig.sensors.counts(0));
+  TEST_ASSERT_EQUAL_INT32(8000, rig.sensors.counts(1));
+}
+
+/**
+ * A sample below the connected threshold drops the window. The next
+ * live sample starts a new average.
+ *
+ * @return Nothing.
+ */
+void testDisconnectClearsTheAverage()
+{
+  SensorRig rig(1, nullptr, 0, 4);
+  rig.sensors.turnOn(0);
+  rig.adc.counts[0] = 4000;
+  publishOne(rig);
+  rig.adc.counts[0] = 6000;
+  publishOne(rig);
+  TEST_ASSERT_EQUAL_INT32(5000, rig.sensors.counts(0));
+
+  rig.adc.counts[0] = 2399;
+  publishOne(rig);
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateDisconnected,
+                          rig.sensors.state(0));
+  TEST_ASSERT_EQUAL_INT32(2399, rig.sensors.counts(0));
+
+  rig.adc.counts[0] = 4800;
+  publishOne(rig);
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateOn,
+                          rig.sensors.state(0));
+  TEST_ASSERT_EQUAL_INT32(4800, rig.sensors.counts(0));
+}
+
+/**
+ * One sample at the trip leaves the average in place. The second
+ * faults, opens the switch, and drops the window. A later on starts
+ * from the new sample.
+ *
+ * @return Nothing.
+ */
+void testTripSpikeLeavesTheAverageUntilFault()
+{
+  SensorRig rig(1, nullptr, 0, 4);
+  rig.sensors.turnOn(0);
+  rig.adc.counts[0] = 4000;
+  publishOne(rig);
+  rig.adc.counts[0] = 6000;
+  publishOne(rig);
+  TEST_ASSERT_EQUAL_INT32(5000, rig.sensors.counts(0));
+
+  rig.adc.counts[0] = static_cast<int16_t>(kTripCounts);
+  publishOne(rig);
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateOn,
+                          rig.sensors.state(0));
+  TEST_ASSERT_EQUAL_INT32(5000, rig.sensors.counts(0));
+
+  publishOne(rig);
+  TEST_ASSERT_EQUAL_UINT8(module_protocol::kSensorStateFault,
+                          rig.sensors.state(0));
+  TEST_ASSERT_FALSE(rig.switches.on[0]);
+  TEST_ASSERT_EQUAL_INT32(kTripCounts, rig.sensors.counts(0));
+
+  rig.sensors.reset(0);
+  rig.sensors.turnOn(0);
+  rig.adc.counts[0] = 4800;
+  publishOne(rig);
+  TEST_ASSERT_EQUAL_INT32(4800, rig.sensors.counts(0));
+}
+
+/**
+ * Samples taken while the switch is open do not enter the window.
+ *
+ * @return Nothing.
+ */
+void testOpenLoopSamplesStayOutOfTheAverage()
+{
+  SensorRig rig(1, nullptr, 0, 4);
+  rig.adc.counts[0] = 4000;
+  publishOne(rig);
+  publishOne(rig);
+  TEST_ASSERT_EQUAL_INT32(4000, rig.sensors.counts(0));
+
+  rig.sensors.turnOn(0);
+  rig.adc.counts[0] = 8000;
+  publishOne(rig);
+  TEST_ASSERT_EQUAL_INT32(8000, rig.sensors.counts(0));
+}
+
+/**
+ * Turn off and reset each drop the window. The next on starts from
+ * the new sample.
+ *
+ * @return Nothing.
+ */
+void testTurnOffOnAndResetClearTheAverage()
+{
+  SensorRig rig(1, nullptr, 0, 4);
+  rig.sensors.turnOn(0);
+  rig.adc.counts[0] = 4000;
+  publishOne(rig);
+  rig.adc.counts[0] = 6000;
+  publishOne(rig);
+  TEST_ASSERT_EQUAL_INT32(5000, rig.sensors.counts(0));
+
+  rig.sensors.turnOff(0);
+  rig.sensors.turnOn(0);
+  rig.adc.counts[0] = 8000;
+  publishOne(rig);
+  TEST_ASSERT_EQUAL_INT32(8000, rig.sensors.counts(0));
+
+  rig.adc.counts[0] = 4000;
+  publishOne(rig);
+  TEST_ASSERT_EQUAL_INT32(6000, rig.sensors.counts(0));
+
+  rig.sensors.reset(0);
+  rig.sensors.turnOn(0);
+  rig.adc.counts[0] = 7000;
+  publishOne(rig);
+  TEST_ASSERT_EQUAL_INT32(7000, rig.sensors.counts(0));
+}
+
+/**
+ * A length of 0 keeps one sample. A length above 25 keeps 25, so
+ * the 26th sample drops the first.
+ *
+ * @return Nothing.
+ */
+void testAverageLengthIsClamped()
+{
+  SensorRig latest(1, nullptr, 0, 0);
+  latest.sensors.turnOn(0);
+  latest.adc.counts[0] = 4000;
+  publishOne(latest);
+  latest.adc.counts[0] = 5000;
+  publishOne(latest);
+  TEST_ASSERT_EQUAL_INT32(5000, latest.sensors.counts(0));
+
+  SensorRig capped(1, nullptr, 0, 100);
+  capped.sensors.turnOn(0);
+  capped.adc.counts[0] = 4000;
+  for (uint8_t sample = 0; sample < 25; ++sample)
+  {
+    publishOne(capped);
+  }
+  TEST_ASSERT_EQUAL_INT32(4000, capped.sensors.counts(0));
+
+  capped.adc.counts[0] = 6500;
+  publishOne(capped);
+  TEST_ASSERT_EQUAL_INT32(4100, capped.sensors.counts(0));
 }
 
 /**
@@ -874,4 +1078,11 @@ void runSensorInputTests()
   RUN_TEST(testSecondLatchLeavesTheFirstImage);
   RUN_TEST(testResetThenLatchKeepsTheLatestReason);
   RUN_TEST(testBusyEepromDoesNotStallTheScan);
+  RUN_TEST(testAverageBuildsThenRotates);
+  RUN_TEST(testEachChannelKeepsItsOwnAverage);
+  RUN_TEST(testDisconnectClearsTheAverage);
+  RUN_TEST(testTripSpikeLeavesTheAverageUntilFault);
+  RUN_TEST(testOpenLoopSamplesStayOutOfTheAverage);
+  RUN_TEST(testTurnOffOnAndResetClearTheAverage);
+  RUN_TEST(testAverageLengthIsClamped);
 }

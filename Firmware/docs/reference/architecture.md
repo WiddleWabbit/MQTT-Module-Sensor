@@ -58,13 +58,14 @@ Declared in `src/main.cpp`.
 | `ADC_SCL_PIN` | 19 | PC5 | ADS1115 SCL, schematic I2C0, TWI0. `Wire` takes no pin argument |
 | `MODULE_TYPE` | `kTypeSensorModule` | | Reported by `GET_IDENTITY` |
 | `BOARD_REVISION` | 2 | | High byte of the `GET_IDENTITY` firmware word |
-| `FIRMWARE_REVISION` | 1 | | Low byte of the `GET_IDENTITY` firmware word |
-| `FIRMWARE_VERSION` | `0x0201` | | `BOARD_REVISION`, then `FIRMWARE_REVISION` |
+| `FIRMWARE_REVISION` | 2 | | Low byte of the `GET_IDENTITY` firmware word |
+| `FIRMWARE_VERSION` | `0x0202` | | `BOARD_REVISION`, then `FIRMWARE_REVISION` |
 | `ADS1115_ADDRESS` | `0x48` | | ADDR strapped to GND |
 | `SENSOR_COUNT` | 3 | | Inputs reported by `GET_SENSOR_COUNT` |
 | `SENSOR_CONNECTED_MIN_COUNTS` | 2400 | | On at or above this raw count, about 2.4 mA |
 | `SENSOR_TRIP_COUNTS` | 21956 | | One strike at or above this raw count, 22 mA |
 | `SENSOR_TRIP_SAMPLES` | 2 | | Consecutive strikes that latch a fault |
+| `SENSOR_AVERAGE_SAMPLES` | 25 | | Live samples in each input's reading. The window rotates once full |
 
 `ads` is constructed with `AvrAds1115::kGainOne` (`0x0200`, ±4.096 V)
 and `AvrAds1115::kRate860Sps` (`0x00E0`).

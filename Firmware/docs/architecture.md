@@ -40,8 +40,8 @@ main.cpp
 
 `main.cpp` passes `MODULE_TYPE` and `FIRMWARE_VERSION` into the link,
 and passes the ADS1115 address, gain, rate, input count, connected
-threshold, trip counts, and trip samples into the scan. Pin numbers
-stay in `main.cpp`.
+threshold, trip counts, trip samples, and the average length into
+the scan. Pin numbers stay in `main.cpp`.
 
 `lib/Interfaces/` holds `IModuleSlavePort` and the copied
 `ModuleProtocol.h`. `lib/Drivers/` holds the AVR adapter. `lib/Logic/`
@@ -74,8 +74,8 @@ Each pass reads `MOD_PIN` and passes that level to the link. The
 motherboard reads the sense line, which `SNS_PIN` holds low.
 
 The link stores the address and whether it has been assigned. The TWI1
-adapter stores the reply the host clocks out. The scan stores the
-latest ADS1115 counts and the latched fault image. Those stores are on the
+adapter stores the reply the host clocks out. The scan stores each
+input's reading and the latched fault image. Those stores are on the
 [module link](module-link.md), [sensor inputs](sensor-inputs.md),
 [slave port](slave-port.md), and [ADC port](adc-port.md) pages.
 

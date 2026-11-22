@@ -73,11 +73,14 @@ private:
  * @param connectedMinCounts A live sample at or above this is on.
  * @param tripCounts A sample at or above this counts toward a fault.
  * @param tripSamples Consecutive trip samples that latch a fault.
+ * @param averageSamples Live samples kept per input. Zero is stored
+ *        as 1. A value above 25 is stored as 25.
  */
 SensorInputs::SensorInputs(IAds1115& adc, ISensorSwitchPort& switches,
                            IInterruptMask& mask, IEeprom& eeprom,
                            uint8_t count, int16_t connectedMinCounts,
-                           int32_t tripCounts, uint8_t tripSamples)
+                           int32_t tripCounts, uint8_t tripSamples,
+                           uint8_t averageSamples)
   : _adc(adc),
     _switches(switches),
     _mask(mask),
@@ -88,6 +91,11 @@ SensorInputs::SensorInputs(IAds1115& adc, ISensorSwitchPort& switches,
     _connectedMinCounts(connectedMinCounts),
     _tripCounts(tripCounts),
     _tripSamples(tripSamples),
+    _averageLength(averageSamples == 0
+                       ? static_cast<uint8_t>(1)
+                       : (averageSamples > kMaxAverageSamples
+                              ? kMaxAverageSamples
+                              : averageSamples)),
     _channel(0),
     _begun(false),
     _phase(_Phase::Starting),
@@ -103,6 +111,13 @@ SensorInputs::SensorInputs(IAds1115& adc, ISensorSwitchPort& switches,
     _power[index] = static_cast<uint8_t>(_Power::Off);
     _fresh[index] = 0;
     _strikes[index] = 0;
+    _windowCount[index] = 0;
+    _windowNext[index] = 0;
+    _windowSum[index] = 0;
+    for (uint8_t slot = 0; slot < kMaxAverageSamples; ++slot)
+    {
+      _window[index][slot] = 0;
+    }
     _record[index] = static_cast<uint8_t>(_Record::Clear);
   }
   for (uint8_t index = 0; index < kImageBytes; ++index)
@@ -222,10 +237,13 @@ bool SensorInputs::connected(uint8_t index) const
 }
 
 /**
- * Reports the stored counts. An input with no sample reads as 0.
+ * Reports the reading. A window that holds samples returns their
+ * average, rounded half up. An empty window returns the last
+ * conversion. An input with no sample reads as 0.
  *
  * @param index Zero-based input.
- * @return Signed counts from the last stored conversion.
+ * @return Averaged counts, or the last conversion when the window
+ *         is empty.
  */
 int32_t SensorInputs::counts(uint8_t index) const
 {
@@ -233,7 +251,15 @@ int32_t SensorInputs::counts(uint8_t index) const
   {
     return 0;
   }
-  return _counts[index];
+  const MaskLock hold(_mask);
+  const uint8_t filled = _windowCount[index];
+  if (filled == 0)
+  {
+    return _counts[index];
+  }
+  const int32_t rounded =
+      _windowSum[index] + static_cast<int32_t>(filled / 2U);
+  return rounded / static_cast<int32_t>(filled);
 }
 
 /**
@@ -299,9 +325,10 @@ uint8_t SensorInputs::readFault(uint8_t* dest) const
 }
 
 /**
- * Closes the loop from off. A sensor that is already on is left as
- * it is, including its strike count. A fault ignores this call.
- * An index outside the count does nothing.
+ * Closes the loop from off and clears that input's window. A sensor
+ * that is already on is left as it is, including its strike count
+ * and its window. A fault ignores this call. An index outside the
+ * count does nothing.
  *
  * @param index Zero-based input.
  * @return Nothing.
@@ -320,13 +347,14 @@ void SensorInputs::turnOn(uint8_t index)
   _power[index] = static_cast<uint8_t>(_Power::On);
   _fresh[index] = 0;
   _strikes[index] = 0;
+  _clearWindow(index);
   _switches.setOn(index, true);
 }
 
 /**
- * Opens the loop from on or disconnected. A fault ignores this call,
- * so only reset() clears a fault. An index outside the count does
- * nothing.
+ * Opens the loop from on or disconnected and clears that window.
+ * A fault ignores this call, so only reset() clears a fault. An
+ * index outside the count does nothing.
  *
  * @param index Zero-based input.
  * @return Nothing.
@@ -344,14 +372,15 @@ void SensorInputs::turnOff(uint8_t index)
   }
   _power[index] = static_cast<uint8_t>(_Power::Off);
   _strikes[index] = 0;
+  _clearWindow(index);
   _switches.setOn(index, false);
 }
 
 /**
- * Clears a fault and opens the loop. On and disconnected end off
- * as well. The live latch clears before this returns. The stored
- * pair catches up from update(). An index outside the count does
- * nothing.
+ * Clears a fault, opens the loop, and clears that window. On and
+ * disconnected end off as well. The live latch clears before this
+ * returns. The stored pair catches up from update(). An index
+ * outside the count does nothing.
  *
  * @param index Zero-based input.
  * @return Nothing.
@@ -367,6 +396,7 @@ void SensorInputs::reset(uint8_t index)
   _fresh[index] = 0;
   _strikes[index] = 0;
   _record[index] = static_cast<uint8_t>(_Record::Clear);
+  _clearWindow(index);
   _switches.setOn(index, false);
 }
 
@@ -393,7 +423,9 @@ void SensorInputs::_publish(uint8_t index, int16_t counts)
 
 /**
  * Applies one stored sample to a closed loop. The caller holds the
- * mask. An open or faulted loop is left as it is.
+ * mask. An open or faulted loop is left as it is. A live sample
+ * below the trip enters that input's window. A sample below the
+ * connected threshold clears it. A trip sample stays out of it.
  *
  * @param index Input the sample belongs to.
  * @param counts Signed conversion result.
@@ -412,17 +444,62 @@ void SensorInputs::_applySample(uint8_t index, int16_t counts)
     {
       _strikes[index] = static_cast<uint8_t>(_strikes[index] + 1U);
     }
+    if (_tripSamples > 0 && _strikes[index] >= _tripSamples)
+    {
+      _power[index] = static_cast<uint8_t>(_Power::Fault);
+      _record[index] = static_cast<uint8_t>(_Record::Fault);
+      _switches.setOn(index, false);
+      _clearWindow(index);
+    }
+    return;
+  }
+  _strikes[index] = 0;
+  if (counts < _connectedMinCounts)
+  {
+    _clearWindow(index);
+    return;
+  }
+  _pushSample(index, counts);
+}
+
+/**
+ * Drops every sample in one input's window. The caller holds the
+ * mask. The last conversion stays in the raw cache.
+ *
+ * @param index Input inside the count.
+ * @return Nothing.
+ */
+void SensorInputs::_clearWindow(uint8_t index)
+{
+  _windowCount[index] = 0;
+  _windowNext[index] = 0;
+  _windowSum[index] = 0;
+}
+
+/**
+ * Stores one live sample and drops the oldest when the window is
+ * full. The caller holds the mask.
+ *
+ * @param index Input inside the count.
+ * @param counts Signed conversion result. At or above the connected
+ *        threshold and below the trip.
+ * @return Nothing.
+ */
+void SensorInputs::_pushSample(uint8_t index, int16_t counts)
+{
+  if (_windowCount[index] == _averageLength)
+  {
+    const int16_t oldest = _window[index][_windowNext[index]];
+    _windowSum[index] -= oldest;
   }
   else
   {
-    _strikes[index] = 0;
+    _windowCount[index] = static_cast<uint8_t>(_windowCount[index] + 1U);
   }
-  if (_tripSamples > 0 && _strikes[index] >= _tripSamples)
-  {
-    _power[index] = static_cast<uint8_t>(_Power::Fault);
-    _record[index] = static_cast<uint8_t>(_Record::Fault);
-    _switches.setOn(index, false);
-  }
+  _window[index][_windowNext[index]] = counts;
+  _windowSum[index] += counts;
+  _windowNext[index] = static_cast<uint8_t>(
+      static_cast<uint8_t>(_windowNext[index] + 1U) % _averageLength);
 }
 
 /**

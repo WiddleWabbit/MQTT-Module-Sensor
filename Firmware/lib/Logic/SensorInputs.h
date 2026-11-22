@@ -11,8 +11,10 @@
 /**
  * Round-robin reader and loop switch for the sensors on one ADS1115.
  * update() advances one step of the scan. A sample stored while the
- * loop is closed sets on, disconnected, or a latched fault. The link
- * reads the cache and the state. No Arduino types.
+ * loop is closed sets on, disconnected, or a latched fault. Each
+ * input keeps its own window of live samples, and the reading is
+ * their average. The link reads the cache and the state. No Arduino
+ * types.
  *
  * A latched overcurrent is stored in EEPROM, two bytes per input,
  * starting at address 0. The constructor reads that image. A blank
@@ -42,11 +44,13 @@ public:
    * @param connectedMinCounts A live sample at or above this is on.
    * @param tripCounts A sample at or above this counts toward a fault.
    * @param tripSamples Consecutive trip samples that latch a fault.
+   * @param averageSamples Live samples kept per input. Zero is stored
+   *        as 1. A value above 25 is stored as 25.
    */
   SensorInputs(IAds1115& adc, ISensorSwitchPort& switches,
                IInterruptMask& mask, IEeprom& eeprom, uint8_t count,
                int16_t connectedMinCounts, int32_t tripCounts,
-               uint8_t tripSamples);
+               uint8_t tripSamples, uint8_t averageSamples);
 
   /**
    * Copying would share the ADC scan with another object.
@@ -98,10 +102,13 @@ public:
   bool connected(uint8_t index) const;
 
   /**
-   * Reports the stored counts. An input with no sample reads as 0.
+   * Reports the reading. A window that holds samples returns their
+   * average, rounded half up. An empty window returns the last
+   * conversion. An input with no sample reads as 0.
    *
    * @param index Zero-based input.
-   * @return Signed counts from the last stored conversion.
+   * @return Averaged counts, or the last conversion when the window
+   *         is empty.
    */
   int32_t counts(uint8_t index) const;
 
@@ -136,9 +143,10 @@ public:
   uint8_t readFault(uint8_t* dest) const;
 
   /**
-   * Closes the loop from off. A sensor that is already on is left as
-   * it is, including its strike count. A fault ignores this call.
-   * An index outside the count does nothing.
+   * Closes the loop from off and clears that input's window. A sensor
+   * that is already on is left as it is, including its strike count
+   * and its window. A fault ignores this call. An index outside the
+   * count does nothing.
    *
    * @param index Zero-based input.
    * @return Nothing.
@@ -146,9 +154,9 @@ public:
   void turnOn(uint8_t index);
 
   /**
-   * Opens the loop from on or disconnected. A fault ignores this call,
-   * so only reset() clears a fault. An index outside the count does
-   * nothing.
+   * Opens the loop from on or disconnected and clears that window.
+   * A fault ignores this call, so only reset() clears a fault. An
+   * index outside the count does nothing.
    *
    * @param index Zero-based input.
    * @return Nothing.
@@ -156,10 +164,10 @@ public:
   void turnOff(uint8_t index);
 
   /**
-   * Clears a fault and opens the loop. On and disconnected end off
-   * as well. The live latch clears before this returns. The stored
-   * pair catches up from update(). An index outside the count does
-   * nothing.
+   * Clears a fault, opens the loop, and clears that window. On and
+   * disconnected end off as well. The live latch clears before this
+   * returns. The stored pair catches up from update(). An index
+   * outside the count does nothing.
    *
    * @param index Zero-based input.
    * @return Nothing.
@@ -212,13 +220,35 @@ private:
 
   /**
    * Applies one stored sample to a closed loop. The caller holds the
-   * mask. An open or faulted loop is left as it is.
+   * mask. An open or faulted loop is left as it is. A live sample
+   * below the trip enters that input's window. A sample below the
+   * connected threshold clears it. A trip sample stays out of it.
    *
    * @param index Input the sample belongs to.
    * @param counts Signed conversion result.
    * @return Nothing.
    */
   void _applySample(uint8_t index, int16_t counts);
+
+  /**
+   * Drops every sample in one input's window. The caller holds the
+   * mask. The last conversion stays in the raw cache.
+   *
+   * @param index Input inside the count.
+   * @return Nothing.
+   */
+  void _clearWindow(uint8_t index);
+
+  /**
+   * Stores one live sample and drops the oldest when the window is
+   * full. The caller holds the mask.
+   *
+   * @param index Input inside the count.
+   * @param counts Signed conversion result. At or above the connected
+   *        threshold and below the trip.
+   * @return Nothing.
+   */
+  void _pushSample(uint8_t index, int16_t counts);
 
   /**
    * Wire state. The caller holds the mask.
@@ -258,6 +288,7 @@ private:
   static constexpr uint8_t kImageBytesPerInput = 2;
   static constexpr uint8_t kImageBytes =
       module_protocol::kMaxSensorsPerModule * kImageBytesPerInput;
+  static constexpr uint8_t kMaxAverageSamples = 25;
 
   IAds1115& _adc;
   ISensorSwitchPort& _switches;
@@ -267,6 +298,7 @@ private:
   int16_t _connectedMinCounts;
   int32_t _tripCounts;
   uint8_t _tripSamples;
+  uint8_t _averageLength;
   uint8_t _channel;
   bool _begun;
   _Phase _phase;
@@ -275,6 +307,11 @@ private:
   volatile uint8_t _power[module_protocol::kMaxSensorsPerModule];
   volatile uint8_t _fresh[module_protocol::kMaxSensorsPerModule];
   volatile uint8_t _strikes[module_protocol::kMaxSensorsPerModule];
+  volatile uint8_t _windowCount[module_protocol::kMaxSensorsPerModule];
+  volatile uint8_t _windowNext[module_protocol::kMaxSensorsPerModule];
+  volatile int32_t _windowSum[module_protocol::kMaxSensorsPerModule];
+  volatile int16_t _window[module_protocol::kMaxSensorsPerModule]
+                          [kMaxAverageSamples];
   volatile uint8_t _record[module_protocol::kMaxSensorsPerModule];
   uint8_t _image[kImageBytes];
   bool _inFlight;

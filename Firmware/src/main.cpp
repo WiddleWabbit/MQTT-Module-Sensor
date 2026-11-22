@@ -47,7 +47,7 @@ const uint16_t MODULE_TYPE = module_protocol::kTypeSensorModule;
 
 // Identity firmware bytes are board revision, then firmware revision.
 const uint8_t BOARD_REVISION = 2;
-const uint8_t FIRMWARE_REVISION = 1;
+const uint8_t FIRMWARE_REVISION = 2;
 const uint16_t FIRMWARE_VERSION =
     static_cast<uint16_t>((static_cast<uint16_t>(BOARD_REVISION) << 8) |
                           FIRMWARE_REVISION);
@@ -66,6 +66,10 @@ const int16_t SENSOR_CONNECTED_MIN_COUNTS = 2400;
 const int32_t SENSOR_TRIP_COUNTS = 21956;
 const uint8_t SENSOR_TRIP_SAMPLES = 2;
 
+// Live samples kept for each input's reading. The window rotates
+// once it is full. A shorter run reports the average so far.
+const uint8_t SENSOR_AVERAGE_SAMPLES = 25;
+
 
 // ========== Modules ==========
 
@@ -78,7 +82,8 @@ AvrInterruptMask interruptMask;
 AvrEeprom eeprom;
 SensorInputs sensorInputs(ads, sensorSwitches, interruptMask, eeprom,
                           SENSOR_COUNT, SENSOR_CONNECTED_MIN_COUNTS,
-                          SENSOR_TRIP_COUNTS, SENSOR_TRIP_SAMPLES);
+                          SENSOR_TRIP_COUNTS, SENSOR_TRIP_SAMPLES,
+                          SENSOR_AVERAGE_SAMPLES);
 ModuleLink moduleLink(moduleSlave, sensorInputs, MODULE_TYPE, FIRMWARE_VERSION);
 
 

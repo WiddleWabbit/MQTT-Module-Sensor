@@ -26,7 +26,7 @@ the constructor registered, from the TWI receive callback or from
 ```text
 ModuleLink
   IModuleSlavePort    enable, disable, setAddress, setReply
-  SensorInputs        count, state, connected flag, raw counts
+  SensorInputs        count, state, connected flag, averaged counts
 ```
 
 The link has no submodules. It cannot be copied: the port stores the

@@ -4,8 +4,8 @@
 
 ## Summary
 
-`SensorInputs` scans the ADS1115 and keeps the latest counts for each
-input. The same object owns that sensor's loop switch. A sensor is
+`SensorInputs` scans the ADS1115 and keeps a reading for each input.
+The same object owns that sensor's loop switch. A sensor is
 off, on, fault, or disconnected. A latched overcurrent is written
 to EEPROM and read again at startup, so that input is fault before
 the slave answers. `ModuleLink` reads the cache and the state. The
@@ -17,9 +17,10 @@ read the fault list.
 
 `main.cpp` constructs it with `AvrAds1115`, `AvrSensorSwitchPort`,
 `AvrInterruptMask`, `AvrEeprom`, `SENSOR_COUNT`,
-`SENSOR_CONNECTED_MIN_COUNTS`, `SENSOR_TRIP_COUNTS`, and
-`SENSOR_TRIP_SAMPLES`. `loop()` calls `update()` and then
-`moduleLink.update()`. The link does not call `update()`.
+`SENSOR_CONNECTED_MIN_COUNTS`, `SENSOR_TRIP_COUNTS`,
+`SENSOR_TRIP_SAMPLES`, and `SENSOR_AVERAGE_SAMPLES`. `loop()` calls
+`update()` and then `moduleLink.update()`. The link does not call
+`update()`.
 
 ## What it creates
 
@@ -62,12 +63,24 @@ start, a poll, and a read.
 ## What is stored, and who reads it
 
 The constructor stores the count, the connected threshold, the trip
-counts, and how many consecutive trip samples latch a fault. It
-reads the fault image before `setup()`. A blank pair starts that
-input off. Any other pair starts it in fault, and `setup()` leaves
-the switch open. `update()` stores the latest counts and arms the
-next image byte. After the loop closes, the next stored sample sets
-on, disconnected, or a fault strike.
+counts, how many consecutive trip samples latch a fault, and how
+many live samples form the reading. It reads the fault image before
+`setup()`. A blank pair starts that input off. Any other pair starts
+it in fault, and `setup()` leaves the switch open. `update()` stores
+the latest conversion and arms the next image byte. After the loop
+closes, the next stored sample sets on, disconnected, or a fault
+strike.
+
+Each input has its own window. A sample enters that window only
+while the loop is on, the sample is at least
+`SENSOR_CONNECTED_MIN_COUNTS`, and it is below the trip. The reading
+is the average of the samples in the window, rounded half up. One
+sample is reported as itself. At `SENSOR_AVERAGE_SAMPLES` (25) each
+newer sample drops the oldest. A sample below the connected
+threshold, a latched fault, turn off, turn on from off, and reset
+each clear that window. Turn on while the loop is already on leaves
+it. A single trip sample stays out of the average. On, disconnected,
+and fault still follow each raw sample.
 
 The valid flag for that input is cleared before the counts are
 written and set after them. `ModuleLink` reads an input from the TWI1

@@ -73,7 +73,7 @@ On the AVR the handler runs from the TWI interrupt. On the desktop,
 | `GET_SENSOR_COUNT` | empty payload | status `Ok`, the cache's count |
 | `GET_SENSOR_COUNT` | any payload | `BadLength` |
 | `GET_SENSOR_CONNECTED` | one index byte, index inside the count, sample stored | `Ok`, index, connected `0` or `1` |
-| `GET_SENSOR_READING` | one index byte, index inside the count, sample stored | `Ok`, index, connected, raw counts as big-endian `int32` |
+| `GET_SENSOR_READING` | one index byte, index inside the count, sample stored | `Ok`, index, connected, averaged counts as big-endian `int32` |
 | `GET_SENSOR_CONNECTED`, `GET_SENSOR_READING` | index inside the count, no sample yet | `Busy` |
 | `GET_SENSOR_CONNECTED`, `GET_SENSOR_READING` | payload length is not 1, or index at or above the count | `BadLength` |
 | `GET_SENSOR_STATE` | one index byte, index inside the count, off, fault, or a sample stored since the loop closed | `Ok`, index, state |
@@ -108,7 +108,7 @@ through `kMaxAssignedAddress`.
 
 A refused `SET_ADDRESS` leaves the address in place and queues no
 status. The reading payload is `kSensorReadingPayloadLen` (6): index,
-connected, then the raw counts. The connected payload is
+connected, then the averaged counts. The connected payload is
 `kSensorConnectedPayloadLen` (2): index, then 0 or 1. The count
 payload is one byte.
 
@@ -125,12 +125,12 @@ record is `kFaultRecordLen` (2). Eight inputs fill `kMaxPayload`.
 Which reason an input gets is on the
 [sensor inputs reference](sensor-inputs.md).
 
-The sensor count, the connected threshold, the trip, and the raw
-counts come from `SensorInputs`. The sketch passes `SENSOR_COUNT`,
-`SENSOR_CONNECTED_MIN_COUNTS`, `SENSOR_TRIP_COUNTS`, and
-`SENSOR_TRIP_SAMPLES` into that object. The reading on the wire is
-the ADS1115 code, not a scaled current. The connected byte is 1 only
-while the state is on.
+The sensor count, the connected threshold, the trip, and the reading
+come from `SensorInputs`. The sketch passes `SENSOR_COUNT`,
+`SENSOR_CONNECTED_MIN_COUNTS`, `SENSOR_TRIP_COUNTS`,
+`SENSOR_TRIP_SAMPLES`, and `SENSOR_AVERAGE_SAMPLES` into that object.
+The reading on the wire is the averaged ADS1115 code, not a scaled
+current. The connected byte is 1 only while the state is on.
 
 State bytes are `kSensorStateOff` (0), `kSensorStateOn` (1),
 `kSensorStateFault` (2), and `kSensorStateDisconnected` (3). A fault
