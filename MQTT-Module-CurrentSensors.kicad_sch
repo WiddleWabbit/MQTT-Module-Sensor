@@ -6,8 +6,8 @@
 	(paper "A4")
 	(title_block
 		(title "MQTT - Current Sensor - Module")
-		(date "2026-10-09")
-		(rev "1.1")
+		(date "2026-11-25")
+		(rev "3")
 	)
 	(lib_symbols)
 	(bus_alias "I2C0"

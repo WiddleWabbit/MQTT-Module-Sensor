@@ -1124,6 +1124,210 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "SUNLORD Inductors:MCL1608S100MT"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "L"
+				(at -3.048 6.858 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+			)
+			(property "Value" "10uH, 50mA, 20%"
+				(at -3.048 4.826 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+			)
+			(property "Footprint" "SUNLORD Inductors:L_0603_1608Metric"
+				(at 16.51 -96.19 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 16.51 -196.19 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
+			)
+			(property "Description" "Inductor, 10uH, 50mA, 20%, 1.17Ω"
+				(at 6.604 -3.556 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Height" "1.9"
+				(at 16.51 -396.19 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
+			)
+			(property "Manufacturer" "Sunlord"
+				(at 16.51 -696.19 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
+			)
+			(property "Manufacturer Part No" "MCL1608S100MT"
+				(at 16.51 -796.19 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+					(hide yes)
+				)
+			)
+			(property "JLCPCB Part #" "C51942"
+				(at 5.588 -10.668 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Package" "0603"
+				(at 5.588 -5.842 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Part Type" "Extended"
+				(at 5.588 -8.128 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "MCL1608S100MT_0_1"
+				(arc
+					(start 2.5461 0.0028)
+					(mid 3.1389 0.6092)
+					(end 3.7317 0.0029)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 3.7636 0)
+					(mid 4.3129 0.5495)
+					(end 4.8624 0.0002)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 4.9194 -0.0053)
+					(mid 5.5286 0.6051)
+					(end 6.139 -0.0042)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 6.2067 -0.0047)
+					(mid 6.8955 0.6813)
+					(end 7.5669 -0.0217)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "MCL1608S100MT_1_1"
+				(pin passive line
+					(at 0 0 0)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 10.16 0 180)
+					(length 2.54)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "power:+3V3"
 			(power)
 			(pin_numbers
@@ -1444,10 +1648,10 @@
 		(uuid "dac05c29-2a4f-46e8-a774-b4406751b3b1")
 	)
 	(junction
-		(at 242.57 45.72)
+		(at 223.52 40.64)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "0f282014-7e83-46e3-ad04-bbfeeeb7289a")
+		(uuid "03a5f929-b49f-4aeb-b071-71057d2781ba")
 	)
 	(junction
 		(at 242.57 101.6)
@@ -1456,16 +1660,16 @@
 		(uuid "41fecb9f-c7cd-412f-a625-9a8293a03e37")
 	)
 	(junction
-		(at 245.11 46.99)
+		(at 242.57 43.18)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "d305c140-eccc-4f4f-8934-cceb99ef4ebf")
+		(uuid "d5d6a665-aedf-4e0c-a5ff-aa465f99392b")
 	)
 	(junction
-		(at 242.57 48.26)
+		(at 245.11 41.91)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "f445f09c-3bec-48ca-afe4-5b5f320bacf9")
+		(uuid "e702ddf2-0f05-4742-9384-37cf0f4be939")
 	)
 	(no_connect
 		(at 154.94 87.63)
@@ -1690,6 +1894,16 @@
 	)
 	(wire
 		(pts
+			(xy 215.9 43.18) (xy 223.52 43.18)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "077abc53-b280-42f2-9c27-9804c1e78955")
+	)
+	(wire
+		(pts
 			(xy 242.57 86.36) (xy 242.57 88.9)
 		)
 		(stroke
@@ -1717,16 +1931,6 @@
 			(type default)
 		)
 		(uuid "24c14492-c604-45a0-8226-8a737b09337e")
-	)
-	(wire
-		(pts
-			(xy 245.11 45.72) (xy 242.57 45.72)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2c3d9c5e-b97a-4ebe-8f55-5efb41d96f8b")
 	)
 	(bus
 		(pts
@@ -1770,6 +1974,16 @@
 	)
 	(wire
 		(pts
+			(xy 233.68 43.18) (xy 242.57 43.18)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3214a00e-eedc-4679-b263-d05dc1bcd55b")
+	)
+	(wire
+		(pts
 			(xy 85.09 182.88) (xy 85.09 172.72)
 		)
 		(stroke
@@ -1800,16 +2014,6 @@
 	)
 	(wire
 		(pts
-			(xy 233.68 48.26) (xy 242.57 48.26)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "36643571-4fb4-41b0-a375-c6d7d44a2086")
-	)
-	(wire
-		(pts
 			(xy 24.13 177.8) (xy 46.99 177.8)
 		)
 		(stroke
@@ -1827,16 +2031,6 @@
 			(type default)
 		)
 		(uuid "3822f710-c84b-4b9e-b4cd-643d4e7fa5e9")
-	)
-	(wire
-		(pts
-			(xy 242.57 59.69) (xy 242.57 57.15)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "39461d99-e022-40b0-a94c-ab5265d3c145")
 	)
 	(wire
 		(pts
@@ -1940,16 +2134,6 @@
 	)
 	(wire
 		(pts
-			(xy 242.57 45.72) (xy 242.57 48.26)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "53937703-126c-4f4c-ae8f-c3bc41384f5c")
-	)
-	(wire
-		(pts
 			(xy 77.47 182.88) (xy 85.09 182.88)
 		)
 		(stroke
@@ -1957,16 +2141,6 @@
 			(type default)
 		)
 		(uuid "554a0499-e1b6-494f-80c2-bd055b3fb7b9")
-	)
-	(wire
-		(pts
-			(xy 245.11 46.99) (xy 247.65 46.99)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5ac50e6e-d57f-4899-bbca-20a70e58bc31")
 	)
 	(wire
 		(pts
@@ -2038,6 +2212,16 @@
 		)
 		(uuid "71420222-343d-478c-9afe-1fe0669248f5")
 	)
+	(wire
+		(pts
+			(xy 245.11 40.64) (xy 245.11 41.91)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "756603e3-dfad-441f-8003-dee23e027c55")
+	)
 	(bus
 		(pts
 			(xy 45.72 170.18) (xy 49.53 170.18)
@@ -2060,13 +2244,13 @@
 	)
 	(wire
 		(pts
-			(xy 242.57 48.26) (xy 242.57 49.53)
+			(xy 223.52 29.21) (xy 223.52 31.75)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "7e2ed046-3d87-49dd-a402-db0cca3cf6e2")
+		(uuid "7eb7c97d-233c-46f7-a0ed-7182586afa1d")
 	)
 	(wire
 		(pts
@@ -2087,6 +2271,16 @@
 			(type default)
 		)
 		(uuid "7ffce925-ae4e-4caf-9334-880b612166fa")
+	)
+	(wire
+		(pts
+			(xy 245.11 41.91) (xy 245.11 43.18)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "82a1f3e6-d548-4aba-8c6b-c58486e47a43")
 	)
 	(wire
 		(pts
@@ -2178,6 +2372,16 @@
 		)
 		(uuid "90768ad8-77b4-4785-8980-cc8a828cf95b")
 	)
+	(wire
+		(pts
+			(xy 242.57 43.18) (xy 242.57 44.45)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "91c99d21-e329-41ac-99cf-9ffb46155c67")
+	)
 	(bus
 		(pts
 			(xy 120.65 170.18) (xy 125.73 170.18)
@@ -2240,6 +2444,16 @@
 	)
 	(wire
 		(pts
+			(xy 242.57 54.61) (xy 242.57 52.07)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ad46cd02-dba6-45f8-ab18-f9b4a36f9f88")
+	)
+	(wire
+		(pts
 			(xy 233.68 144.78) (xy 242.57 144.78)
 		)
 		(stroke
@@ -2250,16 +2464,6 @@
 	)
 	(wire
 		(pts
-			(xy 245.11 46.99) (xy 245.11 45.72)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b66cd433-30c4-4ba2-bea0-83e4c130d80e")
-	)
-	(wire
-		(pts
 			(xy 114.3 57.15) (xy 124.46 57.15)
 		)
 		(stroke
@@ -2267,16 +2471,6 @@
 			(type default)
 		)
 		(uuid "b79963f3-aee8-4608-a4df-45d1cae3bf4a")
-	)
-	(wire
-		(pts
-			(xy 245.11 48.26) (xy 242.57 48.26)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b7e0cf13-39c7-497a-a945-e75393907c2e")
 	)
 	(wire
 		(pts
@@ -2297,6 +2491,26 @@
 			(type default)
 		)
 		(uuid "c56bb402-7d01-41db-9bf1-f34085bab5d3")
+	)
+	(wire
+		(pts
+			(xy 243.84 40.64) (xy 245.11 40.64)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d1be2bb1-cb95-49c6-b052-2215a7a0542e")
+	)
+	(wire
+		(pts
+			(xy 223.52 39.37) (xy 223.52 40.64)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d30c20fc-a3c7-438e-8b29-dce364fd1112")
 	)
 	(wire
 		(pts
@@ -2327,16 +2541,6 @@
 			(type default)
 		)
 		(uuid "db55fa5e-5593-4af6-af2e-9043aff37740")
-	)
-	(wire
-		(pts
-			(xy 245.11 46.99) (xy 245.11 48.26)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "dba59cf1-5723-40ca-a683-9edffd413d6b")
 	)
 	(wire
 		(pts
@@ -2390,6 +2594,16 @@
 	)
 	(wire
 		(pts
+			(xy 223.52 40.64) (xy 223.52 43.18)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e4111504-02cb-495d-909d-db3ac79c434e")
+	)
+	(wire
+		(pts
 			(xy 58.42 185.42) (xy 58.42 172.72)
 		)
 		(stroke
@@ -2420,16 +2634,6 @@
 	)
 	(wire
 		(pts
-			(xy 242.57 34.29) (xy 242.57 36.83)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e8e5345c-89db-4a9c-a034-d20535f3f74a")
-	)
-	(wire
-		(pts
 			(xy 149.86 185.42) (xy 149.86 172.72)
 		)
 		(stroke
@@ -2437,6 +2641,16 @@
 			(type default)
 		)
 		(uuid "f4197c03-abfb-4476-9d35-34740ecf793b")
+	)
+	(wire
+		(pts
+			(xy 245.11 43.18) (xy 242.57 43.18)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f7f9ff1b-2ac0-43e2-a291-aec85a1718a5")
 	)
 	(wire
 		(pts
@@ -2450,23 +2664,23 @@
 	)
 	(wire
 		(pts
-			(xy 233.68 45.72) (xy 242.57 45.72)
+			(xy 245.11 41.91) (xy 247.65 41.91)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "fafff5e1-965c-4e41-8ca0-b28555fd9049")
+		(uuid "fac78a60-07fa-4775-b362-5f6277e07756")
 	)
 	(wire
 		(pts
-			(xy 242.57 44.45) (xy 242.57 45.72)
+			(xy 223.52 40.64) (xy 233.68 40.64)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "fe97d024-3550-4dc6-b03e-39236ef07b89")
+		(uuid "fdb98b34-13f6-402e-96ad-e7f6a6c2e234")
 	)
 	(label "SNS"
 		(at 140.97 182.88 0)
@@ -2497,6 +2711,16 @@
 			(justify left bottom)
 		)
 		(uuid "15d862af-aad7-41dd-8493-86d9f983178a")
+	)
+	(label "AVCC"
+		(at 215.9 43.18 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "28d40f40-a506-41dd-9809-0b9442947cd7")
 	)
 	(label "AREF"
 		(at 114.3 57.15 0)
@@ -2577,16 +2801,6 @@
 			(justify left bottom)
 		)
 		(uuid "610f5c1b-6cf9-4af7-a4f4-f1b7669e4fc6")
-	)
-	(label "VCC"
-		(at 233.68 48.26 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "6f0c4990-9bcc-46c6-ab9d-9fb6631ab78c")
 	)
 	(label "GND"
 		(at 24.13 185.42 0)
@@ -2818,6 +3032,16 @@
 		)
 		(uuid "f6aa7498-3a4e-4ea6-8f1a-5b5406efe2ba")
 	)
+	(label "VCC"
+		(at 233.68 43.18 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f8aee402-8f35-4ddc-947a-345af30cc377")
+	)
 	(label "SCL0"
 		(at 167.64 92.71 180)
 		(effects
@@ -2827,16 +3051,6 @@
 			(justify right bottom)
 		)
 		(uuid "fa3254a1-6329-4e4a-86f0-0297605f6854")
-	)
-	(label "AVCC"
-		(at 233.68 45.72 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "fd5ba2be-f93d-4281-b8a0-f455695ebfd8")
 	)
 	(hierarchical_label "{I2C0}"
 		(shape bidirectional)
@@ -2892,161 +3106,6 @@
 			(justify left)
 		)
 		(uuid "c2d46835-aaa6-4bcb-bf45-247ffd1e093a")
-	)
-	(symbol
-		(lib_id "JLCPCB Basic:CC0603KRX7R9BB104")
-		(at 242.57 44.45 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "0371c503-2cbe-432f-bc21-48e8b984b53a")
-		(property "Reference" "C203"
-			(at 248.666 39.37 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "0.1uF 10% 50V"
-			(at 253.746 41.656 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "JLCPCB Basic:CAPC1608X90N"
-			(at 338.76 35.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://componentsearchengine.com/Datasheets/2/CC0603KRX7R9BB104.pdf"
-			(at 438.76 35.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "Description" "Capacitor Ceramic, 0.1uF, 50V, 0603, 10%, X7R"
-			(at 247.65 40.64 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Height" "0.9"
-			(at 638.76 35.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "Mouser Part Number" "603-CC603KRX7R9BB104"
-			(at 738.76 35.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "Mouser Price/Stock" "https://au.mouser.com/ProductDetail/YAGEO/CC0603KRX7R9BB104?qs=vTakOoo5QyLvVCYM2ge8LQ%3D%3D"
-			(at 838.76 35.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer" "YAGEO"
-			(at 938.76 35.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer Part No" "CC0603KRX7R9BB104"
-			(at 1038.76 35.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Part #" "C14663"
-			(at 250.19 40.894 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Package" "0603"
-			(at 252.476 40.894 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Part Type" "Basic"
-			(at 254.762 40.64 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "PCB_Hint" "Filter Cap, as close as possible to ATMEGA"
-			(at 242.57 44.45 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "fe3cc66c-3fee-4ee1-a766-ea58cb6fa259")
-		)
-		(pin "1"
-			(uuid "fbd84d43-1ae9-461c-96c1-451cd1258ac1")
-		)
-		(instances
-			(project "MQTT-Module-CurrentSensors"
-				(path "/fcdc4d99-6273-4901-9910-bd8fd00b962f/aa87b2dd-90b3-41b3-8e99-8dcc5f11db59"
-					(reference "C203")
-					(unit 1)
-				)
-			)
-		)
 	)
 	(symbol
 		(lib_id "JLCPCB Basic:CC0603KRX7R9BB104")
@@ -3270,6 +3329,73 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+3V3")
+		(at 247.65 41.91 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "21328311-365b-49c2-b105-3ec989ac8f90")
+		(property "Reference" "#PWR0210"
+			(at 243.84 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 251.46 41.9099 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 247.65 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 247.65 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 247.65 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "3bdb4131-a01c-4527-bca7-a53d4bc8af13")
+		)
+		(instances
+			(project "MQTT-Module-CurrentSensors"
+				(path "/fcdc4d99-6273-4901-9910-bd8fd00b962f/aa87b2dd-90b3-41b3-8e99-8dcc5f11db59"
+					(reference "#PWR0210")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 257.81 144.78 90)
 		(unit 1)
@@ -3337,228 +3463,6 @@
 		)
 	)
 	(symbol
-		(lib_id "JLCPCB Basic:CC0603KRX7R9BB104")
-		(at 242.57 57.15 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "50da7a8e-55d7-43b2-96b5-10f0297696b9")
-		(property "Reference" "C201"
-			(at 248.666 52.07 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "0.1uF 10% 50V"
-			(at 253.746 54.356 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "JLCPCB Basic:CAPC1608X90N"
-			(at 338.76 48.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://componentsearchengine.com/Datasheets/2/CC0603KRX7R9BB104.pdf"
-			(at 438.76 48.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "Description" "Capacitor Ceramic, 0.1uF, 50V, 0603, 10%, X7R"
-			(at 247.65 53.34 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Height" "0.9"
-			(at 638.76 48.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "Mouser Part Number" "603-CC603KRX7R9BB104"
-			(at 738.76 48.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "Mouser Price/Stock" "https://au.mouser.com/ProductDetail/YAGEO/CC0603KRX7R9BB104?qs=vTakOoo5QyLvVCYM2ge8LQ%3D%3D"
-			(at 838.76 48.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer" "YAGEO"
-			(at 938.76 48.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer Part No" "CC0603KRX7R9BB104"
-			(at 1038.76 48.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Part #" "C14663"
-			(at 250.19 53.594 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Package" "0603"
-			(at 252.476 53.594 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Part Type" "Basic"
-			(at 254.762 53.34 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "PCB_Hint" "Filter Cap, as close as possible to ATMEGA"
-			(at 242.57 57.15 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "4c54053b-857a-4c76-86ad-2ec3b511a48c")
-		)
-		(pin "1"
-			(uuid "5bf2cc6c-8fe8-4583-a914-d5edc62219a8")
-		)
-		(instances
-			(project ""
-				(path "/fcdc4d99-6273-4901-9910-bd8fd00b962f/aa87b2dd-90b3-41b3-8e99-8dcc5f11db59"
-					(reference "C201")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 242.57 59.69 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "57592088-056f-4234-8e8c-a5e00051d669")
-		(property "Reference" "#PWR0203"
-			(at 242.57 66.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 242.5699 63.5 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" ""
-			(at 242.57 59.69 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 242.57 59.69 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 242.57 59.69 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "14903cb0-e374-4312-9af9-acd5db42a342")
-		)
-		(instances
-			(project "MQTT-Module-CurrentSensors"
-				(path "/fcdc4d99-6273-4901-9910-bd8fd00b962f/aa87b2dd-90b3-41b3-8e99-8dcc5f11db59"
-					(reference "#PWR0203")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:GND")
 		(at 242.57 114.3 0)
 		(unit 1)
@@ -3619,6 +3523,199 @@
 			(project ""
 				(path "/fcdc4d99-6273-4901-9910-bd8fd00b962f/aa87b2dd-90b3-41b3-8e99-8dcc5f11db59"
 					(reference "#PWR0205")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "SUNLORD Inductors:MCL1608S100MT")
+		(at 233.68 40.64 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "6a7f3914-694a-480a-8f73-e78e0215d780")
+		(property "Reference" "L201"
+			(at 238.76 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10uH, 50mA, 20%"
+			(at 238.76 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "SUNLORD Inductors:L_0603_1608Metric"
+			(at 250.19 136.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 250.19 236.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "Inductor, 10uH, 50mA, 20%, 1.17Ω"
+			(at 240.284 44.196 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Height" "1.9"
+			(at 250.19 436.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Sunlord"
+			(at 250.19 736.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer Part No" "MCL1608S100MT"
+			(at 250.19 836.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "JLCPCB Part #" "C51942"
+			(at 239.268 51.308 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Package" "0603"
+			(at 239.268 46.482 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Part Type" "Extended"
+			(at 239.268 48.768 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "b7bb2a1c-9847-461c-bb55-5672e8c9cb70")
+		)
+		(pin "1"
+			(uuid "52824942-5a2a-4c2f-b4bd-2b5ff8548425")
+		)
+		(instances
+			(project "MQTT-Module-CurrentSensors"
+				(path "/fcdc4d99-6273-4901-9910-bd8fd00b962f/aa87b2dd-90b3-41b3-8e99-8dcc5f11db59"
+					(reference "L201")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 223.52 29.21 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "73ad283c-e73d-41ae-bc55-a6b63d140828")
+		(property "Reference" "#PWR0208"
+			(at 223.52 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 223.52 24.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 223.52 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 223.52 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 223.52 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "56d986b4-a788-41ad-b838-7ab2d5473eed")
+		)
+		(instances
+			(project "MQTT-Module-CurrentSensors"
+				(path "/fcdc4d99-6273-4901-9910-bd8fd00b962f/aa87b2dd-90b3-41b3-8e99-8dcc5f11db59"
+					(reference "#PWR0208")
 					(unit 1)
 				)
 			)
@@ -3831,17 +3928,17 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+3V3")
-		(at 247.65 46.99 270)
+		(lib_id "power:GND")
+		(at 242.57 54.61 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "87dce2b5-6d9b-4f39-9194-8e253cb5d43d")
-		(property "Reference" "#PWR0202"
-			(at 243.84 46.99 0)
+		(uuid "8a734367-3409-4010-a367-7c9d36547ff9")
+		(property "Reference" "#PWR0209"
+			(at 242.57 60.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3849,17 +3946,17 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+3V3"
-			(at 251.46 46.9899 90)
+		(property "Value" "GND"
+			(at 242.5699 58.42 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 			)
 		)
 		(property "Footprint" ""
-			(at 247.65 46.99 0)
+			(at 242.57 54.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3868,7 +3965,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 247.65 46.99 0)
+			(at 242.57 54.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3876,8 +3973,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 247.65 46.99 0)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 242.57 54.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3886,12 +3983,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "154b35fc-acc6-4db0-a97a-d67758571005")
+			(uuid "9c684457-2d30-4f04-861e-c8a559d2aa4e")
 		)
 		(instances
 			(project "MQTT-Module-CurrentSensors"
 				(path "/fcdc4d99-6273-4901-9910-bd8fd00b962f/aa87b2dd-90b3-41b3-8e99-8dcc5f11db59"
-					(reference "#PWR0202")
+					(reference "#PWR0209")
 					(unit 1)
 				)
 			)
@@ -3959,6 +4056,161 @@
 			(project "MQTT-Module-CurrentSensors"
 				(path "/fcdc4d99-6273-4901-9910-bd8fd00b962f/aa87b2dd-90b3-41b3-8e99-8dcc5f11db59"
 					(reference "#PWR0206")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "JLCPCB Basic:CC0603KRX7R9BB104")
+		(at 242.57 52.07 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "9b5bf4b1-3246-47ec-90ae-b3f12207c68a")
+		(property "Reference" "C206"
+			(at 248.666 46.99 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "0.1uF 10% 50V"
+			(at 253.746 49.276 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "JLCPCB Basic:CAPC1608X90N"
+			(at 338.76 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://componentsearchengine.com/Datasheets/2/CC0603KRX7R9BB104.pdf"
+			(at 438.76 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "Capacitor Ceramic, 0.1uF, 50V, 0603, 10%, X7R"
+			(at 247.65 48.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Height" "0.9"
+			(at 638.76 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "603-CC603KRX7R9BB104"
+			(at 738.76 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Mouser Price/Stock" "https://au.mouser.com/ProductDetail/YAGEO/CC0603KRX7R9BB104?qs=vTakOoo5QyLvVCYM2ge8LQ%3D%3D"
+			(at 838.76 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "YAGEO"
+			(at 938.76 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer Part No" "CC0603KRX7R9BB104"
+			(at 1038.76 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "JLCPCB Part #" "C14663"
+			(at 250.19 48.514 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Package" "0603"
+			(at 252.476 48.514 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Part Type" "Basic"
+			(at 254.762 48.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "PCB_Hint" "Filter Cap, as close as possible to ATMEGA"
+			(at 242.57 52.07 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "6435f0a6-7204-4584-a7f1-f5973adca9ab")
+		)
+		(pin "1"
+			(uuid "790af090-59a8-402e-8e1e-dd362b85b78d")
+		)
+		(instances
+			(project "MQTT-Module-CurrentSensors"
+				(path "/fcdc4d99-6273-4901-9910-bd8fd00b962f/aa87b2dd-90b3-41b3-8e99-8dcc5f11db59"
+					(reference "C206")
 					(unit 1)
 				)
 			)
@@ -4269,17 +4521,52 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 242.57 34.29 180)
+		(lib_id "JLCPCB Basic:CC0603KRX7R9BB104")
+		(at 223.52 39.37 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "ef3f6166-fa96-404b-9a44-76da6cbadb14")
-		(property "Reference" "#PWR0201"
-			(at 242.57 27.94 0)
+		(uuid "c0613c7e-c056-4b9c-82ab-a06ab509cc17")
+		(property "Reference" "C205"
+			(at 217.932 34.29 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "0.1uF 10% 50V"
+			(at 213.106 36.83 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "JLCPCB Basic:CAPC1608X90N"
+			(at 319.71 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://componentsearchengine.com/Datasheets/2/CC0603KRX7R9BB104.pdf"
+			(at 419.71 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "Capacitor Ceramic, 0.1uF, 50V, 0603, 10%, X7R"
+			(at 228.6 35.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4287,16 +4574,58 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "GND"
-			(at 242.57 29.21 0)
+		(property "Height" "0.9"
+			(at 619.71 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left top)
+				(hide yes)
 			)
 		)
-		(property "Footprint" ""
-			(at 242.57 34.29 0)
+		(property "Mouser Part Number" "603-CC603KRX7R9BB104"
+			(at 719.71 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Mouser Price/Stock" "https://au.mouser.com/ProductDetail/YAGEO/CC0603KRX7R9BB104?qs=vTakOoo5QyLvVCYM2ge8LQ%3D%3D"
+			(at 819.71 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "YAGEO"
+			(at 919.71 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer Part No" "CC0603KRX7R9BB104"
+			(at 1019.71 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "JLCPCB Part #" "C14663"
+			(at 231.14 35.814 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4304,8 +4633,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
-			(at 242.57 34.29 0)
+		(property "Package" "0603"
+			(at 233.426 35.814 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4313,22 +4642,34 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 242.57 34.29 0)
+		(property "Part Type" "Basic"
+			(at 235.712 35.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
+		)
+		(property "PCB_Hint" "Filter Cap, as close as possible to ATMEGA"
+			(at 223.52 39.37 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "831cafd4-c16a-4a36-a32d-9db93e6bc328")
 		)
 		(pin "1"
-			(uuid "80bf45b8-2b50-4b95-89eb-2c1f27a415a4")
+			(uuid "e3054580-65e5-4f9e-8b7f-dd09cf41448f")
 		)
 		(instances
 			(project "MQTT-Module-CurrentSensors"
 				(path "/fcdc4d99-6273-4901-9910-bd8fd00b962f/aa87b2dd-90b3-41b3-8e99-8dcc5f11db59"
-					(reference "#PWR0201")
+					(reference "C205")
 					(unit 1)
 				)
 			)
